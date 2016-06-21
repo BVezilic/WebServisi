@@ -49,7 +49,7 @@ public class AkcijskiDogadjaj implements Serializable {
 	// GET && SET
 	public boolean addKategorijaArtiklaSaPopustima(KategorijaArtikla kategorijaArtikla){
 		for (KategorijaArtikla ka : kategorijaArtiklaSaPopustima) {
-			if (ka.getSifraKategorije().equals(kategorijaArtikla.getSifraKategorije())){
+			if (ka.equals(kategorijaArtikla)){
 				return false;
 			}
 		}
@@ -59,6 +59,10 @@ public class AkcijskiDogadjaj implements Serializable {
 	
 	public void removeKategorijaArtiklaSaPopustima(KategorijaArtikla kategorijaArtikla){
 		kategorijaArtiklaSaPopustima.remove(kategorijaArtikla);
+	}
+	
+	public boolean containsKategorija (KategorijaArtikla kategorijaArtikla){
+		return kategorijaArtiklaSaPopustima.contains(kategorijaArtikla);
 	}
 	
 	public String getSifra() {

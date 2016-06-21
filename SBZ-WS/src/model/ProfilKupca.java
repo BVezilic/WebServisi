@@ -6,27 +6,28 @@ import java.util.ArrayList;
 public class ProfilKupca implements Serializable {
 
 	private static final long serialVersionUID = -4118823700944757540L;
-
+	
+	private Korisnik korisnik;
 	private String adresaIsporuke;
-	private double nagradniBodovi;
+	private int nagradniBodovi;
 	private KategorijaKupca kategorijaKupca;
-	private Korisnik korisnik; // dodato da bi moglo da bude unique
 	private ArrayList<Racun> realizovaneKupovine = new ArrayList<Racun>();
-
+	
 	// KONSTRUKTORI
-	public ProfilKupca(String adresaIsporuke, double nagradniBodovi,
-			KategorijaKupca kategorijaKupca, Korisnik korisnik) {
+	public ProfilKupca(Korisnik korisnik, String adresaIsporuke, int nagradniBodovi,
+			KategorijaKupca kategorijaKupca) {
 		super();
 		this.korisnik = korisnik;
 		this.adresaIsporuke = adresaIsporuke;
 		this.nagradniBodovi = nagradniBodovi;
 		this.kategorijaKupca = kategorijaKupca;
 	}
-
-	public ProfilKupca(String adresaIsporuke, double nagradniBodovi,
-			KategorijaKupca kategorijaKupca, Korisnik korisnik,
+	
+	public ProfilKupca(Korisnik korisnik, String adresaIsporuke, int nagradniBodovi,
+			KategorijaKupca kategorijaKupca,
 			ArrayList<Racun> realizovaneKupovine) {
 		super();
+		this.korisnik = korisnik;
 		this.adresaIsporuke = adresaIsporuke;
 		this.nagradniBodovi = nagradniBodovi;
 		this.kategorijaKupca = kategorijaKupca;
@@ -37,21 +38,17 @@ public class ProfilKupca implements Serializable {
 		super();
 	}
 
-	// GET && SET
-	public boolean addRealizovanaKupovina(Racun racun) {
+	//GET && SET
+	public boolean addRealizovanaKupovina(Racun racun){
 		for (Racun r : realizovaneKupovine) {
-			if (r.getSifra().equals(racun.getSifra())) {
+			if (r.equals(racun)){
 				return false;
 			}
 		}
 		realizovaneKupovine.add(racun);
 		return true;
 	}
-
-	public void removeRealizovanaKupovina(Racun racun) {
-		realizovaneKupovine.remove(racun);
-	}
-
+	
 	public Korisnik getKorisnik() {
 		return korisnik;
 	}
@@ -60,6 +57,11 @@ public class ProfilKupca implements Serializable {
 		this.korisnik = korisnik;
 	}
 
+	public void removeRealizovanaKupovina(Racun racun){
+		realizovaneKupovine.remove(racun);
+	}
+	
+	
 	public String getAdresaIsporuke() {
 		return adresaIsporuke;
 	}
@@ -68,11 +70,11 @@ public class ProfilKupca implements Serializable {
 		this.adresaIsporuke = adresaIsporuke;
 	}
 
-	public double getNagradniBodovi() {
+	public int getNagradniBodovi() {
 		return nagradniBodovi;
 	}
 
-	public void setNagradniBodovi(double nagradniBodovi) {
+	public void setNagradniBodovi(int nagradniBodovi) {
 		this.nagradniBodovi = nagradniBodovi;
 	}
 
@@ -119,20 +121,17 @@ public class ProfilKupca implements Serializable {
 				return false;
 		} else if (!kategorijaKupca.equals(other.kategorijaKupca))
 			return false;
-		if (korisnik == null) {
-			if (other.korisnik != null)
+		if (nagradniBodovi != other.nagradniBodovi) {
 				return false;
-		} else if (!korisnik.equals(other.korisnik))
-			return false;
-		if (Double.doubleToLongBits(nagradniBodovi) != Double
-				.doubleToLongBits(other.nagradniBodovi))
-			return false;
+		} 
 		if (realizovaneKupovine == null) {
 			if (other.realizovaneKupovine != null)
 				return false;
 		} else if (!realizovaneKupovine.equals(other.realizovaneKupovine))
 			return false;
+		
 		return true;
 	}
-
+	
+	
 }

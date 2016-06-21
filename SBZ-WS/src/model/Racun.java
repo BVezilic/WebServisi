@@ -12,40 +12,80 @@ public class Racun implements Serializable{
 	private Date datumIzdavanja;
 	private ProfilKupca kupac;
 	private int brojOstvarenihBodova;
+	private double originalnaUkupnaCena;
+	private double procenatUmanjenja;
+	private double konacnaCena;
+	private double brojPotrosenihBodova;
 	private ArrayList<Popust> primenjeniPopusti = new ArrayList<Popust>();
 	private ArrayList<StavkaRacuna> stavkeRacuna = new ArrayList<StavkaRacuna>();
 	
 	// KONSTRUKTORI
-	public Racun(String sifra, Date datumIzdavanja, ProfilKupca kupac,
-			int brojOstvarenihBodova, ArrayList<Popust> primenjeniPopusti,
-			ArrayList<StavkaRacuna> stavkeRacuna) {
-		super();
-		this.sifra = sifra;
-		this.datumIzdavanja = datumIzdavanja;
-		this.kupac = kupac;
-		this.brojOstvarenihBodova = brojOstvarenihBodova;
-		this.primenjeniPopusti = primenjeniPopusti;
-		this.stavkeRacuna = stavkeRacuna;
-	}
+//	public Racun(String sifra, Date datumIzdavanja, ProfilKupca kupac,
+//			int brojOstvarenihBodova, ArrayList<Popust> primenjeniPopusti,
+//			ArrayList<StavkaRacuna> stavkeRacuna) {
+//		super();
+//		this.sifra = sifra;
+//		this.datumIzdavanja = datumIzdavanja;
+//		this.kupac = kupac;
+//		this.brojOstvarenihBodova = brojOstvarenihBodova;
+//		this.primenjeniPopusti = primenjeniPopusti;
+//		this.stavkeRacuna = stavkeRacuna;
+//	}
+//	
+//	public Racun(String sifra, Date datumIzdavanja, ProfilKupca kupac,
+//			int brojOstvarenihBodova) {
+//		super();
+//		this.sifra = sifra;
+//		this.datumIzdavanja = datumIzdavanja;
+//		this.kupac = kupac;
+//		this.brojOstvarenihBodova = brojOstvarenihBodova;
+//	}
 	
-	public Racun(String sifra, Date datumIzdavanja, ProfilKupca kupac,
-			int brojOstvarenihBodova) {
-		super();
-		this.sifra = sifra;
-		this.datumIzdavanja = datumIzdavanja;
-		this.kupac = kupac;
-		this.brojOstvarenihBodova = brojOstvarenihBodova;
-	}
 	
 	public Racun() {
 		super();
 	}
 
 
+	public Racun(String sifra, Date datumIzdavanja, ProfilKupca kupac,
+			int brojOstvarenihBodova, double originalnaUkupnaCena,
+			double procenatUmanjenja, double konacnaCena,
+			double brojPotrosenihBodova) {
+		super();
+		this.sifra = sifra;
+		this.datumIzdavanja = datumIzdavanja;
+		this.kupac = kupac;
+		this.brojOstvarenihBodova = brojOstvarenihBodova;
+		this.originalnaUkupnaCena = originalnaUkupnaCena;
+		this.procenatUmanjenja = procenatUmanjenja;
+		this.konacnaCena = konacnaCena;
+		this.brojPotrosenihBodova = brojPotrosenihBodova;
+	}
+
+
+	public Racun(String sifra, Date datumIzdavanja, ProfilKupca kupac,
+			int brojOstvarenihBodova, double originalnaUkupnaCena,
+			double procenatUmanjenja, double konacnaCena,
+			double brojPotrosenihBodova, ArrayList<Popust> primenjeniPopusti,
+			ArrayList<StavkaRacuna> stavkeRacuna) {
+		super();
+		this.sifra = sifra;
+		this.datumIzdavanja = datumIzdavanja;
+		this.kupac = kupac;
+		this.brojOstvarenihBodova = brojOstvarenihBodova;
+		this.originalnaUkupnaCena = originalnaUkupnaCena;
+		this.procenatUmanjenja = procenatUmanjenja;
+		this.konacnaCena = konacnaCena;
+		this.brojPotrosenihBodova = brojPotrosenihBodova;
+		this.primenjeniPopusti = primenjeniPopusti;
+		this.stavkeRacuna = stavkeRacuna;
+	}
+
+
 	//GET && SET
 	public boolean addPrimenjeniPopust(Popust popust){
 		for (Popust p : primenjeniPopusti) {
-			if (p.getSifra().equals(popust.getSifra())){
+			if (p.equals(popust)){
 				return false;
 			}
 		}
@@ -59,7 +99,7 @@ public class Racun implements Serializable{
 	
 	public boolean addStavkaRacuna(StavkaRacuna stavkaRacuna){
 		for (StavkaRacuna sr : stavkeRacuna){
-			if (sr.getRacun().getSifra().equals(stavkaRacuna.getRacun().getSifra()) && sr.getRedniBrojStavke() == stavkaRacuna.getRedniBrojStavke()){
+			if (sr.equals(stavkaRacuna)){
 				return false;
 			}
 		}
@@ -71,6 +111,40 @@ public class Racun implements Serializable{
 		stavkeRacuna.remove(stavkaRacuna);
 	}
 	
+	
+	
+	public double getOriginalnaUkupnaCena() {
+		return originalnaUkupnaCena;
+	}
+
+	public void setOriginalnaUkupnaCena(double originalnaUkupnaCena) {
+		this.originalnaUkupnaCena = originalnaUkupnaCena;
+	}
+
+	public double getProcenatUmanjenja() {
+		return procenatUmanjenja;
+	}
+
+	public void setProcenatUmanjenja(double procenatUmanjenja) {
+		this.procenatUmanjenja = procenatUmanjenja;
+	}
+
+	public double getKonacnaCena() {
+		return konacnaCena;
+	}
+
+	public void setKonacnaCena(double konacnaCena) {
+		this.konacnaCena = konacnaCena;
+	}
+
+	public double getBrojPotrosenihBodova() {
+		return brojPotrosenihBodova;
+	}
+
+	public void setBrojPotrosenihBodova(double brojPotrosenihBodova) {
+		this.brojPotrosenihBodova = brojPotrosenihBodova;
+	}
+
 	public String getSifra() {
 		return sifra;
 	}
