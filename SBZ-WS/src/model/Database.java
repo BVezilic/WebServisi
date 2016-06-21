@@ -289,6 +289,7 @@ public class Database implements Serializable {
 		}
 	}
 
+	/*
 	public void kreirajFakte(Racun r) {
 
 		ProfilKupca pk = r.getKupac();
@@ -313,7 +314,7 @@ public class Database implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
+	*/
 	/*
 	public void pokupiFakte(String className) {
 
