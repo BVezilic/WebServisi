@@ -14,6 +14,9 @@ public class Korisnik implements Serializable {
 	private UlogaKorisnika ulogaKorisnika;
 	private Date datumRegistrovanja;
 	
+	// dodato zbog lakseg dodavanja profila kupca
+	private ProfilKupca profilKupca;
+
 	//KONSTRUKTORI
 	public Korisnik(String korisnickoIme, String ime, String prezime,
 			String lozinka, UlogaKorisnika ulogaKorisnika,
@@ -78,6 +81,14 @@ public class Korisnik implements Serializable {
 
 	public void setDatumRegistrovanja(Date datumRegistrovanja) {
 		this.datumRegistrovanja = datumRegistrovanja;
+	}
+	
+	public ProfilKupca getProfilKupca() {
+		return profilKupca;
+	}
+
+	public void setProfilKupca(ProfilKupca profilKupca) {
+		this.profilKupca = profilKupca;
 	}
 
 	@Override
