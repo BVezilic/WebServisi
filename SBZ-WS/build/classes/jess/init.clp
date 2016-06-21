@@ -68,7 +68,7 @@
         (from-class Popust)
         (include-variables TRUE))
     )
-/*
+
 (bind ?kor1 (new Korisnik "FrMujo" "Mujo" "Raciole" "sarma" (UlogaKorisnika.KUPAC) (new Date 112 05 10)))
 (bind ?kak1 (new KategorijaKupca "GLD" "Zlatni" nil))
 (bind ?kak2 (new KategorijaKupca "SIL" "Srebrni" nil))
@@ -118,4 +118,3 @@
 (printout t (call ?akd1 containsKategorija ?kat1) crlf crlf)
 
 (printout t (call ?kor1 toString) crlf crlf)
-*/

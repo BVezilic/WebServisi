@@ -18,6 +18,7 @@ public class Racun implements Serializable{
 	private double brojPotrosenihBodova;
 	private ArrayList<Popust> primenjeniPopusti = new ArrayList<Popust>();
 	private ArrayList<StavkaRacuna> stavkeRacuna = new ArrayList<StavkaRacuna>();
+	private StanjeRacuna stanjeRacuna;
 	
 	// KONSTRUKTORI
 //	public Racun(String sifra, Date datumIzdavanja, ProfilKupca kupac,
@@ -60,6 +61,7 @@ public class Racun implements Serializable{
 		this.procenatUmanjenja = procenatUmanjenja;
 		this.konacnaCena = konacnaCena;
 		this.brojPotrosenihBodova = brojPotrosenihBodova;
+		this.stanjeRacuna = StanjeRacuna.PORUCENO;
 	}
 
 
@@ -79,7 +81,10 @@ public class Racun implements Serializable{
 		this.brojPotrosenihBodova = brojPotrosenihBodova;
 		this.primenjeniPopusti = primenjeniPopusti;
 		this.stavkeRacuna = stavkeRacuna;
+		this.stanjeRacuna = StanjeRacuna.PORUCENO;
 	}
+
+
 
 
 	//GET && SET
@@ -181,6 +186,13 @@ public class Racun implements Serializable{
 	public void setStavkeRacuna(ArrayList<StavkaRacuna> stavkeRacuna) {
 		this.stavkeRacuna = stavkeRacuna;
 	}
+	public StanjeRacuna getStanjeRacuna() {
+		return stanjeRacuna;
+	}
+	public void setStanjeRacuna(StanjeRacuna stanjeRacuna) {
+		this.stanjeRacuna = stanjeRacuna;
+	}
+
 
 	@Override
 	public String toString() {

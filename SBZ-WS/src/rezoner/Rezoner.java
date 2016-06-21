@@ -8,12 +8,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
-import jess.Fact;
 import jess.Filter;
 import jess.JessException;
-import jess.RU;
 import jess.Rete;
-import jess.Value;
 import jess.WorkingMemoryMarker;
 import model.AkcijskiDogadjaj;
 import model.Artikal;
@@ -92,6 +89,49 @@ public class Rezoner {
 	// Funkcije za Engine
 
 	// DODAVANJE FAKATA
+	/**
+	 * Dodaje sve fakte koji su potrebni za korisnika
+	 * 
+	 * @param ko
+	 */
+	public void dodajSveFakteZaKorisnika(Korisnik ko) {
+
+		dodajFact(ko); // korisnik
+		dodajFact(ko.getProfilKupca()); // profil kupca
+		dodajFact(ko.getProfilKupca().getKategorijaKupca()); // kategorija kupca
+		dodajFact(ko.getProfilKupca().getKategorijaKupca().getPragPotrosnje()); // prag potrosnje za kategoriju kupca
+
+		for (Racun ra : ko.getProfilKupca().getRealizovaneKupovine()) {
+
+			dodajFact(ra); // racun
+			for (Popust pp : ra.getPrimenjeniPopusti()) {
+				dodajFact(pp); // popust na racun
+				dodajFact(pp.getOznaka()); // tip popusta
+			}
+
+			for (StavkaRacuna sr : ra.getStavkeRacuna()) {
+				dodajFact(sr); // stavka racuna
+				
+				for (PopustZaPojedinacnuStavku ps : sr.getPrimenjeniPopusti()){
+					dodajFact(ps); // popust za stavku
+					dodajFact(ps.getOznaka()); //tip popusta
+				}
+				
+				Artikal ar = sr.getArtikal();
+				dodajFact(ar); // artikal
+				dodajFact(ar.getKategorijaArtikla()); // kategorija artikla
+				dodajFact(ar.getKategorijaArtikla().getNadkategorija()); //nadkategorija artikla
+				
+			}
+			
+			dodajFact(ra.getStanjeRacuna()); // stanje racuna
+
+		}
+
+		dodajFact(ko.getUlogaKorisnika());
+
+	}
+
 	public void dodajFact(AkcijskiDogadjaj ad) {
 		try {
 			engine.definstance("akcijskiDogadjaj", ad, false);
@@ -148,7 +188,7 @@ public class Rezoner {
 		}
 	}
 
-	public void dodajPragPotrosnje(PragPotrosnje pp) {
+	public void dodajFact(PragPotrosnje pp) {
 		try {
 			engine.definstance("pragPotrosnje", pp, false);
 		} catch (JessException e) {
@@ -203,8 +243,9 @@ public class Rezoner {
 			e.printStackTrace();
 		}
 	}
+
 	// DODAVANJE FAKATA
-	
+
 	// OSTALO
 	public void postaviMarker(String key) {
 		// Mark end of catalog data for later
@@ -278,6 +319,17 @@ public class Rezoner {
 		return lista;
 	}
 
+	/**
+	 * Clears working memory and agenda
+	 */
+	public static void removeAllFacts() {
+		try {
+			engine.clear();
+		} catch (JessException e) {
+			e.printStackTrace();
+		}
+	}
+
 	// TEST MAIN
 	public static void main(String[] args) {
 
@@ -287,6 +339,8 @@ public class Rezoner {
 			engine.reset();
 			engine.eval("(watch all)");
 			engine.batch("jess/rules.clp");
+			engine.clear();
+			pokreniRezonovanje();
 
 		} catch (JessException e) {
 			e.printStackTrace();
