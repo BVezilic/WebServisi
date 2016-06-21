@@ -93,11 +93,7 @@ public class Rezoner {
 	
 	public void dodajFact(AkcijskiDogadjaj ad){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("akcijskiDogadjaj", ad, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -105,11 +101,7 @@ public class Rezoner {
 	
 	public void dodajFact(Artikal ar){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("artikal", ar, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -117,11 +109,7 @@ public class Rezoner {
 	
 	public void dodajFact(KategorijaArtikla ka){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("kategorijaArtikla", ka, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -129,11 +117,7 @@ public class Rezoner {
 	
 	public void dodajFact(KategorijaKupca kk){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("kategorijaKupca", kk, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -141,11 +125,7 @@ public class Rezoner {
 	
 	public void dodajFact(Korisnik ko){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("korisnik", ko, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -153,11 +133,7 @@ public class Rezoner {
 	
 	public void dodajFact(Popust po){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("popust", po, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -165,11 +141,7 @@ public class Rezoner {
 	
 	public void dodajFact(PopustZaPojedinacnuStavku ps){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("popustZaPojedinacnuStavku", ps, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -177,11 +149,7 @@ public class Rezoner {
 	
 	public void dodajPragPotrosnje(PragPotrosnje pp){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("pragPotrosnje", pp, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -189,11 +157,7 @@ public class Rezoner {
 	
 	public void dodajFact(ProfilKupca pk){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("profilKupca", pk, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -201,11 +165,7 @@ public class Rezoner {
 	
 	public void dodajFact(Racun ra){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("racun", ra, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -213,11 +173,7 @@ public class Rezoner {
 	
 	public void dodajFact(StanjeRacuna sr){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("stanjeRacuna", sr, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -225,11 +181,7 @@ public class Rezoner {
 	
 	public void dodajFact(StavkaRacuna st){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("stavkaRacuna", st, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -237,11 +189,7 @@ public class Rezoner {
 	
 	public void dodajFact(TipPopusta tp){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("tipPopusta", tp, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -249,11 +197,7 @@ public class Rezoner {
 	
 	public void dodajFact(UlogaKorisnika uk){
 		try {
-			Fact f = new Fact("tipFakta", engine);
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			f.setSlotValue("id", new Value(1, RU.INTEGER));
-			engine.assertFact(f);
-			
+			engine.definstance("ulogaKorisnika", uk, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
@@ -277,7 +221,6 @@ public class Rezoner {
 			try {
 				engine.resetToMark(markeri.get(key));
 			} catch (JessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -295,7 +238,6 @@ public class Rezoner {
 		try {
 			engine.batch(putanja);
 		} catch (JessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -304,7 +246,6 @@ public class Rezoner {
 		try {
 			engine.batch(putanja);
 		} catch (JessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -313,7 +254,6 @@ public class Rezoner {
 		try {
 			engine.batch(naredba);
 		} catch (JessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
