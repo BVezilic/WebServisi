@@ -1,4 +1,4 @@
-package model;
+package database;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -8,6 +8,20 @@ import java.util.Date;
 
 import javax.ejb.Singleton;
 
+import model.AkcijskiDogadjaj;
+import model.Artikal;
+import model.KategorijaArtikla;
+import model.KategorijaKupca;
+import model.Korisnik;
+import model.Popust;
+import model.PopustZaPojedinacnuStavku;
+import model.PragPotrosnje;
+import model.ProfilKupca;
+import model.Racun;
+import model.StanjeRacuna;
+import model.StavkaRacuna;
+import model.TipPopusta;
+import model.UlogaKorisnika;
 import jess.JessException;
 import jess.Rete;
 import rezoner.Rezoner;
@@ -32,8 +46,6 @@ public class Database implements Serializable {
 	private ArrayList<StanjeRacuna> stanjaRacuna = new ArrayList<StanjeRacuna>();
 	private ArrayList<TipPopusta> tipoviPopusta = new ArrayList<TipPopusta>();
 	private ArrayList<UlogaKorisnika> ulogeKorisnika = new ArrayList<UlogaKorisnika>();
-
-	private Rete engine = Rezoner.engine;
 
 	public Database() {
 		super();
@@ -212,65 +224,6 @@ public class Database implements Serializable {
 
 		addTipPopusta(tp1);
 		addTipPopusta(tp2);
-
-	}
-
-	public void createFacts() throws JessException {
-
-		int brojac = 0;
-		for (AkcijskiDogadjaj ad : akcijskiDogadjaji) {
-			engine.definstance("akcijskiDogadjaj" + brojac++, ad, false);
-		}
-
-		brojac = 0;
-		for (Artikal a : artikli) {
-			engine.definstance("artikal" + brojac++, a, false);
-		}
-
-		brojac = 0;
-		for (KategorijaArtikla ka : kategorijeArtikla) {
-			engine.definstance("kateogrijaArtikla" + brojac++, ka, false);
-		}
-
-		brojac = 0;
-		for (KategorijaKupca kk : kategorijeKupca) {
-			engine.definstance("kategorijeKupca" + brojac++, kk, false);
-		}
-
-		brojac = 0;
-		for (Korisnik ko : korisnici) {
-			engine.definstance("korisnik" + brojac++, ko, false);
-		}
-
-		brojac = 0;
-		for (PragPotrosnje pp : pragoviPotrosnje) {
-			engine.definstance("pragpotrosnje" + brojac++, pp, false);
-		}
-
-		brojac = 0;
-		for (Racun ra : racuni) {
-			engine.definstance("racun" + brojac++, ra, false);
-		}
-
-		brojac = 0;
-		for (StavkaRacuna sr : stavkeRacuna) {
-			engine.definstance("stavka" + brojac++, sr, false);
-		}
-
-		brojac = 0;
-		for (ProfilKupca pk : profiliKupca) {
-			engine.definstance("profilKupca" + brojac++, pk, false);
-		}
-
-		brojac = 0;
-		for (Popust po : popustiZaRacun) {
-			engine.definstance("popustiZaRacun" + brojac++, po, false);
-		}
-
-		brojac = 0;
-		for (PopustZaPojedinacnuStavku ps : popustiZaStavku) {
-			engine.definstance("popustiZaStavku" + brojac++, ps, false);
-		}
 
 	}
 

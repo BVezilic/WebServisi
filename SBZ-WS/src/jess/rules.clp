@@ -154,4 +154,4 @@ PRAVILA ZA RACUNE!!!!
     (printout t crlf "popust za srebrne/zlatne kupce od 1%" crlf)
     
     )
-(run)
+;(run)

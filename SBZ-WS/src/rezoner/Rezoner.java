@@ -8,13 +8,13 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
+import database.Database;
 import jess.Filter;
 import jess.JessException;
 import jess.Rete;
 import jess.WorkingMemoryMarker;
 import model.AkcijskiDogadjaj;
 import model.Artikal;
-import model.Database;
 import model.KategorijaArtikla;
 import model.KategorijaKupca;
 import model.Korisnik;
