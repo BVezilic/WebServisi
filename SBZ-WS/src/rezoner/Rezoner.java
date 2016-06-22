@@ -8,11 +8,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
-import database.Database;
-import jess.Filter;
-import jess.JessException;
-import jess.Rete;
-import jess.WorkingMemoryMarker;
 import model.AkcijskiDogadjaj;
 import model.Artikal;
 import model.KategorijaArtikla;
@@ -27,6 +22,11 @@ import model.StanjeRacuna;
 import model.StavkaRacuna;
 import model.TipPopusta;
 import model.UlogaKorisnika;
+import jess.Filter;
+import jess.JessException;
+import jess.Rete;
+import jess.WorkingMemoryMarker;
+import database.Database;
 
 @Singleton
 public class Rezoner {
@@ -34,7 +34,7 @@ public class Rezoner {
 	@EJB
 	Database database;
 
-	public static Rete engine = new Rete();
+	public Rete engine = new Rete();
 	private HashMap<String, WorkingMemoryMarker> markeri = new HashMap<String, WorkingMemoryMarker>();
 
 	// Funkcije za rest
@@ -96,7 +96,9 @@ public class Rezoner {
 	 */
 	public void dodajSveFakteZaKorisnika(Korisnik ko) {
 
+		//Korisnik ko = database.getKorisnikByKorisnickoIme(korisnickoIme);
 		dodajFact(ko); // korisnik
+		/*
 		dodajFact(ko.getProfilKupca()); // profil kupca
 		dodajFact(ko.getProfilKupca().getKategorijaKupca()); // kategorija kupca
 		dodajFact(ko.getProfilKupca().getKategorijaKupca().getPragPotrosnje()); // prag potrosnje za kategoriju kupca
@@ -130,6 +132,12 @@ public class Rezoner {
 
 		dodajFact(ko.getUlogaKorisnika());
 
+		for(AkcijskiDogadjaj ad : database.getAkcijskiDogadjaji()){
+			dodajFact(ad);
+		}
+		*/
+		
+		
 	}
 
 	public void dodajFact(AkcijskiDogadjaj ad) {
@@ -270,7 +278,7 @@ public class Rezoner {
 		}
 	}
 
-	public static void pokreniRezonovanje() {
+	public void pokreniRezonovanje() {
 		try {
 			engine.run();
 		} catch (JessException e) {
@@ -278,7 +286,7 @@ public class Rezoner {
 		}
 	}
 
-	public static void postaviTemplejte(String putanja) {
+	public void postaviTemplejte(String putanja) {
 		try {
 			engine.batch(putanja);
 		} catch (JessException e) {
@@ -286,7 +294,7 @@ public class Rezoner {
 		}
 	}
 
-	public static void postaviPravila(String putanja) {
+	public void postaviPravila(String putanja) {
 		try {
 			engine.batch(putanja);
 		} catch (JessException e) {
@@ -294,7 +302,7 @@ public class Rezoner {
 		}
 	}
 
-	public static void izvrsiNaredbuKaoTekst(String naredba) {
+	public void izvrsiNaredbuKaoTekst(String naredba) {
 		try {
 			engine.batch(naredba);
 		} catch (JessException e) {
@@ -302,7 +310,7 @@ public class Rezoner {
 		}
 	}
 
-	public static List<Object> vratiRezultate(String className) {
+	public List<Object> vratiRezultate(String className) {
 		List<Object> lista = new ArrayList<Object>();
 		Iterator<?> it;
 		try {
@@ -322,28 +330,47 @@ public class Rezoner {
 	/**
 	 * Clears working memory and agenda
 	 */
-	public static void removeAllFacts() {
+	public void removeAllFacts() {
 		try {
 			engine.clear();
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
 	}
-
-	// TEST MAIN
-	public static void main(String[] args) {
-
+	
+	public void setupEngine(){
+		
 		try {
-
-			engine = new Rete();
+			
 			engine.reset();
 			engine.eval("(watch all)");
 			engine.batch("jess/rules.clp");
-			engine.clear();
-			pokreniRezonovanje();
+			
+		} catch (JessException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	// TEST MAIN
+	public static void main(String[] args) {
+		
+		
+		try {
+			Database data = new Database();
+			
+			Rete engine2 = new Rete();
+			
+			engine2.reset();
+			engine2.eval("(watch all)");
+			engine2.batch("jess/rules.clp");
+			engine2.definstance("korisnik", data.getKorisnikByKorisnickoIme("kupac1"), false);
+			engine2.run();
+			
 
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
+		
 	}
 }

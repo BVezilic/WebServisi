@@ -197,7 +197,7 @@ public class Racun implements Serializable{
 	@Override
 	public String toString() {
 		return "Racun [sifra=" + sifra + ", datumIzdavanja=" + datumIzdavanja
-				+ ", kupac=" + kupac + ", brojOstvarenihBodova="
+				+ ", brojOstvarenihBodova="
 				+ brojOstvarenihBodova + ", primenjeniPopusti="
 				+ primenjeniPopusti + ", stavkeRacuna=" + stavkeRacuna + "]";
 	}

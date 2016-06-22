@@ -10,5 +10,7 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="libs/jess.jar"/>
 	<classpathentry kind="lib" path="libs/javaee-api-7.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javaee-api-7.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jess.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
