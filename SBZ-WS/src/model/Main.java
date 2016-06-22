@@ -7,7 +7,6 @@ import java.util.Date;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy");
 		
 		Date d1 = new Date();
@@ -18,7 +17,6 @@ public class Main {
 			 d2 = formatter.parse("05.01.2016");
 			 date = formatter.parse("03.01.2016");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
