@@ -15,13 +15,13 @@ public class StavkaRacuna implements Serializable{
 	private double originalnaUkupnaCena;
 	private double procenatUmanjenja;
 	private double konacnaCena;
-	private ArrayList<Popust> primenjeniPopusti = new ArrayList<Popust>();
+	private ArrayList<PopustZaPojedinacnuStavku> primenjeniPopusti = new ArrayList<PopustZaPojedinacnuStavku>();
 	
 	// KONSTRUKTORI
 	public StavkaRacuna(Racun racun, int redniBrojStavke, Artikal artikal,
 			double jedinicnaCena, int kolicinaKupnjeljihArtikala,
 			double originalnaUkupnaCena, double procenatUmanjenja,
-			double konacnaCena, ArrayList<Popust> primenjeniPopusti) {
+			double konacnaCena, ArrayList<PopustZaPojedinacnuStavku> primenjeniPopusti) {
 		super();
 		this.racun = racun;
 		this.redniBrojStavke = redniBrojStavke;
@@ -54,7 +54,7 @@ public class StavkaRacuna implements Serializable{
 	}
 	
 	// GET && SET
-	public boolean addPrimenjeniPopust(Popust popust){
+	public boolean addPrimenjeniPopust(PopustZaPojedinacnuStavku popust){
 		for (Popust p : primenjeniPopusti) {
 			if (p.getSifra().equals(popust.getSifra())){
 				return false;
@@ -132,11 +132,11 @@ public class StavkaRacuna implements Serializable{
 		this.konacnaCena = konacnaCena;
 	}
 
-	public ArrayList<Popust> getPrimenjeniPopusti() {
+	public ArrayList<PopustZaPojedinacnuStavku> getPrimenjeniPopusti() {
 		return primenjeniPopusti;
 	}
 
-	public void setPrimenjeniPopusti(ArrayList<Popust> primenjeniPopusti) {
+	public void setPrimenjeniPopusti(ArrayList<PopustZaPojedinacnuStavku> primenjeniPopusti) {
 		this.primenjeniPopusti = primenjeniPopusti;
 	}
 

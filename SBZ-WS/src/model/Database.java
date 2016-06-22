@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.Singleton;
+
 import jess.JessException;
 import jess.Rete;
 import rezoner.Rezoner;
 
+@Singleton
 public class Database implements Serializable {
 
 	private static final long serialVersionUID = 6692747052696354138L;
@@ -32,7 +35,7 @@ public class Database implements Serializable {
 	private ArrayList<UlogaKorisnika> ulogeKorisnika = new ArrayList<UlogaKorisnika>();
 
 	private Rete engine = Rezoner.engine;
-	
+
 	public Database() {
 		super();
 
@@ -121,9 +124,9 @@ public class Database implements Serializable {
 		Korisnik ko6 = new Korisnik("menadzer1", "Djordje", "Djordjevic", "d",
 				uk3, parseDate("6/6/2011"));
 
-		ProfilKupca pk1 = new ProfilKupca("Zeleznicka 1", 0, kk1, ko1);
-		ProfilKupca pk2 = new ProfilKupca("Zeleznicka 2", 100, kk2, ko2);
-		ProfilKupca pk3 = new ProfilKupca("Zeleznicka 3", 500, kk3, ko3);
+		ProfilKupca pk1 = new ProfilKupca(ko1, "Zeleznicka 1", 0, kk1);
+		ProfilKupca pk2 = new ProfilKupca(ko2, "Zeleznicka 2", 100, kk2);
+		ProfilKupca pk3 = new ProfilKupca(ko3, "Zeleznicka 3", 500, kk3);
 
 		StanjeRacuna sr1 = StanjeRacuna.OTKAZANO;
 		StanjeRacuna sr2 = StanjeRacuna.PORUCENO;
@@ -213,63 +216,63 @@ public class Database implements Serializable {
 
 	}
 
-	public void createFacts() throws JessException{
-		
+	public void createFacts() throws JessException {
+
 		int brojac = 0;
-		for (AkcijskiDogadjaj ad : akcijskiDogadjaji){
-			engine.definstance("akcijskiDogadjaj" + brojac++ , ad, false);
+		for (AkcijskiDogadjaj ad : akcijskiDogadjaji) {
+			engine.definstance("akcijskiDogadjaj" + brojac++, ad, false);
 		}
-		
+
 		brojac = 0;
 		for (Artikal a : artikli) {
 			engine.definstance("artikal" + brojac++, a, false);
 		}
-		
+
 		brojac = 0;
-		for(KategorijaArtikla ka : kategorijeArtikla){
+		for (KategorijaArtikla ka : kategorijeArtikla) {
 			engine.definstance("kateogrijaArtikla" + brojac++, ka, false);
 		}
-		
+
 		brojac = 0;
-		for(KategorijaKupca kk : kategorijeKupca){
+		for (KategorijaKupca kk : kategorijeKupca) {
 			engine.definstance("kategorijeKupca" + brojac++, kk, false);
 		}
-		
+
 		brojac = 0;
-		for(Korisnik ko : korisnici){
+		for (Korisnik ko : korisnici) {
 			engine.definstance("korisnik" + brojac++, ko, false);
 		}
-		
+
 		brojac = 0;
-		for(PragPotrosnje pp : pragoviPotrosnje){
+		for (PragPotrosnje pp : pragoviPotrosnje) {
 			engine.definstance("pragpotrosnje" + brojac++, pp, false);
 		}
-		
+
 		brojac = 0;
 		for (Racun ra : racuni) {
 			engine.definstance("racun" + brojac++, ra, false);
 		}
-		
+
 		brojac = 0;
-		for (StavkaRacuna sr : stavkeRacuna){
+		for (StavkaRacuna sr : stavkeRacuna) {
 			engine.definstance("stavka" + brojac++, sr, false);
 		}
-		
+
 		brojac = 0;
-		for (ProfilKupca pk : profiliKupca){
+		for (ProfilKupca pk : profiliKupca) {
 			engine.definstance("profilKupca" + brojac++, pk, false);
 		}
-		
+
 		brojac = 0;
-		for (Popust po : popustiZaRacun){
+		for (Popust po : popustiZaRacun) {
 			engine.definstance("popustiZaRacun" + brojac++, po, false);
 		}
-		
+
 		brojac = 0;
-		for (PopustZaPojedinacnuStavku ps : popustiZaStavku){
+		for (PopustZaPojedinacnuStavku ps : popustiZaStavku) {
 			engine.definstance("popustiZaStavku" + brojac++, ps, false);
 		}
-	
+
 	}
 
 	/**
@@ -282,66 +285,70 @@ public class Database implements Serializable {
 		try {
 			return (new SimpleDateFormat("dd/mm/yyyy")).parse(s);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			return null;
 		}
 	}
 
-	public void kreirajFakte(Racun r){
-		
+	/*
+	public void kreirajFakte(Racun r) {
+
 		ProfilKupca pk = r.getKupac();
 		KategorijaKupca kk = pk.getKategorijaKupca();
 		PragPotrosnje pp = kk.getPragPotrosnje();
 		Korisnik ko = pk.getKorisnik();
-		
+
 		ArrayList<Racun> prethodniRacuni = getAllRacuniByProfilKorisnika(pk);
-		
+
 		try {
 			engine.definstance("profilKupca", pk, false);
 			engine.definstance("kategorijaKupca", kk, false);
 			engine.definstance("pragPotrosnje", pp, false);
 			engine.definstance("korisnik", ko, false);
-			
+
 			int brojac = 0;
 			for (Racun racun : prethodniRacuni) {
 				engine.definstance("prethodniRacun" + brojac++, racun, false);
 			}
-			
+
 		} catch (JessException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void pokupiFakte(String className){
-		
+	*/
+	/*
+	public void pokupiFakte(String className) {
+
 		List<Object> objekti = Rezoner.vratiRezultate(className);
-		
+
 		for (Object object : objekti) {
-			if (object instanceof Artikal){
-				
-			} else if (object instanceof AkcijskiDogadjaj){
-				
-			} else if (object instanceof KategorijaArtikla){
-				
+			if (object instanceof Artikal) {
+
+			} else if (object instanceof AkcijskiDogadjaj) {
+
+			} else if (object instanceof KategorijaArtikla) {
+
 			}
 		}
-		
+
 	}
-	
-	public ArrayList<Racun> getAllRacuniByProfilKorisnika(ProfilKupca pk){
+	*/
+
+	public ArrayList<Racun> getAllRacuniByProfilKorisnika(ProfilKupca pk) {
 		ArrayList<Racun> retVal = new ArrayList<Racun>();
 		for (Racun r : racuni) {
-			if (r.getKupac().getKorisnik().getKorisnickoIme().equals(pk.getKorisnik().getKorisnickoIme())){
+			if (r.getKupac().getKorisnik().getKorisnickoIme()
+					.equals(pk.getKorisnik().getKorisnickoIme())) {
 				retVal.add(r);
 			}
 		}
 		return retVal;
 	}
-	
+
 	public boolean addStavkaRacuna(StavkaRacuna sr) {
 		for (StavkaRacuna s : stavkeRacuna) {
 			if (s.getRacun().getSifra().equals(sr.getRacun().getSifra())
 					&& sr.getRedniBrojStavke() == s.getRedniBrojStavke()) {
+				System.out.println("Vec stavka racuna sa istom sifrom racuna i rednim brojem stavke");
 				return false;
 			}
 		}
@@ -352,6 +359,7 @@ public class Database implements Serializable {
 	public boolean addUlogaKorisnika(UlogaKorisnika uk) {
 		for (UlogaKorisnika u : ulogeKorisnika) {
 			if (u.equals(uk)) {
+				System.out.println("Vec postoji ova uloga korisnika");
 				return false;
 			}
 		}
@@ -362,6 +370,7 @@ public class Database implements Serializable {
 	public boolean addTipPopusta(TipPopusta tp) {
 		for (TipPopusta t : tipoviPopusta) {
 			if (t.equals(tp)) {
+				System.out.println("Vec postoji ovaj tip popusta");
 				return false;
 			}
 		}
@@ -372,6 +381,7 @@ public class Database implements Serializable {
 	public boolean addStanjeRacuna(StanjeRacuna sr) {
 		for (StanjeRacuna s : stanjaRacuna) {
 			if (s.equals(sr)) {
+				System.out.println("Vec postoji ovo stanje racuna");
 				return false;
 			}
 		}
@@ -382,6 +392,7 @@ public class Database implements Serializable {
 	public boolean addRacun(Racun ra) {
 		for (Racun r : racuni) {
 			if (r.getSifra().equals(ra.getSifra())) {
+				System.out.println("Vec postoji racun sa ovom sifrom");
 				return false;
 			}
 		}
@@ -393,6 +404,7 @@ public class Database implements Serializable {
 		for (ProfilKupca p : profiliKupca) {
 			if (p.getKorisnik().getKorisnickoIme()
 					.equals(pk.getKorisnik().getKorisnickoIme())) {
+				System.out.println("Vec postoji profil kupca koji ima ovog korisnika");
 				return false;
 			}
 		}
@@ -403,6 +415,7 @@ public class Database implements Serializable {
 	public boolean addPragPotrosnje(PragPotrosnje pr) {
 		for (PragPotrosnje p : pragoviPotrosnje) {
 			if (p.equals(pr)) {
+				System.out.println("Vec postoji ovaj prag potrosnje");
 				return false;
 			}
 		}
@@ -413,6 +426,7 @@ public class Database implements Serializable {
 	public boolean addPopustZaStavku(PopustZaPojedinacnuStavku pp) {
 		for (PopustZaPojedinacnuStavku p : popustiZaStavku) {
 			if (p.getSifra().equals(pp.getSifra())) {
+				System.out.println("Vec postoji popust za stavku sa ovom sifrom");
 				return false;
 			}
 		}
@@ -423,6 +437,7 @@ public class Database implements Serializable {
 	public boolean addPopustZaRacun(Popust pp) {
 		for (Popust p : popustiZaRacun) {
 			if (p.getSifra().equals(pp.getSifra())) {
+				System.out.println("Vec postoji popust za racun sa ovom sifrom");
 				return false;
 			}
 		}
@@ -433,6 +448,7 @@ public class Database implements Serializable {
 	public boolean addKorisnik(Korisnik ko) {
 		for (Korisnik k : korisnici) {
 			if (k.getKorisnickoIme().equals(ko.getKorisnickoIme())) {
+				System.out.println("Vec postoji korisnik sa ovim korisnickim imenom");
 				return false;
 			}
 		}
@@ -440,9 +456,19 @@ public class Database implements Serializable {
 		return true;
 	}
 
+	public Korisnik korisnikExists(Korisnik ko) {
+		for (Korisnik k : korisnici) {
+			if (k.getKorisnickoIme().equals(ko.getKorisnickoIme())) {
+				return k;
+			}
+		}
+		return null;
+	}
+
 	public boolean addKategorijaKupca(KategorijaKupca kk) {
 		for (KategorijaKupca k : kategorijeKupca) {
 			if (k.getSifraKategorije().equals(kk.getSifraKategorije())) {
+				System.out.println("Vec postoji kategorija kupca sa ovom sifrom kategorije");
 				return false;
 			}
 		}
@@ -453,6 +479,7 @@ public class Database implements Serializable {
 	public boolean addAkcijskiDogadjaj(AkcijskiDogadjaj ad) {
 		for (AkcijskiDogadjaj a : akcijskiDogadjaji) {
 			if (a.getSifra().equals(ad.getSifra())) {
+				System.out.println("Vec postoji popust sa ovom sifrom akcijskog dogadjaja");
 				return false;
 			}
 		}
@@ -463,6 +490,7 @@ public class Database implements Serializable {
 	public boolean addArtikal(Artikal ar) {
 		for (Artikal a : artikli) {
 			if (a.getSifra().equals(ar.getSifra())) {
+				System.out.println("Vec postoji artikal sa ovom sifrom");
 				return false;
 			}
 		}
@@ -473,6 +501,7 @@ public class Database implements Serializable {
 	public boolean addKategorijaArtikla(KategorijaArtikla ka) {
 		for (KategorijaArtikla k : kategorijeArtikla) {
 			if (k.getSifraKategorije().equals(ka.getSifraKategorije())) {
+				System.out.println("Vec postoji kategorija artikla sa ovom sifrom kategorije artikla");
 				return false;
 			}
 		}
@@ -480,6 +509,40 @@ public class Database implements Serializable {
 		return true;
 	}
 
+	public ArrayList<Artikal> getAllArtikliByKategorija(KategorijaArtikla ka) {
+		
+		ArrayList<Artikal> retVal = new ArrayList<Artikal>();
+		for (Artikal artikal : artikli) {
+			if (artikal.getKategorijaArtikla().getNaziv().equals(ka.getNaziv())
+					|| (artikal.getKategorijaArtikla().getNadkategorija() != null && artikal.getKategorijaArtikla().getNadkategorija().getNaziv().equals(ka.getNaziv()))) {
+				retVal.add(artikal);
+			}
+		}
+		
+		return retVal;
+	}
+	
+	//GETTERS BY ATTRIBUTE
+	
+	public Korisnik getKorisnikByKorisnickoIme(String username){
+		for (Korisnik ko : korisnici) {
+			if (ko.getKorisnickoIme().equals(username)){
+				return ko;
+			}
+		}
+		return null;
+	}
+	
+	public ProfilKupca getProfilKupcaByKorisnickoIme(String username){
+		for (ProfilKupca pk	: profiliKupca) {
+			if (pk.getKorisnik().getKorisnickoIme().equals(username)){
+				return pk;
+			}
+		}
+		return null;
+	}
+
+	// GETTERS BY ATTRIBUTE
 	public ArrayList<StavkaRacuna> getStavkeRacuna() {
 		return stavkeRacuna;
 	}
