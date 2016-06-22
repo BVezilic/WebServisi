@@ -150,6 +150,16 @@ public class Artikal implements Serializable{
 	}
 	
 	
+	public String getNazivKategorije()
+	{
+		return kategorijaArtikla.getNaziv();
+	}
 	
-	
+	public String getNazivNadKategorije()
+	{
+		if(kategorijaArtikla.getNadkategorija() != null)
+			return kategorijaArtikla.getNadkategorija().getNaziv();
+		else
+			return "Prazno";
+	}
 }

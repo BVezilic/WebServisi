@@ -3,31 +3,29 @@
 (watch facts)
 ;PRAVILA ZA STAVKE RACUNA
 
-(defrule ispisiKorisnika
+;(defrule ispisiKorisnika
     
-    ?kor <- (korisnik (profilKupca ?pk))
-    =>
-    (bind ?lst ?pk.realizovaneKupovine)
-    (printout t "Prvi element " ?lst)
-    
-    )
+    ;?kor <- (korisnik (profilKupca ?pk))
+  ;  =>
+  ;  (bind ?lst ?pk.realizovaneKupovine)
+    ;(printout t "Prvi element " ?lst)
+  ;  
+  ;  )
 
-(defrule ispisKorisnika2
-    ?kor <- (korisnik (profilKupca ?pk))
-    =>
-    (bind ?lst ?pk.realizovaneKupovine)
-    (bind ?LIST (new java.util.ArrayList))
-   (foreach ?N ?lst  (printout t " SIFRA RACUNA: " ?N.sifra))
-    )
+;(defrule ispisKorisnika2
+;    ?kor <- (korisnik (profilKupca ?pk))
+;    =>
+;    (printout t (call ?kor.profilKupca getKategorijaKupca))
+;    )
 
 (defrule popustZaViseOd20
     
-    ?s <- (stavka (kolicinaKupnjeljihArtikala ?kol &:(and(> ?kol 20)) ))
+    ?s <- (stavka (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and (> ?kol 20) (<> (call ?ar getNazivKategorije) "Skolski pribor") (<> (call ?ar getNazivNadKategorije) "Skolski pribor"))))
     =>
-    (call ?s.OBJECT addPrimenjeniPopust (new Popust "001" nil 0.1 (TipPopusta.OSNOVNI)))
+    ;(call ?s.OBJECT addPrimenjeniPopust (new Popust "001" nil 0.1 (TipPopusta.OSNOVNI)))
     ;(printout t (call (new Popust "001" nil 0.1 (TipPopusta.OSNOVNI)) toString) crlf)
-    (printout t "radi mi pravilo " (call ?s.OBJECT toString) crlf)
-    
+    ;(printout t "radi mi pravilo " (call ?s.OBJECT toString) crlf)
+    (printout t " ISPIS: " (call ?ar getNazivKategorije))
     )
 
 ;televizori, racunari ili laptopovi

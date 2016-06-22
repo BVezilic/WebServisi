@@ -1,6 +1,9 @@
 package rezoner;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -8,6 +11,10 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
+import jess.Filter;
+import jess.JessException;
+import jess.Rete;
+import jess.WorkingMemoryMarker;
 import model.AkcijskiDogadjaj;
 import model.Artikal;
 import model.KategorijaArtikla;
@@ -22,10 +29,6 @@ import model.StanjeRacuna;
 import model.StavkaRacuna;
 import model.TipPopusta;
 import model.UlogaKorisnika;
-import jess.Filter;
-import jess.JessException;
-import jess.Rete;
-import jess.WorkingMemoryMarker;
 import database.Database;
 
 @Singleton
@@ -365,6 +368,23 @@ public class Rezoner {
 			engine2.eval("(watch all)");
 			engine2.batch("jess/rules.clp");
 			engine2.definstance("korisnik", data.getKorisnikByKorisnickoIme("kupac1"), false);
+			UlogaKorisnika uk1 = UlogaKorisnika.KUPAC;
+			PragPotrosnje pp1 = new PragPotrosnje(0, 10000);
+			Korisnik ko1 = new Korisnik("kupac1", "Pera", "Peric", "p", uk1,
+					parseDate("1/1/2015"));
+			KategorijaKupca kk1 = new KategorijaKupca("kk1", "Bronzana kategorija",
+					pp1);
+			KategorijaArtikla ka1 = new KategorijaArtikla("ka1", null,
+					"Skolski pribor", 0.15);
+			KategorijaArtikla ka2 = new KategorijaArtikla("ka2", ka1,
+					"Govna", 0.20);
+			ProfilKupca pk1 = new ProfilKupca(ko1, "Zeleznicka 1", 0, kk1);
+			Artikal ar1 = new Artikal("ar1", "Olovka", ka2, 25, 100, 50, parseDate("1/1/2014"), false, false);
+			StavkaRacuna str1 = new StavkaRacuna(null, 1, ar1, ar1.getCena(), 22, 0, 0, 0);
+			Racun r1 = new Racun("111", parseDate("22/11/1999"), pk1, 0, 0.0, 0.0, 0.0, 0.0);
+			r1.addStavkaRacuna(str1);
+			str1.setRacun(r1);
+			engine2.definstance("stavka", str1, false);
 			engine2.run();
 			
 
@@ -372,5 +392,13 @@ public class Rezoner {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public static Date parseDate(String s) {
+		try {
+			return (new SimpleDateFormat("dd/mm/yyyy")).parse(s);
+		} catch (ParseException e) {
+			return null;
+		}
 	}
 }
