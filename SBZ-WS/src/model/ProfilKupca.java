@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.persistence.OneToMany;
+
 public class ProfilKupca implements Serializable {
 
 	private static final long serialVersionUID = -4118823700944757540L;
