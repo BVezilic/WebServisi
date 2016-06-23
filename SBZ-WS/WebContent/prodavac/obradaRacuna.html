@@ -1,6 +1,6 @@
 <div class="row">
 	<h2>Spisak racuna</h2><br/>
-	<p>Filter:<p><select ng-model="filter" ng-options="x for x in ['Realizovan','U procesu']"></select>
+	<p>Filter:<p><select ng-model="stanje" ng-options="x for x in ['','PORUCENO','OTKAZANO','USPESNO_REALIZOVANO']"></select>
 	<table class="table table-striped">
 	  <tr>
 	    <th>Sifra</th>
@@ -12,7 +12,7 @@
 	    <th>Potroseni bodovi</th>
 	    <th>Stanje</th>
 	  </tr>
-	  <tr ng-repeat="racun in racuni" ng-click="selectRacun(racun)">
+	  <tr ng-repeat="racun in racuni | filter:stanje" ng-click="selectRacun(racun)">
 	    <td>{{racun.sifra}}</td>
 	    <td>{{racun.kupac.korisnik.korisnickoIme}}</td>
 	    <td>{{racun.originalnaUkupnaCena}}</td>
@@ -27,6 +27,6 @@
 <div class="row">
 	<h2>Obrada racuna: </h2><br/>
 	<p><b>Sifra racuna:</b> {{selectedRacun.sifra}}</p>
-	<button type="button" class="btn btn-success">Obradi</button>
-	<button type="button" class="btn btn-danger">Otkazi</button>
+	<button type="button" class="btn btn-success" ng-click="obradiRacun()">Obradi</button>
+	<button type="button" class="btn btn-danger" ng-click="otkaziRacun()">Otkazi</button>
 </div>

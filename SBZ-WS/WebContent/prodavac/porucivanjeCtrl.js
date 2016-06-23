@@ -10,7 +10,8 @@
 			  }, function errorCallback(response) {
 				  console.log("Greska kog GET artikli");
 			  });
-		}();
+		};
+		getArtikli();
 		 
 		$scope.selectArtikal = function(artikal) {
 			$scope.selectedArtikal = artikal;

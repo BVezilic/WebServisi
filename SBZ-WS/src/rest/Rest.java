@@ -45,5 +45,20 @@ public class Rest {
 		return data.getRacuni();
 	}
 	
+	@POST
+	@Path("/racun/apply")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Boolean obradiRacun(Racun racun){
+		System.out.println(racun);
+		return true;
+	}
+	
+	@POST
+	@Path("/racun/cancel")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Boolean otkaziRacun(Racun racun){
+		System.out.println(racun);
+		return data.getRacuni().remove(racun);
+	}
 	
 }
