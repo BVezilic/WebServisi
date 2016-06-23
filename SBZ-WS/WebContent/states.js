@@ -26,11 +26,13 @@
       })
     .state('prodavac.porucivanje', {
       url: '/porucivanje', 
-      templateUrl: 'prodavac/porucivanje.html'
+      templateUrl: 'prodavac/porucivanje.html',
+      controller: 'porucivanjeCtrl'
     })
     .state('prodavac.obradaRacuna', {
       url: '/obradaRacuna', 
-      templateUrl: 'prodavac/obradaRacuna.html'
+      templateUrl: 'prodavac/obradaRacuna.html',
+      controller: 'obradaRacunaCtrl'
     });
   });
 })(angular);

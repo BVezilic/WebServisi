@@ -145,6 +145,10 @@ public class Database implements Serializable {
 
 		TipPopusta tp1 = TipPopusta.DODATNI;
 		TipPopusta tp2 = TipPopusta.OSNOVNI;
+		
+		Racun r1 = new Racun("r1", null, ko1.getProfilKupca(), 2, 156, 15, 120, 0);
+		Racun r2 = new Racun("r2", null, ko2.getProfilKupca(), 2, 2000, 0, 2000, 0);
+		Racun r3 = new Racun("r3", null, ko3.getProfilKupca(), 2, 1500, 50, 750, 0);
 
 		// Dodavanje kategorija artikala u akcijske dogadjaje
 		ad1.addKategorijaArtiklaSaPopustima(ka1);
@@ -224,6 +228,10 @@ public class Database implements Serializable {
 
 		addTipPopusta(tp1);
 		addTipPopusta(tp2);
+		
+		addRacun(r1);
+		addRacun(r2);
+		addRacun(r3);
 
 	}
 
