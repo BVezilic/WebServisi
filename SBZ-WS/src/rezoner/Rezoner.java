@@ -375,7 +375,7 @@ public class Rezoner {
 			KategorijaKupca kk1 = new KategorijaKupca("kk1", "Bronzana kategorija",
 					pp1);
 			KategorijaArtikla ka1 = new KategorijaArtikla("ka1", null,
-					"Skolski pribor", 0.15);
+					"Pribor", 0.15);
 			KategorijaArtikla ka2 = new KategorijaArtikla("ka2", ka1,
 					"Govna", 0.20);
 			ProfilKupca pk1 = new ProfilKupca(ko1, "Zeleznicka 1", 0, kk1);
@@ -386,7 +386,11 @@ public class Rezoner {
 			str1.setRacun(r1);
 			engine2.definstance("stavka", str1, false);
 			engine2.run();
-			
+			System.out.println("DODAT POPUST ");
+			for(PopustZaPojedinacnuStavku pp : str1.getPrimenjeniPopusti())
+			{
+				System.out.println(pp);
+			}
 
 		} catch (JessException e) {
 			e.printStackTrace();

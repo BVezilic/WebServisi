@@ -21,27 +21,24 @@
 (defrule popustZaViseOd20
     
     ?s <- (stavka (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and (> ?kol 20) (<> (call ?ar getNazivKategorije) "Skolski pribor") (<> (call ?ar getNazivNadKategorije) "Skolski pribor"))))
+    ;?s <- (stavka (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and (> ?kol 20) (<> (get (get ?ar kategorijaArtikla) naziv) "Skolski pribor") (<> (call ?ar getNazivNadKategorije) "Skolski pribor"))))
     =>
-    ;(call ?s.OBJECT addPrimenjeniPopust (new Popust "001" nil 0.1 (TipPopusta.OSNOVNI)))
+    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "001" (get ?s racun) 0.1 (TipPopusta.OSNOVNI) ?s.OBJECT))
     ;(printout t (call (new Popust "001" nil 0.1 (TipPopusta.OSNOVNI)) toString) crlf)
     ;(printout t "radi mi pravilo " (call ?s.OBJECT toString) crlf)
-    (printout t " ISPIS: " (call ?ar getNazivKategorije))
+    ;(printout t " ISPIS: " (call ?ar getNazivKategorije))
     )
 
 ;televizori, racunari ili laptopovi
 (defrule popustZa5IzTehnike
-   
-    ?s <- (stavka (kolicinaKupnjeljihArtikala ?kol &:(> ?kol 5)) (artikal ?a))
-    
-    (artikal (kategorijaArtikla ?kat) (sifra ?sifra &?a.sifra))
-    
-    (kategorijaArtikla (sifraKategorije ?kat1 &?kat.sifraKategorije) (naziv ?n |:(or (eq ?n "laptopovi")(eq ?n "racunari")(eq ?n "televizori"))))
-    
-    
+    ?s <- (stavka (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and  (> ?kol 5) (or (and (eq (call ?ar getNazivKategorije) "Televizori") (eq (call ?ar getNazivNadKategorije) "Televizori") ) 
+               (and (eq (call ?ar getNazivKategorije) "Racunari") (eq (call ?ar getNazivNadKategorije) "Racunari") )
+               (and (eq (call ?ar getNazivKategorije) "Laptopovi") (eq (call ?ar getNazivNadKategorije) "Laptopovi") )     ))))
+    ;(artikal (kategorijaArtikla ?kat) (sifra ?sifra &?a.sifra))
+    ;(kategorijaArtikla (sifraKategorije ?kat1 &?kat.sifraKategorije) (naziv ?n |:(or (eq ?n "laptopovi")(eq ?n "racunari")(eq ?n "televizori"))))
     =>
-    
-    (printout t "radi mi i drugo pravilo" crlf crlf)
-    
+    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "002" (get ?s racun) 0.05 (TipPopusta.OSNOVNI) ?s.OBJECT))
+    ;(printout t "radi mi i drugo pravilo" crlf crlf)
     )
 
 ;>5000 i siroka potrosnja
