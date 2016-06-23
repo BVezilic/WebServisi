@@ -1,24 +1,9 @@
 (batch "./jess/init.clp")
 (import java.util.ArrayList)
-(import java.lang.Integer)
+(import model.*)
+(import model.Popust)
 (watch facts)
 ;PRAVILA ZA STAVKE RACUNA
-
-;(defrule ispisiKorisnika
-    
-    ;?kor <- (korisnik (profilKupca ?pk))
-  ;  =>
-  ;  (bind ?lst ?pk.realizovaneKupovine)
-    ;(printout t "Prvi element " ?lst)
-  ;  
-  ;  )
-
-;(defrule ispisKorisnika2
-;    ?kor <- (korisnik (profilKupca ?pk))
-;    =>
-;    (printout t (call ?kor.profilKupca getKategorijaKupca))
-;    )
-
 
 (defrule popustZaViseOd20
     (declare (no-loop TRUE) (salience 50))
@@ -112,6 +97,26 @@
     (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "006" (get ?s racun) (get ?akd popustZaDogadjaj) (TipPopusta.DODATNI) ?s.OBJECT))
     )
 
+
+;sortiraj listu po rastucem redosledu ako bog da
+(deffunction uporediFunkcija(?name ?obj1 ?obj2)
+    "Sortiranje studenata po proseku DESC a zatim po imenu ASC"
+    
+    (if (eq ?obj1 ?obj2) then 
+        (return 0)    
+     elif (and (neq ?obj1 nil) (neq ?obj2 nil) (instanceof ?obj1 Popust) (instanceof ?obj2 Popust)) then
+        (bind ?retVal (- ?obj2.procenatUmanjenja ?obj1.procenatUmanjenja)) ;rezultat može biti realna vrednost 6.5-6.23
+        (if (> ?retVal 0) then ;zato sto compare prima integer vrednosti 
+            (bind ?retVal 1)
+         elif (< ?retVal 0) then
+            (bind ?retVal -1)
+         else					;0.0-0.0 je 0.0
+            (bind ?retVal 0))
+        (return ?retVal))
+    (return -1))
+
+
+
 ;saberi sve popuste
 (defrule saberiPopusteZaStavke
     (declare (no-loop TRUE) (salience 0))
@@ -119,8 +124,31 @@
     =>
     (bind ?lst (get ?s primenjeniPopusti))
     (bind ?temp 0)
+    
+    (bind ?lstDod (new ArrayList))
+	(bind ?lstOsn (new ArrayList))
+
+    
+    ;(bind $?argv (insert$ $?argv 2 100))
+    
+    ;podeli popuste u dodatne i osnovne da bi primenio samo najpovoljniji osnovni
     (foreach ?x ?lst
+		(if(eq (TipPopusta.OSNOVNI) (get ?x oznaka) ) then
+            (call ?lstOsn add ?x)
+        else
+            (call ?lstDod add ?x)
+		))
+    
+    (bind ?co (implement Comparator using uporediFunkcija))
+	(call Collections sort ?lstOsn ?co)
+    
+    (bind ?temp (+ ?temp (get (call ?lstOsn  get 0) procenatUmanjenja)))
+   
+    
+    ; saberi sve dodatne popuste
+    (foreach ?x ?lstDod
 		(bind ?temp (+ ?temp (get ?x  procenatUmanjenja))))
+	
     (bind ?max (get (get (get ?s artikal) kategorijaArtikla) maksimalniDozvoljeniPopust))
     (if(<= ?temp ?max) then
 		(call ?s.OBJECT setProcenatUmanjenja ?temp)
