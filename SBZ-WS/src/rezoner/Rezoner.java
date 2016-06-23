@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 
+import utils.Utility;
 import jess.Filter;
 import jess.JessException;
 import jess.Rete;
@@ -367,7 +368,7 @@ public class Rezoner {
 			engine2.reset();
 			engine2.eval("(watch all)");
 			engine2.batch("jess/rules.clp");
-			engine2.definstance("korisnik", data.getKorisnikByKorisnickoIme("kupac1"), false);
+			//engine2.definstance("korisnik", data.getKorisnikByKorisnickoIme("kupac1"), false);
 			UlogaKorisnika uk1 = UlogaKorisnika.KUPAC;
 			PragPotrosnje pp1 = new PragPotrosnje(0, 10000);
 			Korisnik ko1 = new Korisnik("kupac1", "Pera", "Peric", "p", uk1,
@@ -375,14 +376,16 @@ public class Rezoner {
 			KategorijaKupca kk1 = new KategorijaKupca("kk1", "Bronzana kategorija",
 					pp1);
 			KategorijaArtikla ka1 = new KategorijaArtikla("ka1", null,
-					"Pribor", 0.15);
+					"Nesto", 0.15);
+			KategorijaArtikla ka3 = new KategorijaArtikla("ka3", null,
+					"Skolski pribor", 0.15);
 			KategorijaArtikla ka2 = new KategorijaArtikla("ka2", ka1,
-					"Govna", 0.20);
+					"Laptopovi", 0.20);
 			ProfilKupca pk1 = new ProfilKupca(ko1, "Zeleznicka 1", 0, kk1);
-			Artikal ar1 = new Artikal("ar1", "Olovka", ka2, 25, 100, 50, parseDate("1/1/2014"), false, false);
+			Artikal ar1 = new Artikal("ar1", "Laptop", ka2, 25, 100, 50, parseDate("1/1/2014"), false, false);
 			StavkaRacuna str1 = new StavkaRacuna(null, 1, ar1, ar1.getCena(), 22, 0, 0, 0);
 			StavkaRacuna str2 = new StavkaRacuna(null, 1, ar1, ar1.getCena(), 22, 0, 0, 0);
-			Racun r1 = new Racun("111", parseDate("22/11/1999"), pk1, 0, 0.0, 0.0, 0.0, 0.0);
+			Racun r1 = new Racun("111", parseDate("22/07/2016"), pk1, 0, 0.0, 0.0, 0.0, 0.0);
 			Racun r2 = new Racun("123", parseDate("20/11/1999"), pk1, 0, 0.0, 0.0, 0.0, 0.0);
 			ArrayList<StavkaRacuna> temp = new ArrayList<StavkaRacuna>();
 			str2.setRacun(r2);
@@ -391,8 +394,24 @@ public class Rezoner {
 			pk1.addRealizovanaKupovina(r2);
 			r1.addStavkaRacuna(str1);
 			str1.setRacun(r1);
+			
+			/*
+			 * akcijski dogadjaji
+			 */
+			AkcijskiDogadjaj ad1 = new AkcijskiDogadjaj("ad1", "Leto",
+					parseDate("21/06/2016"), parseDate("21/09/2016"), 0.20);
+			ad1.addKategorijaArtiklaSaPopustima(ka1);
+			System.out.println(Utility.isWithinDates(r1.getDatumIzdavanja(), ad1.getVaziOd(), ad1.getVaziDo()));
+			/*
+			 * akcijski dogadjaji
+			 */
+			engine2.definstance("akcijskiDogadjaj", ad1, false);
 			engine2.definstance("stavka", str1, false);
 			engine2.run();
+			//engine2.definstance("stavka", str1, false);
+			//engine2.run();
+			System.out.println("POPUST: " + str1.getProcenatUmanjenja());
+			System.out.println("KONACNA CENA: " + str1.getKonacnaCena());
 			System.out.println("DODAT POPUST ");
 			for(PopustZaPojedinacnuStavku pp : str1.getPrimenjeniPopusti())
 			{
@@ -407,7 +426,7 @@ public class Rezoner {
 	
 	public static Date parseDate(String s) {
 		try {
-			return (new SimpleDateFormat("dd/mm/yyyy")).parse(s);
+			return (new SimpleDateFormat("dd/MM/yyyy")).parse(s);
 		} catch (ParseException e) {
 			return null;
 		}
