@@ -115,8 +115,6 @@
         (return ?retVal))
     (return -1))
 
-
-
 ;saberi sve popuste
 (defrule saberiPopusteZaStavke
     (declare (no-loop TRUE) (salience 0))
@@ -127,9 +125,6 @@
     
     (bind ?lstDod (new ArrayList))
 	(bind ?lstOsn (new ArrayList))
-
-    
-    ;(bind $?argv (insert$ $?argv 2 100))
     
     ;podeli popuste u dodatne i osnovne da bi primenio samo najpovoljniji osnovni
     (foreach ?x ?lst
@@ -157,7 +152,6 @@
     (bind ?temp (* (get ?s jedinicnaCena) (get ?s kolicinaKupnjeljihArtikala) (- 1 (call ?s.OBJECT getProcenatUmanjenja))))
     (call ?s.OBJECT setKonacnaCena ?temp)
     )
-
 
 /*
 *
