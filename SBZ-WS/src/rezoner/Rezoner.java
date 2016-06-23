@@ -381,7 +381,14 @@ public class Rezoner {
 			ProfilKupca pk1 = new ProfilKupca(ko1, "Zeleznicka 1", 0, kk1);
 			Artikal ar1 = new Artikal("ar1", "Olovka", ka2, 25, 100, 50, parseDate("1/1/2014"), false, false);
 			StavkaRacuna str1 = new StavkaRacuna(null, 1, ar1, ar1.getCena(), 22, 0, 0, 0);
+			StavkaRacuna str2 = new StavkaRacuna(null, 1, ar1, ar1.getCena(), 22, 0, 0, 0);
 			Racun r1 = new Racun("111", parseDate("22/11/1999"), pk1, 0, 0.0, 0.0, 0.0, 0.0);
+			Racun r2 = new Racun("123", parseDate("20/11/1999"), pk1, 0, 0.0, 0.0, 0.0, 0.0);
+			ArrayList<StavkaRacuna> temp = new ArrayList<StavkaRacuna>();
+			str2.setRacun(r2);
+			temp.add(str1);
+			r2.setStavkeRacuna(temp);
+			pk1.addRealizovanaKupovina(r2);
 			r1.addStavkaRacuna(str1);
 			str1.setRacun(r1);
 			engine2.definstance("stavka", str1, false);

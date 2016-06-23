@@ -18,6 +18,7 @@
 ;    (printout t (call ?kor.profilKupca getKategorijaKupca))
 ;    )
 
+
 (defrule popustZaViseOd20
     
     ?s <- (stavka (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and (> ?kol 20) (<> (call ?ar getNazivKategorije) "Skolski pribor") (<> (call ?ar getNazivNadKategorije) "Skolski pribor"))))
@@ -43,59 +44,49 @@
 
 ;>5000 i siroka potrosnja
 (defrule viseOd5000
-    
-    ?s <- (stavka (artikal ?a) (konacnaCena ?cena &:(> ?cena 5000)))
-    
-    (artikal (kategorijaArtikla ?kat) (sifra ?sifra &?a.sifra))
-    
-    (kategorijaArtikla (sifraKategorije ?kat1 &?kat.sifraKategorije) (naziv ?n &"Siroka potrosnja"))
-    
-    
-    
+    ?s <- (stavka (artikal ?ar) (originalnaUkupnaCena ?cena &:(and(> ?cena 5000) (eq (call ?ar getNazivKategorije) "Skolski pribor") (eq (call ?ar getNazivNadKategorije) "Skolski pribor") )))
+    ;(artikal (kategorijaArtikla ?kat) (sifra ?sifra &?a.sifra))
+    ;(kategorijaArtikla (sifraKategorije ?kat1 &?kat.sifraKategorije) (naziv ?n &"Siroka potrosnja"))
     =>
-    
+    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "003" (get ?s racun) 0.07 (TipPopusta.OSNOVNI) ?s.OBJECT))
     (printout t "radi mi trece pravilo")
-    
     )
 
 ;DODATNI POPUSTI
 
 ;popust za isti artikal u prethodnih 15 dana
 (defrule dodatni1
+    ;(stavka (artikal ?artSt1) (racun ?racSt1))
+    ;(stavka (artikal ?artSt2) (racun ?racSt2))
     
-    (stavka (artikal ?artSt1) (racun ?racSt1))
-    (stavka (artikal ?artSt2) (racun ?racSt2))
+    ;(racun (sifra ?rac1) (sifra ?rac1 &?racSt1.sifra) (datumIzdavanja ?date1))
+    ;?racP <- (racun (sifra ?rac2 &?racSt2.sifra) (sifra ?rac2 &:(<> ?rac2 ?rac1) ) (datumIzdavanja ?date2))
+    ;(test (and (< (call Utility dateDifference ?date2 ?date1) 15) (> (call Utility dateDifference ?date2 ?date1) 0))) 
     
-    (racun (sifra ?rac1) (sifra ?rac1 &?racSt1.sifra) (datumIzdavanja ?date1))
-    ?racP <- (racun (sifra ?rac2 &?racSt2.sifra) (sifra ?rac2 &:(<> ?rac2 ?rac1) ) (datumIzdavanja ?date2))
-    (test (and (< (call Utility dateDifference ?date2 ?date1) 15) (> (call Utility dateDifference ?date2 ?date1) 0))) 
-    
-    (artikal (sifra ?art &?artSt1.sifra) (sifra ?art2 &?artSt2.sifra))
-    
-    
+    ;(artikal (sifra ?art &?artSt1.sifra) (sifra ?art2 &?artSt2.sifra))
+    ?s <- (stavka (racun ?r) (artikal ?ar &:(call Utility getArticlesInSpan ?r 15 ?ar)))
     =>
-    
-    (printout t crlf crlf "napravicu onaj 2% popust" crlf )
-    
+    ;(printout t crlf crlf "napravicu onaj 2% popust" crlf )
+    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "004" (get ?s racun) 0.02 (TipPopusta.DODATNI) ?s.OBJECT))
     )
 
 ;popust za artikal iste kategorije 30 dana
 (defrule dodatni2
     
-    (stavka (artikal ?artSt1) (racun ?racSt1))
-    (stavka (artikal ?artSt2) (racun ?racSt2))
+    ;(stavka (artikal ?artSt1) (racun ?racSt1))
+    ;(stavka (artikal ?artSt2) (racun ?racSt2))
     
-    (racun (sifra ?rac1) (sifra ?rac1 &?racSt1.sifra) (datumIzdavanja ?date1))
-    ?racP <- (racun (sifra ?rac2 &?racSt2.sifra) (sifra ?rac2 &:(<> ?rac2 ?rac1) ) (datumIzdavanja ?date2))
+    ;(racun (sifra ?rac1) (sifra ?rac1 &?racSt1.sifra) (datumIzdavanja ?date1))
+    ;?racP <- (racun (sifra ?rac2 &?racSt2.sifra) (sifra ?rac2 &:(<> ?rac2 ?rac1) ) (datumIzdavanja ?date2))
     
-    (test (and (< (call Utility dateDifference ?date2 ?date1) 30) (> (call Utility dateDifference ?date2 ?date1) 0))) 
+    ;(test (and (< (call Utility dateDifference ?date2 ?date1) 30) (> (call Utility dateDifference ?date2 ?date1) 0))) 
     
-    (artikal (sifra ?art1 &?artSt1.sifra) (kategorijaArtikla ?kat))
-    (artikal (sifra ?art2 &:(<> ?art1 ?art2))(sifra ?art2 &?artSt2.sifra) (kategorijaArtikla ?kat))
-    
+    ;(artikal (sifra ?art1 &?artSt1.sifra) (kategorijaArtikla ?kat))
+    ;(artikal (sifra ?art2 &:(<> ?art1 ?art2))(sifra ?art2 &?artSt2.sifra) (kategorijaArtikla ?kat))
+    ?s <- (stavka (racun ?r) (artikal ?ar &:(call Utility getCatInSpan ?r 30 ?ar)))
     =>
-    
-    (printout t crlf crlf "napravicu onaj 1% popust" crlf)
+    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "005" (get ?s racun) 0.01 (TipPopusta.DODATNI) ?s.OBJECT))
+    ;(printout t crlf crlf "napravicu onaj 1% popust" crlf)
     
     )
 
