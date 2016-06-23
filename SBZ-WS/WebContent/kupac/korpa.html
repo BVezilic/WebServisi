@@ -1,7 +1,13 @@
-<div class="col-sm-4">
-	<div class="panel panel-primary">
-		<div class="panel-heading">KORPA</div>
-    	<div class="panel-body"><img src="http://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-  	<div class="panel-footer">Korpa</div>
-  </div>
+<h2>Korpa</h2><br/>
+<div class="col-md-6">
+	<table class="table">
+		<tr ng-repeat="stavka in ['Stavka1', 'Stavka2', 'Stavka3', 'Stavka4'] track by $index">
+			<td valign="middle">{{stavka}}</td>
+			<td align="right"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Izbrisi</button></td>
+		</tr>
+	</table>
+	<button type="button" class="btn btn-success">Izdaj racun</button>
+</div>
+<div class="col-md-6">
+	Mesto za ispis podataka o racunu
 </div>

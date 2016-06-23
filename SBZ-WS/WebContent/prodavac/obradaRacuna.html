@@ -1,0 +1,23 @@
+<div class="row">
+	<h2>Spisak racuna</h2><br/>
+	<p>Filter:<p><select ng-model="filter" ng-options="x for x in ['Realizovan','U procesu']"></select>
+	<table class="table table-striped">
+	  <tr>
+	    <th>Sifra</th>
+	    <th>Stanje</th>
+	    <th>Konacna cena</th>
+	    <th>Razilka</th>
+	  </tr>
+	  <tr ng-repeat="racun in [1,2,3,4]">
+	    <td>{{artikal}}</td>
+	    <td>1</td>
+	    <td>2</td>
+	    <td>1</td>
+	  </tr>
+	</table>
+</div>
+<div class="row">
+	<h2>Obrada racuna: </h2><br/>
+	<button type="button" class="btn btn-success">Obradi</button>
+	<button type="button" class="btn btn-danger">Otkazi</button>
+</div>

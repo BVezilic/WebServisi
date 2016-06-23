@@ -1,0 +1,32 @@
+<div class="alert alert-warning">
+  <strong>Upozorenje!</strong> Potrebno je azurirati odredjene artikle.
+</div>
+<div class="row">
+	<h2>Spisak artikala</h2><br/>
+	<table class="table table-striped">
+	  <tr>
+	    <th>Naziv</th>
+	    <th>Trenutna kolicina</th>
+	    <th>Minimalna kolicina</th>
+	    <th>Razilka</th>
+	  </tr>
+	  <tr ng-repeat="artikal in [1,2,3,4]">
+	    <td>{{artikal}}</td>
+	    <td>1</td>
+	    <td>2</td>
+	    <td>1</td>
+	  </tr>
+	</table>
+</div>
+<div class="row">
+	<h2>Azuriraj artikal: </h2><br/>
+	<p><label>Kolicina za narucivanje</label></p>
+	<div class="col-lg-2">
+		<div class="input-group">
+		  <input class="form-control" type="number">
+		  <span class="input-group-btn">
+		  	<button type="button" class="btn btn-success">Azuriraj</button>
+		  </span>
+		</div>
+	</div>
+</div>
