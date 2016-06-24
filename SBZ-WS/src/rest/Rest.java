@@ -13,6 +13,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import model.Artikal;
+import model.Korisnik;
 import model.Racun;
 import database.Database;
 
@@ -59,6 +60,19 @@ public class Rest {
 	public Boolean otkaziRacun(Racun racun){
 		System.out.println(racun);
 		return data.getRacuni().remove(racun);
+	}
+	
+	@GET
+	@Path("/login")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Korisnik login(@QueryParam("korisnickoIme")String korisnickoIme, @QueryParam("lozinka")String lozinka) {
+		ArrayList<Korisnik> korisnici = data.getKorisnici();
+		for (Korisnik k : korisnici) {
+			if (k.getKorisnickoIme().equals(korisnickoIme) && k.getLozinka().equals(lozinka)) {
+				return k;
+			}
+		}
+		return null;
 	}
 	
 }

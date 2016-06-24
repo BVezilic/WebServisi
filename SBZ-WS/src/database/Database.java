@@ -104,11 +104,11 @@ public class Database implements Serializable {
 				parseDate("1/1/2014"), false, false);
 		Artikal ar13 = new Artikal("ar13", "Kapa", ka5, 750, 10, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar14 = new Artikal("ar13", "Mis", ka3, 1000, 10, 2,
+		Artikal ar14 = new Artikal("ar14", "Mis", ka3, 1000, 10, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar15 = new Artikal("ar13", "Tastatura", ka3, 1500, 10, 2,
+		Artikal ar15 = new Artikal("ar15", "Tastatura", ka3, 1500, 10, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar16 = new Artikal("ar13", "Kamera", ka3, 2000, 10, 2,
+		Artikal ar16 = new Artikal("ar16", "Kamera", ka3, 2000, 10, 2,
 				parseDate("1/1/2014"), false, false);
 
 		PragPotrosnje pp1 = new PragPotrosnje(0, 10000);

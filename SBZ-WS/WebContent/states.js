@@ -2,7 +2,7 @@
   var app = angular.module('app',['ui.router']);
 
   app.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/prodavac');
+    $urlRouterProvider.otherwise('/login');
     $stateProvider
     .state('kupac', {//naziv stanja!
       url: '/kupac',
@@ -33,6 +33,11 @@
       url: '/obradaRacuna', 
       templateUrl: 'prodavac/obradaRacuna.html',
       controller: 'obradaRacunaCtrl'
+    })
+    .state('login', {
+      url: '/login', 
+      templateUrl: 'login/login.html',
+      controller: 'loginCtrl'
     });
   });
 })(angular);
