@@ -1,7 +1,7 @@
 <div class="row">
 	<h2>Spisak racuna</h2><br/>
 	<p>Filter:<p><select ng-model="stanje" ng-options="x for x in ['','PORUCENO','OTKAZANO','USPESNO_REALIZOVANO']"></select>
-	<table class="table table-hover">
+	<table class="table table-hover fixed">
 	  <tr>
 	    <th>Sifra</th>
 	    <th>Kupac</th>
@@ -23,10 +23,17 @@
 	    <td>{{racun.stanjeRacuna}}</td>
 	  </tr>
 	</table>
+	<br/><br/>
 </div>
 <div class="row">
-	<h2>Obrada racuna: </h2><br/>
-	<p><b>Sifra racuna:</b> {{selectedRacun.sifra}}</p>
-	<button type="button" class="btn btn-success" ng-click="obradiRacun()">Obradi</button>
-	<button type="button" class="btn btn-danger" ng-click="otkaziRacun()">Otkazi</button>
+	<div class="col-md-4">
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h2>Obrada racuna: </h2><br/></div>
+	  <div class="panel-body">
+	  	<p><b>Sifra racuna:</b> {{selectedRacun.sifra}}</p>
+			<button type="button" class="btn btn-success" ng-click="obradiRacun()">Obradi</button>
+			<button type="button" class="btn btn-danger" ng-click="otkaziRacun()">Otkazi</button>
+		</div>
+	</div>
+	</div>
 </div>

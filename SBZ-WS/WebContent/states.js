@@ -26,12 +26,12 @@
       })
     .state('prodavac.porucivanje', {
       url: '/porucivanje', 
-      templateUrl: 'prodavac/porucivanje.html',
+      templateUrl: 'prodavac/porucivanje1.html',
       controller: 'porucivanjeCtrl'
     })
     .state('prodavac.obradaRacuna', {
       url: '/obradaRacuna', 
-      templateUrl: 'prodavac/obradaRacuna.html',
+      templateUrl: 'prodavac/obradaRacuna1.html',
       controller: 'obradaRacunaCtrl'
     })
     .state('menadzer', {

@@ -1,0 +1,89 @@
+<div class="row">
+	<h2>Spisak akcijskih dogadjaja</h2><br/>
+	<table class="table table-hover fixed">
+	  <tr>
+	    <th>Sifra</th>
+	    <th>Naziv</th>
+	    <th>Vazi od</th>
+	    <th>Vazi do</th>
+	    <th>Popust (%)</th>
+	  </tr>
+	  <tr ng-repeat="akcijskiDogadjaj in akcijskiDogadjaji" ng-click="selectAkcijskiDogadjaj(akcijskiDogadjaj)">
+	    <td>{{akcijskiDogadjaj.sifra}}</td>
+	    <td>{{akcijskiDogadjaj.naziv}}</td>
+	    <td>{{akcijskiDogadjaj.vaziOd|date:'mediumDate'}}</td>
+	    <td>{{akcijskiDogadjaj.vaziDo|date:'mediumDate'}}</td>
+ 	    <td>{{akcijskiDogadjaj.popustZaDogadjaj*100}}</td>
+	  </tr>
+	</table>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel panel-default">
+	  <div class="panel-heading"><h2>Dodavanje novog dogadjaja:</h2></div>
+	  <div class="panel-body">
+		  <form role="form">
+				<div class="form-group">
+			    <label for="sifraKategorije">Sifra:</label>
+			    <input type="text" ng-model="dodavanjeSifra" class="form-control" id="sifraKategorije">
+			  </div>
+			  <div class="form-group">
+			    <label for="nazivKategorije">Naziv:</label>
+			    <input type="text" ng-model="dodavanjeNaziv" class="form-control" id="nazivKategorije">
+			  </div>
+			  <div class="form-group">
+			    <label for="vaziOd">Vazi od:</label>
+			    <input type="date" ng-model="dodavanjeOd" class="form-control" id="vaziOd">
+			  </div>
+			  <div class="form-group">
+			    <label for="vaziOd">Vazi do:</label>
+			    <input type="date" ng-model="dodavanjeDo" class="form-control" id="vaziOd">
+			  </div>
+			  <div class="form-group">
+			    <label for="popust">Popust:</label>
+					<input type="number" ng-model="dodavanjePopust" class="form-control" id="popust">			 
+				</div>
+			  <div class="form-group">
+			    <label for="popust">Kategorije:</label>
+			    <div ng-repeat="katArt in kategorijaArtikala">
+				  	<input type="checkbox" data-checklist-model="dodavanjeKat" data-checklist-value="katArt.naziv">{{katArt.naziv}}</input>
+				  </div>
+			  </div>
+				<button type="button" class="btn btn-success" ng-click="dodajAkcijskiDogadjaj()">Dodaj</button>
+			</form>
+		</div>
+	</div>
+		
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><h2>Azuriranje akcije:</h2></div>
+		  <div class="panel-body">
+			  <form role="form">
+			  <div class="form-group">
+			    <label for="nazivKategorije">Naziv:</label>
+			    <input type="text" ng-model="azuriranjeNaziv" class="form-control" id="nazivKategorije">
+			  </div>
+			  <div class="form-group">
+			    <label for="vaziOd">Vazi od:</label>
+			    <input type="date" ng-model="azuriranjeOd" class="form-control" id="vaziOd">
+			  </div>
+			  <div class="form-group">
+			    <label for="vaziOd">Vazi do:</label>
+			    <input type="date" ng-model="azuriranjeDo" class="form-control" id="vaziOd">
+			  </div>
+			  <div class="form-group">
+			    <label for="popust">Popust:</label>
+					<input type="number" ng-model="azuriranjePopust" class="form-control" id="popust">			 
+				</div>
+			  <div class="form-group">
+			    <label for="popust">Kategorije:</label>			 
+				  <div ng-repeat="katArt in kategorijaArtikala">
+				  	<input type="checkbox" data-checklist-model="azuriranjeKat" data-checklist-value="katArt.naziv">{{katArt.naziv}}</input>
+				  </div>
+			  </div>
+				<button type="button" class="btn btn-success" ng-click="azurirajAkcijskiDogadjaj()">Sacuvaj</button>
+			</form>
+		</div>		
+	</div>
+</div>

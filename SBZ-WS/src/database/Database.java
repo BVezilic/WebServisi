@@ -122,17 +122,17 @@ public class Database implements Serializable {
 		KategorijaKupca kk3 = new KategorijaKupca("kk3", "Zlatna kategorija",
 				pp3);
 
-		Korisnik ko1 = new Korisnik("kupac1", "Pera", "Peric", "p", uk1,
+		Korisnik ko1 = new Korisnik("kupac", "Pera", "Peric", "k", uk1,
 				parseDate("1/1/2015"));
 		Korisnik ko2 = new Korisnik("kupac2", "Marko", "Markovic", "m", uk1,
 				parseDate("2/2/2014"));
 		Korisnik ko3 = new Korisnik("kupac3", "Nikola", "Nikolic", "n", uk1,
 				parseDate("3/3/2013"));
-		Korisnik ko4 = new Korisnik("prodavac1", "Jovan", "Jovanovic", "j",
+		Korisnik ko4 = new Korisnik("prodavac", "Jovan", "Jovanovic", "p",
 				uk2, parseDate("4/4/2012"));
 		Korisnik ko5 = new Korisnik("prodavac2", "Ana", "Anic", "a", uk2,
 				parseDate("5/5/2012"));
-		Korisnik ko6 = new Korisnik("menadzer1", "Djordje", "Djordjevic", "d",
+		Korisnik ko6 = new Korisnik("menadzer", "Djordje", "Djordjevic", "m",
 				uk3, parseDate("6/6/2011"));
 
 		ProfilKupca pk1 = new ProfilKupca(ko1, "Zeleznicka 1", 0, kk1);

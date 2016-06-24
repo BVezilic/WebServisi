@@ -1,6 +1,6 @@
 <div class="row">
 	<h2>Spisak kategorija artikala</h2><br/>
-	<table class="table table-hover">
+	<table class="table table-hover fixed">
 	  <tr>
 	    <th>Sifra</th>
 	    <th>Naziv</th>
@@ -11,18 +11,56 @@
 	    <td>{{kategorijaArtikla.sifraKategorije}}</td>
 	    <td>{{kategorijaArtikla.naziv}}</td>
 	    <td>{{kategorijaArtikla.nadkategorija.naziv}}</td>
-	    <td>{{kategorijaArtikla.maksimalniDozvoljeniPopust}}</td>
+	    <td>{{kategorijaArtikla.maksimalniDozvoljeniPopust*100}}</td>
 	  </tr>
 	</table>
 </div>
 <div class="row">
 	<div class="col-md-6">
-		<h2>Azuriranje kategorije: </h2><br/>
-		<p><b>Sifra kategorije:</b> {{selectedKategorijaKupca.sifraKategorije}}</p>
-		<label for="opseg">Opseg:</label>
-	 		<div class="input-group form-group col-md-6">
-	    <input type="number" ng-model="opsegOd" class="form-control" id="cenaOd"><span class="input-group-addon">-</span><input type="number" ng-model="opsegDo" class="form-control" id="cenaDo">
- 		  </div>
-		<button type="button" class="btn btn-success" ng-click="sacuvajKategorijuKupca()">Sacuvaj</button>
+		<div class="panel panel-default">
+	  <div class="panel-heading"><h2>Dodavanje nove kategorije:</h2></div>
+	  <div class="panel-body">
+		  <form role="form">
+				<div class="form-group">
+			    <label for="sifraKategorije">Sifra:</label>
+			    <input type="text" ng-model="dodavanjeSifra" class="form-control" id="sifraKategorije">
+			  </div>
+			  <div class="form-group">
+			    <label for="nazivKategorije">Naziv:</label>
+			    <input type="text" ng-model="dodavanjeNaziv" class="form-control" id="nazivKategorije">
+			  </div>
+			  <div class="form-group">
+			    <label for="nadkategorija">Nadkategorija:</label>
+			    <select ng-model="dodavanjeNadkategorija" ng-options="artikal.naziv for artikal in kategorijaArtikala"></select>
+			  </div>
+			  <div class="form-group">
+			    <label for="popust">Maksimalni popust (%):</label>
+			    <input type="number" ng-model="dodavanjPopust" class="form-control" id="popust">
+			  </div>
+				<button type="button" class="btn btn-success" ng-click="dodajKategorijuArtikla()">Dodaj</button>
+			</form>
+		</div>
+	</div>
+		
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><h2>Azuriranje kategorije:</h2></div>
+		  <div class="panel-body">
+			  <div class="form-group">
+			    <label for="nazivKategorije">Naziv:</label>
+			    <input type="text" ng-model="azuriranjeNaziv" class="form-control" id="nazivKategorije">
+			  </div>
+			  <div class="form-group">
+			    <label for="nadkategorija">Nadkategorija:</label>
+			    <select ng-model="azuriranjeNadkategorija" ng-options="artikal.naziv for artikal in kategorijaArtikala"></select>
+			  </div>
+			  <div class="form-group">
+			    <label for="popust">Maksimalni popust (%):</label>
+			    <input type="number" ng-model="azuriranjePopust" class="form-control" id="popust">
+			  </div>
+				<button type="button" class="btn btn-success" ng-click="azurirajKategorijuArtikla()">Sacuvaj</button>
+			</div>
+		</div>		
 	</div>
 </div>

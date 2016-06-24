@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import model.AkcijskiDogadjaj;
 import model.Artikal;
 import model.KategorijaArtikla;
 import model.KategorijaKupca;
@@ -36,9 +37,14 @@ public class Rest {
 	@POST
 	@Path("/artikal/update")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void azurirajArtikal(Artikal artikal, @QueryParam("kolicina")int kolicina){
-		System.out.println(kolicina);
-		System.out.println(artikal);
+	public Boolean azurirajArtikal(Artikal artikal, @QueryParam("kolicina")int kolicina){
+		for (Artikal a : data.getArtikli()) {
+			if (a.getSifra().equals(artikal.getSifra())) {
+				a.setBrojnoStanje(a.getBrojnoStanje() + kolicina);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@GET
@@ -92,12 +98,52 @@ public class Rest {
 	}
 	
 	@POST
+	@Path("/kategorija/artikal/add")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Boolean dodajKategorijuArtikla(KategorijaArtikla kategorija){
+		return data.addKategorijaArtikla(kategorija);
+	}
+	
+	@POST
 	@Path("/kategorija/artikal/update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean azurirajKategorijuArtikla(KategorijaArtikla kategorija){
 		for (KategorijaArtikla ka : data.getKategorijeArtikla()) {
 			if (ka.getSifraKategorije().equals(kategorija.getSifraKategorije())) {
-				ka = kategorija;
+				ka.setMaksimalniDozvoljeniPopust(kategorija.getMaksimalniDozvoljeniPopust());
+				ka.setNadkategorija(kategorija.getNadkategorija());
+				ka.setNaziv(kategorija.getNaziv());
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@GET
+	@Path("/akcija/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<AkcijskiDogadjaj> sveAkcije(){
+		return data.getAkcijskiDogadjaji();
+	}
+	
+	@POST
+	@Path("/akcija/add")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Boolean dodajAkciju(AkcijskiDogadjaj akcijskiDogadjaj){
+		return data.addAkcijskiDogadjaj(akcijskiDogadjaj);
+	}
+	
+	@POST
+	@Path("/akcija/update")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Boolean azurirajAkciju(AkcijskiDogadjaj akcijskiDogadjaj){
+		for (AkcijskiDogadjaj ad : data.getAkcijskiDogadjaji()) {
+			if (ad.getSifra().equals(akcijskiDogadjaj.getSifra())) {
+				ad.setNaziv(akcijskiDogadjaj.getNaziv());
+				ad.setPopustZaDogadjaj(akcijskiDogadjaj.getPopustZaDogadjaj());
+				ad.setVaziDo(akcijskiDogadjaj.getVaziDo());
+				ad.setVaziOd(akcijskiDogadjaj.getVaziOd());
+				ad.setKategorijaArtiklaSaPopustima(akcijskiDogadjaj.getKategorijaArtiklaSaPopustima());
 				return true;
 			}
 		}
