@@ -10,13 +10,13 @@
 				$scope.korisnik = response.data;
 				switch ($scope.korisnik.ulogaKorisnika) {
 				case "KUPAC":
-					$state.go("kupac");
+					$state.go("kupac.proizvodi");
 					break;
 				case "PRODAVAC":
-					$state.go("prodavac");
+					$state.go("prodavac.porucivanje");
 					break;
 				case "MENADZER":
-					$state.go("login");
+					$state.go("menadzer.kategorijeKupaca");
 					break;
 				}
 			  }, function errorCallback(response) {
