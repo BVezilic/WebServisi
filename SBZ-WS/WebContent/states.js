@@ -29,13 +29,32 @@
       })
     .state('prodavac.porucivanje', {
       url: '/porucivanje', 
-      templateUrl: 'prodavac/porucivanje.html',
+      templateUrl: 'prodavac/porucivanje1.html',
       controller: 'porucivanjeCtrl'
     })
     .state('prodavac.obradaRacuna', {
       url: '/obradaRacuna', 
-      templateUrl: 'prodavac/obradaRacuna.html',
+      templateUrl: 'prodavac/obradaRacuna1.html',
       controller: 'obradaRacunaCtrl'
+    })
+    .state('menadzer', {
+      url: '/menadzer', 
+      templateUrl: 'menadzer/menadzer.html'
+    })
+    .state('menadzer.kategorijeKupaca', {
+      url: '/kategorijeKupaca', 
+      templateUrl: 'menadzer/kategorijeKupaca.html',
+      controller: 'kategorijeKupacaCtrl'
+    })
+    .state('menadzer.kategorijeArtikala', {
+      url: '/kategorijeArtikala', 
+      templateUrl: 'menadzer/kategorijeArtikala.html',
+      controller: 'kategorijeArtikalaCtrl'
+    })
+    .state('menadzer.akcijskiDogadjaji', {
+      url: '/akcijskiDogadjaji', 
+      templateUrl: 'menadzer/akcijskiDogadjaji.html',
+      controller: 'akcijskiDogadjajiCtrl'
     })
     .state('login', {
       url: '/login', 
