@@ -5,11 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.ejb.Singleton;
 
 import model.AkcijskiDogadjaj;
 import model.Artikal;
+import model.ArtikalUKorpi;
 import model.KategorijaArtikla;
 import model.KategorijaKupca;
 import model.Korisnik;
@@ -22,9 +24,6 @@ import model.StanjeRacuna;
 import model.StavkaRacuna;
 import model.TipPopusta;
 import model.UlogaKorisnika;
-import jess.JessException;
-import jess.Rete;
-import rezoner.Rezoner;
 
 @Singleton
 public class Database implements Serializable {
@@ -46,7 +45,9 @@ public class Database implements Serializable {
 	private ArrayList<StanjeRacuna> stanjaRacuna = new ArrayList<StanjeRacuna>();
 	private ArrayList<TipPopusta> tipoviPopusta = new ArrayList<TipPopusta>();
 	private ArrayList<UlogaKorisnika> ulogeKorisnika = new ArrayList<UlogaKorisnika>();
-
+	
+	private HashMap<String, StavkaRacuna> korpa = new HashMap<String, StavkaRacuna>();
+	
 	public Database() {
 		super();
 
@@ -232,9 +233,9 @@ public class Database implements Serializable {
 		addTipPopusta(tp1);
 		addTipPopusta(tp2);
 		
-		addRacun(r1);
-		addRacun(r2);
-		addRacun(r3);
+		//addRacun(r1);
+		//addRacun(r2);
+		//addRacun(r3);
 
 	}
 
@@ -244,6 +245,8 @@ public class Database implements Serializable {
 	 * @param s
 	 * @return
 	 */
+	
+	
 	public Date parseDate(String s) {
 		try {
 			return (new SimpleDateFormat("dd/mm/yyyy")).parse(s);
@@ -295,6 +298,14 @@ public class Database implements Serializable {
 
 	}
 	*/
+
+	public HashMap<String, StavkaRacuna> getKorpa() {
+		return korpa;
+	}
+
+	public void setKorpa(HashMap<String, StavkaRacuna> korpa) {
+		this.korpa = korpa;
+	}
 
 	public ArrayList<Racun> getAllRacuniByProfilKorisnika(ProfilKupca pk) {
 		ArrayList<Racun> retVal = new ArrayList<Racun>();
