@@ -16,6 +16,9 @@
 (deftemplate artikalAlarm
     (slot ID (type STRING)))
 
+(deftemplate privremeniBodovi
+    (slot BODOVI (type INTEGER)))
+
 (deftemplate profilKupca
     (declare
         (slot-specific TRUE)

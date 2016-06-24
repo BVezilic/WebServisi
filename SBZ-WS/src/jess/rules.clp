@@ -282,7 +282,8 @@ PRAVILA ZA RACUNE!!!!
     (call ?r.OBJECT setKonacnaCena ?temp)
     (bind ?profilKupca (get ?r kupac))
     (bind ?pragPotrosnje (get (get (get ?r kupac) kategorijaKupca) pragPotrosnje))
-    (call ?profilKupca addNagradniBodovi (round(call ?pragPotrosnje dodelaNagradnihBodova ?temp)))
+    ;(call ?profilKupca addNagradniBodovi (round(call ?pragPotrosnje dodelaNagradnihBodova ?temp)))
+    (assert (privremeniBodovi (BODOVI (round(call ?pragPotrosnje dodelaNagradnihBodova ?temp)))))
     )
 
 ;proveri da li je potrebno da se poruci jos artikala

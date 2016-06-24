@@ -106,6 +106,32 @@ public class Rezoner {
 		return retVal;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Integer getPrivremeniBodovi()
+	{
+		int retVal = 0;
+		Iterator<Fact> it = new FilteringIterator(engine.listFacts(), new Filter() {
+			public boolean accept(Object arg0) {
+				Fact temp = (Fact) arg0; 
+				if(temp.getName().equals("MAIN::artikalAlarm"))
+					return true;
+				return false;
+			}
+		});
+		
+		while (it.hasNext()) {
+        	Fact fa = (Fact) it.next();
+        	try {
+				String sifra = fa.getSlotValue("BODOVI").toString();
+				sifra = sifra.replace("\"", "");
+				retVal = Integer.parseInt(sifra);
+			} catch (JessException e) {
+				e.printStackTrace();
+			}
+		}
+		return retVal;
+	}
+	
 	public void setProfilKupca(Korisnik ko, ProfilKupca pk) {
 
 		Korisnik k = database.getKorisnikByKorisnickoIme(ko.getKorisnickoIme());
@@ -445,71 +471,46 @@ public class Rezoner {
 			 * akcijski dogadjaji
 			 */
 			//engine2.definstance("akcijskiDogadjaj", ad1, false);
-			//engine2.definstance("stavka", str1, false);
-			//engine2.definstance("racun", r3, false);
-			Artikal ar4 = new Artikal("ar1", "Laptop", ka2, 25, 49, 50, parseDate("1/1/2014"), false, false);
-			Artikal ar5 = new Artikal("ar2", "Laptop", ka2, 25, 42, 50, parseDate("1/1/2014"), false, false);
-			Artikal ar6 = new Artikal("ar3", "Laptop", ka2, 25, 39, 50, parseDate("1/1/2014"), false, false);
-			Artikal ar7 = new Artikal("ar4", "Laptop", ka2, 25, 12, 50, parseDate("1/1/2014"), false, false);
-			Artikal ar8 = new Artikal("ar5", "Laptop", ka2, 25, 58, 50, parseDate("1/1/2014"), false, false);
-			Artikal ar9 = new Artikal("ar6", "Laptop", ka2, 25, 100, 50, parseDate("1/1/2014"), false, false);
-			Database database1 = new Database();
-			System.out.println(database1.getArtikli().size());
-			database1.addArtikal(ar4);
-			database1.addArtikal(ar5);
-			database1.addArtikal(ar6);
-			database1.addArtikal(ar7);
-			database1.addArtikal(ar8);
-			database1.addArtikal(ar9);
-			engine2.definstance("artikal", ar4, false);
-			engine2.definstance("artikal", ar5, false);
-			engine2.definstance("artikal", ar6, false);
-			engine2.definstance("artikal", ar7, false);
-			engine2.definstance("artikal", ar8, false);
-			engine2.definstance("artikal", ar9, false);
+			engine2.definstance("stavka", str1, false);
+			engine2.definstance("racun", r3, false);
+			
 			engine2.run();
 			//Iterator<Fact> it = engine2.listFacts();
 			
+			System.out.println("NAGRADNI BODOVI: " + r3.getKupac().getNagradniBodovi());
+			//engine2.definstance("stavka", str1, false);
+			//engine2.run();
+			//System.out.println(r3.getOriginalnaUkupnaCena());
+			System.out.println("POPUST: " + r3.getProcenatUmanjenja());
+			System.out.println("KONACNA CENA: " + r3.getKonacnaCena());
+			System.out.println("DODAT POPUST ");
+
+			for(Popust pp : r3.getPrimenjeniPopusti())
+			{
+				System.out.println(pp);
+			}
+			
 			Iterator<Fact> it = new FilteringIterator(engine2.listFacts(), new Filter() {
-				
 				public boolean accept(Object arg0) {
 					Fact temp = (Fact) arg0; 
-					//						kreiranje filtera za studente koji imaju ocene
-					if(temp.getName().equals("MAIN::artikalAlarm"))
+					if(temp.getName().equals("MAIN::privremeniBodovi"))
 						return true;
 					return false;
 				}
 			});
-			ArrayList<Artikal> retVal = new ArrayList<Artikal>();
+			
 			while (it.hasNext()) {
-//	        	Jess.Fact je java reprezentacija Jess fakta
 	        	Fact fa = (Fact) it.next();
-	        	//if(fa.getName().equals("MAIN::artikalAlarm"))
-	        	//{
-	        		//System.out.println(fa.getSlotValue("ID"));
-	        	//System.out.println("Za fakt sa rednim brojem " + fa.getFactId() + " tipa " + fa.getName());
-	        	String sifra = fa.getSlotValue("ID").toString();
-	        	sifra = sifra.replace("\"", "");
-	        	System.out.println(sifra);
-				retVal.add(database1.getArtikalBySifra(sifra));
-	        	//}
-	        	//filtriraj fakte samo da se preuzimaju fakti iz templejta student
+	        	try {
+					String sifra = fa.getSlotValue("BODOVI").toString();
+					sifra = sifra.replace("\"", "");
+					System.out.println(sifra);
+				} catch (JessException e) {
+					e.printStackTrace();
+				}
 			}
-			System.out.println(retVal.toString());
-			//engine2.definstance("stavka", str1, false);
-			//engine2.run();
-			//System.out.println(r3.getOriginalnaUkupnaCena());
-//			System.out.println("POPUST: " + r3.getProcenatUmanjenja());
-//			System.out.println("KONACNA CENA: " + r3.getKonacnaCena());
-//			System.out.println("DODAT POPUST ");
-//			for(StavkaRacuna t: r1.getStavkeRacuna())
-//			{
-//			for(Popust pp : r3.getPrimenjeniPopusti())
-//			{
-//				System.out.println(pp);
-//			}
-
-		} catch (JessException e) {
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
