@@ -34,12 +34,14 @@
 ;>5000 i siroka potrosnja
 (defrule viseOd5000
     (declare (no-loop TRUE) (salience 51))
-    ?s <- (stavka (racun ?r &:(eq (get ?r stanjeRacuna) StanjeRacuna.PORUCENO)) (artikal ?ar) (originalnaUkupnaCena ?cena &:(and(> ?cena 5000) (eq (call ?ar getNazivKategorije) "Skolski pribor") (eq (call ?ar getNazivNadKategorije) "Skolski pribor") )))
+    ;(or(eq (call ?ar getNazivKategorije) "Skolski pribor") (eq (call ?ar getNazivNadKategorije) "Skolski pribor")
+    ;(racun ?r &:(eq (get ?r stanjeRacuna) StanjeRacuna.PORUCENO)) (artikal ?ar) (originalnaUkupnaCena ?cena &:(> ?cena 5000))
+    ?s <- (stavka (racun ?r &:(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO))) (artikal ?ar) (originalnaUkupnaCena ?cena &:(and(> ?cena 5000) (or(eq (call ?ar getNazivKategorije) "Skolski pribor") (eq (call ?ar getNazivNadKategorije) "Skolski pribor")) ) ) )
     ;(artikal (kategorijaArtikla ?kat) (sifra ?sifra &?a.sifra))
     ;(kategorijaArtikla (sifraKategorije ?kat1 &?kat.sifraKategorije) (naziv ?n &"Siroka potrosnja"))
     =>
     (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "003" (get ?s racun) 0.07 (TipPopusta.OSNOVNI) ?s.OBJECT))
-    ;(printout t "radi mi trece pravilo")
+    (printout t "radi mi trece pravilo")
     )
 
 ;DODATNI POPUSTI
@@ -152,8 +154,9 @@
 
 ;saberi sve popuste
 (defrule saberiPopusteZaStavke
-    (declare (no-loop TRUE) (salience 0))
+    (declare (no-loop TRUE) (salience 30))
     ?s <-(stavka (racun ?r &:(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO))))
+    ?rac <- (racun (sifra ?sifra &:(eq  (get ?r sifra) (get ?rac sifra))) )
     =>
     (bind ?lst (get ?s primenjeniPopusti))
     (bind ?temp 0)
@@ -187,6 +190,12 @@
 		(call ?s.OBJECT setProcenatUmanjenja ?max))
     (bind ?temp (* (get ?s jedinicnaCena) (get ?s kolicinaKupnjeljihArtikala) (- 1 (call ?s.OBJECT getProcenatUmanjenja))))
     (call ?s.OBJECT setKonacnaCena ?temp)
+    (bind ?racun (get ?s racun))
+    ;(call ?racun addCena ?temp)
+    (bind ?oc (call ?racun getOriginalnaUkupnaCena))
+    (bind ?modCen (+ ?oc ?temp))
+    (printout t crlf "CENA NA RACUNU: " crlf ?modCen crlf)
+    (modify ?rac (originalnaUkupnaCena ?modCen))
     )
 
 /*
@@ -197,17 +206,17 @@ PRAVILA ZA RACUNE!!!!
 
 ;5% popusta za preko 200000
 (defrule osnovniR1
-    (declare (no-loop TRUE) (salience 40))
-    ?r<-(racun (originalnaUkupnaCena ?ukupnaCena &:(> ?ukupnaCena 200000)))
+    (declare (no-loop TRUE) (salience 9))
+    ?r<-(racun (originalnaUkupnaCena ?ukupnaCena &:(> ?ukupnaCena 200000.0)))
     (test(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO)))
     =>
-    ;(printout t crlf "primenice se 5% popusta na racun za 200000" crlf)
+    ;(printout t crlf "primenice se 5% popusta na racun za 200000: " (get ?r originalnaUkupnaCena) crlf)
     (call ?r.OBJECT addPrimenjeniPopust (new Popust "007" ?r.OBJECT 0.05 (TipPopusta.OSNOVNI)))
     )
 
 ;1% na ceo racun ako je kupac duze od dve godine aktivan
 (defrule dodatniR1
-    (declare (no-loop TRUE) (salience 50))
+    (declare (no-loop TRUE) (salience 8))
     ;(korisnik (datumRegistrovanja ?datumRegistrovanja))
     ;(racun (datumIzdavanja ?datumIzdavanja))
     ;(test (> (call Utility dateDifference ?datumIzdavanja ?datumRegistrovanja) 730))
@@ -221,7 +230,7 @@ PRAVILA ZA RACUNE!!!!
 
 ;popust za srebrne/zladne kupce
 (defrule dodatniR2
-    (declare (no-loop TRUE) (salience 60))
+    (declare (no-loop TRUE) (salience 7))
     ;(profilKupca (kategorijaKupca ?kat))
     ;(kategorijaKupca (sifraKategorije ?sifraKategorije &?kat.sifraKategorije) (sifraKategorije ?sifra &:(or (eq ?sifra "SIL")(eq ?sifra "GLD"))))
     ?r<-(racun (kupac ?kup &:(or (eq (get(get ?kup kategorijaKupca) nazivKategorije) "SIL") (eq (get(get ?kup kategorijaKupca) nazivKategorije) "GLD")) ))
@@ -238,19 +247,19 @@ PRAVILA ZA RACUNE!!!!
        (foreach ?x ?lstDod
 			(bind ?count (+ ?count (get(get ?x  artikal)cena)))
         )
-        if((> (* ?prag ?ukupnaCena) ?count) then
-            return 1
+        if((< (* ?prag ?ukupnaCena) ?count) then
+            return TRUE
         else
-            return 0
+            return FALSE
          )
     else
-        return 0
+        return FALSE
      )
 )
 
 ;popust 3%
 (defrule dodatniR3
-    (declare (no-loop TRUE) (salience 70))
+    (declare (no-loop TRUE) (salience 6))
     ;?r <- (racun (originalnaUkupnaCena ?ukupnaCena &:(and(> ?ukupnaCena 50000) (call Utility overHalf (get ?r originalnaUkupnaCena) (get ?r stavkeRacuna) 0.5))))
     ?r <- (racun (originalnaUkupnaCena ?ukupnaCena &:(and(> ?ukupnaCena 50000) (overHalf (get ?r originalnaUkupnaCena) (get ?r stavkeRacuna) 0.5))))
     (test(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO)))
@@ -269,7 +278,7 @@ PRAVILA ZA RACUNE!!!!
     (foreach ?x ?lst
 		(bind ?temp (+ ?temp (get ?x  procenatUmanjenja))))
 	(call ?r.OBJECT setProcenatUmanjenja ?temp)
-    (bind ?temp (* (get ?s jedinicnaCena) (get ?s kolicinaKupnjeljihArtikala) (- 1 (call ?s.OBJECT getProcenatUmanjenja))))
+    (bind ?temp (* (get ?r originalnaUkupnaCena) (- 1 ?temp)))
     (call ?r.OBJECT setKonacnaCena ?temp)
     (bind ?profilKupca (get ?r kupac))
     (bind ?pragPotrosnje (get (get (get ?r kupac) kategorijaKupca) pragPotrosnje))
@@ -281,6 +290,8 @@ PRAVILA ZA RACUNE!!!!
     ?a <- (artikal (minimalnoStanjeNaLageru ?ms) (brojnoStanje ?br&:(< ?br ?ms)))
     =>
     ; uradi nesto
+    ;(printout t crlf "NEMA BATO" crlf)
+    (assert (artikalAlarm (ID (get ?a sifra))))
     )
 
 ;(run)

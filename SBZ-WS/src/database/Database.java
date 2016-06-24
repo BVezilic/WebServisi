@@ -452,7 +452,19 @@ public class Database implements Serializable {
 		}
 		return null;
 	}
-
+	
+	public Artikal getArtikalBySifra(String sifra)
+	{
+		for(Artikal a:artikli)
+		{
+			if(a.getSifra().equals(sifra))
+			{
+				return a;
+			}
+		}
+		return null;
+	}
+	
 	public boolean addKategorijaKupca(KategorijaKupca kk) {
 		for (KategorijaKupca k : kategorijeKupca) {
 			if (k.getSifraKategorije().equals(kk.getSifraKategorije())) {

@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import model.Artikal;
 import model.KategorijaArtikla;
@@ -19,12 +20,14 @@ public class Utility {
 	
 	public static int fixedDateDifference(Date date1){
 		Date date2 = new Date();
-		return Math.abs((int) ((date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24)));
+		long dur = date2.getTime() - date1.getTime();
+		long diffInSec = TimeUnit.MILLISECONDS.toDays(dur);
+		return Math.round(diffInSec/365);
 	}
 	
 	public static boolean korisniciStaz(int staz, Date pocetak)
 	{
-		return (staz > fixedDateDifference(pocetak));
+		return (staz < fixedDateDifference(pocetak));
 	}
 	
 	public static boolean isWithinDates(Date date, Date dateFrom, Date dateTo){

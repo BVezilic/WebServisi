@@ -13,6 +13,9 @@
         (include-variables TRUE))
     )
 
+(deftemplate artikalAlarm
+    (slot ID (type STRING)))
+
 (deftemplate profilKupca
     (declare
         (slot-specific TRUE)
