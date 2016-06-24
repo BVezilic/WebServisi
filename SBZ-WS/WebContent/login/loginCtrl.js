@@ -1,14 +1,14 @@
 (function(angular) {
 	var app = angular.module('app');
-	app.controller('loginCtrl', ['$scope', '$http', '$state', function($scope, $http, $state) {
+	app.controller('loginCtrl', ['$rootScope','$scope', '$http', '$state', function($rootScope, $scope, $http, $state) {
 		$scope.login = function(korisnickoIme, lozinka) {
 			$http({
 			  method: 'GET',
 			  url: 'http://localhost:8080/SBZ/rest/services/login',
 			  params: {"korisnickoIme":korisnickoIme, "lozinka":lozinka}
 			}).then(function successCallback(response) {
-				$scope.korisnik = response.data;
-				switch ($scope.korisnik.ulogaKorisnika) {
+				$rootScope.korisnik = response.data;
+				switch ($rootScope.korisnik.ulogaKorisnika) {
 				case "KUPAC":
 					$state.go("kupac.proizvodi");
 					break;
