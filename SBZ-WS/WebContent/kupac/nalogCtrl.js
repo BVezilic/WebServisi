@@ -12,5 +12,11 @@
 				  });
 		}
 		getRacuni();
+		
+		$scope.checkRacun = function(racun){
+			
+		};
+		
+		$scope.showSelectedRacun = false;
 	}]);
 })(angular);

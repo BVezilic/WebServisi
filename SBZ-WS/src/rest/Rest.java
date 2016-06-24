@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 
 import model.Artikal;
 import model.ArtikalUKorpi;
+import model.KategorijaArtikla;
 import model.Korisnik;
 import model.Racun;
 import model.StanjeRacuna;
@@ -120,6 +121,13 @@ public class Rest {
 			racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
 		}
 		return racun;
+	}
+	
+	@GET
+	@Path("/kategorijeArtikala/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<KategorijaArtikla> getKategorijeArtikala(){
+		return data.getKategorijeArtikla();
 	}
 	
 	@POST

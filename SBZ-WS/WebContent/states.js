@@ -10,12 +10,12 @@
     })
     .state('kupac.proizvodi', {
       url: '/proizvodi', //url je #/main/search
-      templateUrl: 'kupac/proizvodi.html',
+      templateUrl: 'kupac/proizvodi1.html',
       controller: 'proizvodiCtrl'
     })
     .state('kupac.nalog', {
       url: '/nalog', 
-      templateUrl: 'kupac/nalog.html',
+      templateUrl: 'kupac/nalog1.html',
       controller: 'nalogCtrl'
     })
     .state('kupac.korpa', {

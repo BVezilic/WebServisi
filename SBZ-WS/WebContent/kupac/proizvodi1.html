@@ -5,28 +5,27 @@
 	   	<form role="form" ng-submit="">
 	   		<label for="cena">Cena:</label>
 	   		<div class="input-group form-group">
-			    <input type="number" class="form-control" id="cenaOd"><span class="input-group-addon">-</span><input type="number" class="form-control" id="cenaDo">
+			    <input type="number" class="form-control" id="cenaOd" ng-model="cenaOd"><span class="input-group-addon">-</span><input type="number" class="form-control" id="cenaDo" ng-model="cenaDo">
 			  </div>
 			  <div class="form-group">
-			    <label for="sifra">Sifra:</label>
-			    <input type="text" class="form-control" id="sifra">
+			    <label for="sifra" ng-model="sifra">Sifra:</label>
+			    <input type="text" class="form-control" id="sifra" ng-model="sifra">
 			  </div>
 			  <div class="form-group">
 			    <label for="naziv">Naziv:</label>
-			    <input type="text" class="form-control" id="naziv">
+			    <input type="text" class="form-control" id="naziv" ng-model="naziv">
 			  </div>
 			  <div class="form-group">
 			    <label for="kategorija">Kategorija:</label>
-			    <select class="form-control" ng-model="odabranaKategorija" id="kategorija" ng-options="kat for kat in ['Monitori','Misevi','TV','Slusalice']"></select>
+			    <select class="form-control" ng-model="odabranaKategorija" id="kategorija" ng-options="kat.naziv for kat in kategorijeArtikala"><option></option></select>
 			  </div>
-			  <button type="button" class="btn btn-primary">Pretrazi</button>
 			</form>
    </div>
 </div>
 </div>
 <div class="col-sm-8">
 	<table class="table">	
-		<tr ng-repeat="a in artikli">
+		<tr ng-repeat="a in artikli | artikliFilter:sifra:naziv:odabranaKategorija:cenaOd:cenaDo">
 			<td style="border: none;">
 				<div class="panel panel-default">
 				  <div class="panel-body">

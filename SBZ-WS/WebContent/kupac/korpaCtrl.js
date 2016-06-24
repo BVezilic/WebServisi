@@ -53,6 +53,7 @@
 		$scope.ponistiRacun = function(){
 			$scope.racun={};
 			$scope.hasRacun = false;
+			$scope.korpa = [];
 		};
 		
 		$scope.potvrdiRacun = function(racun){
@@ -64,9 +65,11 @@
 				}).then(function successCallback(response) {
 					$scope.racun={};
 					$scope.hasRacun = false;
+					$scope.korpa = [];
 				  }, function errorCallback(response) {
 					  console.log("Greska kod addToKorpa");
 				  });
+			
 		};
 	}]);
 })(angular);
