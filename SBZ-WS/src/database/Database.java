@@ -1,5 +1,10 @@
 package database;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -646,4 +651,54 @@ public class Database implements Serializable {
 		this.ulogeKorisnika = ulogeKorisnika;
 	}
 
+	// SERIALIZE
+	
+	public void serializeToFile(){
+		
+		FileOutputStream fout;
+		ObjectOutputStream oos;
+		try {
+			fout = new FileOutputStream("../standalone/deployments/SBZ.war/database/database.bin");
+			oos = new ObjectOutputStream(fout);
+			oos.writeObject(this);
+			
+			fout.close();
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void readFromFile(){
+		FileInputStream fis;
+		ObjectInputStream ois;
+		try {
+			fis = new FileInputStream("../standalone/deployments/SBZ.war/database/database.bin");
+			ois = new ObjectInputStream(fis);
+			Database db = (Database) ois.readObject();
+			
+			this.akcijskiDogadjaji = db.akcijskiDogadjaji;
+			this.artikli = db.artikli;
+			this.kategorijeArtikla = db.kategorijeArtikla;
+			this.kategorijeKupca = db.kategorijeKupca;
+			this.korisnici = db.korisnici;
+			this.popustiZaRacun = db.popustiZaRacun;
+			this.popustiZaStavku = db.popustiZaStavku;
+			this.pragoviPotrosnje = db.pragoviPotrosnje;
+			this.profiliKupca = db.profiliKupca;
+			this.racuni = db.racuni;
+			this.stanjaRacuna = db.stanjaRacuna;
+			this.stavkeRacuna = db.stavkeRacuna;
+			this.tipoviPopusta = db.tipoviPopusta;
+			this.ulogeKorisnika = db.ulogeKorisnika;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e){
+			
+		}
+	}
 }

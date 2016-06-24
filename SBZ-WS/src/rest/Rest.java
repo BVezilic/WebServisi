@@ -24,14 +24,9 @@ public class Rest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		Korisnik ko1 = new Korisnik("kupac1", "Pera", "Peric", "p", null,null);
+		rezoner.serializeToFile();
 		
-		ko1 = rezoner.userExists(ko1);
-		System.out.println(ko1);
-		
-		rezoner.setupEngine();
-		rezoner.dodajFact(ko1);
-		rezoner.pokreniRezonovanje();
+		rezoner.loadFromFile();
 		
 		return "Radi";
 	}

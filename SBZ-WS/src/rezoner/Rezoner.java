@@ -85,6 +85,20 @@ public class Rezoner {
 		k.setProfilKupca(pk);
 
 	}
+	
+	/**
+	 * Sacuva bazu u fajl database/database.bin
+	 */
+	public void serializeToFile(){
+		database.serializeToFile();
+	}
+	
+	/**
+	 * Ucitava bazu iz fajla database/database.bin
+	 */
+	public void loadFromFile(){
+		database.readFromFile();
+	}
 
 	// Funkcije za Engine
 
