@@ -1,13 +1,50 @@
 <h2>Korpa</h2><br/>
 <div class="col-md-6">
-	<table class="table">
-		<tr ng-repeat="stavka in ['Stavka1', 'Stavka2', 'Stavka3', 'Stavka4'] track by $index">
-			<td valign="middle">{{stavka}}</td>
-			<td align="right"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Izbrisi</button></td>
+	<table class="table table-striped">
+		<tr>
+			<th>Sifra</th>
+			<th>Naziv</th>
+			<th>Kolicina</th>
+			<th>Pojedinacna cena</th>
+			<th>Ukupna cena</th>
+			<th></th>
+		</tr>
+		<tr ng-repeat="artikalUKorpi in korpa">
+			<td valign="middle">{{artikalUKorpi.artikal.sifra}}</td>
+			<td valign="middle">{{artikalUKorpi.artikal.naziv}}</td>
+			<td valign="middle">{{artikalUKorpi.kolicinaKupnjeljihArtikala}}</td>
+			<td valign="middle">{{artikalUKorpi.jedinicnaCena}}</td>
+			<td valign="middle">{{artikalUKorpi.originalnaUkupnaCena}}</td>
+			<td align="right"><button type="button" class="btn btn-danger" ng-click="removeFromKorpa(artikalUKorpi)"><span class="glyphicon glyphicon-remove"></span> Izbrisi</button></td>
 		</tr>
 	</table>
-	<button type="button" class="btn btn-success">Izdaj racun</button>
+	<button type="button" class="btn btn-success" ng-click="pregledRacuna()">Izdaj racun</button>
 </div>
-<div class="col-md-6">
-	Mesto za ispis podataka o racunu
+<div class="col-md-6 well" ng-show="hasRacun">
+	<p>{{racun.sifra}}</p>
+	<p>{{racun.datumIzdavanja|date:'mediumDate'}}</p>
+	<p>{{racun.brojOstvarenihBodova}}</p>
+	<p>{{racun.originalnaUkupnaCena}}</p>
+	<p>{{racun.procenatUmanjenja}}</p>
+	<p>{{racun.konacnaCena}}</p>
+	<table class="table table-striped">
+		<tr>
+			<th>Redni broj</th>
+			<th>Sifra</th>
+			<th>Naziv</th>
+			<th>Kolicina</th>
+			<th>Pojedinacna cena</th>
+			<th>Ukupna cena</th>	
+		</tr>
+		<tr ng-repeat="stavkaRacuna in racun.stavkeRacuna">
+			<td valign="middle">{{stavkaRacuna.redniBrojStavke}}</td>
+			<td valign="middle">{{stavkaRacuna.artikal.sifra}}</td>
+			<td valign="middle">{{stavkaRacuna.artikal.naziv}}</td>
+			<td valign="middle">{{stavkaRacuna.kolicinaKupnjeljihArtikala}}</td>
+			<td valign="middle">{{stavkaRacuna.jedinicnaCena}}</td>
+			<td valign="middle">{{stavkaRacuna.originalnaUkupnaCena}}</td>
+		</tr>
+	</table>
+	<button class="btn btn-success" ng-click="potvrdiRacun(racun)">Potvrdi</button>
+	<button class="btn btn-danger" ng-click="ponistiRacun()">Poništi</button>
 </div>

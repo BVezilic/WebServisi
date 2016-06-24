@@ -14,13 +14,10 @@
 <div class="col-sm-6">
 	<h2>Istorija kupovine</h2><br/>
 	<table class="table table-hover">
-    <tbody>
-      <tr>
-        <td>Racun 1</td>
-      </tr>
-      <tr>
-        <td>Racun 2</td>
-      </tr>
-    </tbody>
-  </table>
+    	<tr ng-repeat="racun in racuni">
+    		<td>{{racun.sifra}}</td>
+    		<td>{{racun.datumIzdavanja|date:'mediumDate'}}</td>
+    		<td>{{racun.konacnaCena}}</td>
+    	</tr>
+  	</table>
 </div>

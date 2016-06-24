@@ -25,31 +25,27 @@
 </div>
 </div>
 <div class="col-sm-8">
-	<table class="table">
-    <tbody>
-			<div ng-repeat="a in [1,2]">
-				<tr>
-					<td style="border: none;">
-					<div class="panel panel-default">
-					  <div class="panel-body">
-					  	<p><label>Sifra:</label> 13543216</p>
-					  	<p><label>Naziv:</label> Steelseries</p>					  	
-					  	<p><label>Kategorija:</label> Slusalice</p>
-					  	<p><label>Cena:</label> 8500.00</p>
-					  	<p><label>Akcija:</label> 10%</p>
-					  </div>
-					  <div class="panel-footer">
-			  			<div class="input-group col-lg-5">
-							 	<span class="input-group-addon" id="basic-addon3">Kolicina</span><input type="number" class="form-control" id="kolicina" aria-describedby="basic-addon3"/>
-							 	<span class="input-group-btn">
-						        <button type="button" class="btn btn-success">Dodaj u korpu</button>
-						   	</span>
-							</div>
+	<table class="table">	
+		<tr ng-repeat="a in artikli">
+			<td style="border: none;">
+				<div class="panel panel-default">
+				  <div class="panel-body">
+				  	<p><label>Sifra:</label> {{a.sifra}}</p>
+				  	<p><label>Naziv:</label> {{a.naziv}}</p>					  	
+				  	<p><label>Kategorija:</label> {{a.kategorijaArtikla.naziv}}</p>
+				  	<p><label>Cena:</label> {{a.cena}}</p>
+				  	<p><label>Akcija:</label> 10%</p>
+				  </div>
+				  <div class="panel-footer">
+		  			<div class="input-group col-lg-5">
+						 	<span class="input-group-addon" id="basic-addon3">Kolicina</span><input type="number" class="form-control" id="kolicina" ng-model="kolicina" aria-describedby="basic-addon3"/>
+						 	<span class="input-group-btn">
+					        <button type="button" class="btn btn-success" ng-click="addToKorpa(a, kolicina)">Dodaj u korpu</button>
+					   	</span>
 						</div>
 					</div>
-					</td>
-				<tr>
-			</div>
-    </tbody>
+				</div>
+			</td>
+		</tr> 
   </table>
 </div>
