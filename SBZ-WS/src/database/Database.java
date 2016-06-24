@@ -11,7 +11,6 @@ import javax.ejb.Singleton;
 
 import model.AkcijskiDogadjaj;
 import model.Artikal;
-import model.ArtikalUKorpi;
 import model.KategorijaArtikla;
 import model.KategorijaKupca;
 import model.Korisnik;
