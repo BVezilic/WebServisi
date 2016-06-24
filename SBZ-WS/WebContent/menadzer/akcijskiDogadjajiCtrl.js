@@ -1,8 +1,8 @@
 (function(angular) {
 	var app = angular.module('app');
 	app.controller('akcijskiDogadjajiCtrl', ['$scope', '$http', function($scope, $http) {
-		//$scope.azuriranjeKat = {};
-		//$scope.dodavanjeKat = [];
+		$scope.azuriranjeKat = [];
+		$scope.dodavanjeKat = [];
 		
 		var getAkcijskeDogadjaje = function() {
 			$http({
@@ -28,12 +28,14 @@
 		};
 		getKategorijeArtikala();
 		
-		$scope.selectAkcijskiDogadjaj = function(akcija) {
+		$scope.selectAkcijskiDogadjaj = function(akcija) {			
 			$scope.selectedAkcijskiDogadjaj = akcija;
 			$scope.azuriranjeNaziv = akcija.naziv;
 			$scope.azuriranjeOd = new Date(akcija.vaziOd);
 			$scope.azuriranjeDo = new Date(akcija.vaziDo);
 			$scope.azuriranjePopust = akcija.popustZaDogadjaj*100;
+			$scope.azuriranjeKat = [];
+			$scope.azuriranjeKat = akcija.kategorijaArtiklaSaPopustima;
 		};
 	
 		$scope.dodajAkcijskiDogadjaj = function() {

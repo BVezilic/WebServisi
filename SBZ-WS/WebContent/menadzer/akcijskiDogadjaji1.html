@@ -46,7 +46,7 @@
 			  <div class="form-group">
 			    <label for="popust">Kategorije:</label>
 			    <div ng-repeat="katArt in kategorijaArtikala">
-				  	<input type="checkbox" data-checklist-model="dodavanjeKat" data-checklist-value="katArt.naziv">{{katArt.naziv}}</input>
+				  	<input type="checkbox" data-checklist-model="dodavanjeKat" data-checklist-value="katArt">{{katArt.naziv}}</input>
 				  </div>
 			  </div>
 				<button type="button" class="btn btn-success" ng-click="dodajAkcijskiDogadjaj()">Dodaj</button>
@@ -79,7 +79,7 @@
 			  <div class="form-group">
 			    <label for="popust">Kategorije:</label>			 
 				  <div ng-repeat="katArt in kategorijaArtikala">
-				  	<input type="checkbox" data-checklist-model="azuriranjeKat" data-checklist-value="katArt.naziv">{{katArt.naziv}}</input>
+				  	<input type="checkbox" data-checklist-model="azuriranjeKat" data-checklist-value="katArt">{{katArt.naziv}}</input>
 				  </div>
 			  </div>
 				<button type="button" class="btn btn-success" ng-click="azurirajAkcijskiDogadjaj()">Sacuvaj</button>

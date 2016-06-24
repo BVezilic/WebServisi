@@ -1,5 +1,5 @@
 (function(angular) {
-  var app = angular.module('app',['ui.router']);
+  var app = angular.module('app',['ui.router', "checklist-model"]);
 
   app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/login');
@@ -50,7 +50,7 @@
     })
     .state('menadzer.akcijskiDogadjaji', {
       url: '/akcijskiDogadjaji', 
-      templateUrl: 'menadzer/akcijskiDogadjaji.html',
+      templateUrl: 'menadzer/akcijskiDogadjaji1.html',
       controller: 'akcijskiDogadjajiCtrl'
     })
     .state('login', {
