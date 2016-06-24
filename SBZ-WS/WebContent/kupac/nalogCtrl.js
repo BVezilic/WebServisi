@@ -12,11 +12,13 @@
 				  });
 		}
 		getRacuni();
-		
-		$scope.checkRacun = function(racun){
 			
+		$scope.checkRacun = function(racun){
+			$scope.racun = racun;
+			$scope.showSelectedRacun = true;
 		};
 		
+		$scope.racuni = {};
 		$scope.showSelectedRacun = false;
 	}]);
 })(angular);

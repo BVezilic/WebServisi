@@ -110,6 +110,7 @@ public class Rest {
 		racun.setStanjeRacuna(StanjeRacuna.USPESNO_REALIZOVANO);
 		racun.setBrojPotrosenihBodova(bodovi);
 		data.addRacun(racun);
+		data.getKorpa().clear();
 		return true;
 	}
 	
