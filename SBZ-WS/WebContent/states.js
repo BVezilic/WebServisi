@@ -34,6 +34,25 @@
       templateUrl: 'prodavac/obradaRacuna.html',
       controller: 'obradaRacunaCtrl'
     })
+    .state('menadzer', {
+      url: '/menadzer', 
+      templateUrl: 'menadzer/menadzer.html'
+    })
+    .state('menadzer.kategorijeKupaca', {
+      url: '/kategorijeKupaca', 
+      templateUrl: 'menadzer/kategorijeKupaca.html',
+      controller: 'kategorijeKupacaCtrl'
+    })
+    .state('menadzer.kategorijeArtikala', {
+      url: '/kategorijeArtikala', 
+      templateUrl: 'menadzer/kategorijeArtikala.html',
+      controller: 'kategorijeArtikalaCtrl'
+    })
+    .state('menadzer.akcijskiDogadjaji', {
+      url: '/akcijskiDogadjaji', 
+      templateUrl: 'menadzer/akcijskiDogadjaji.html',
+      controller: 'akcijskiDogadjajiCtrl'
+    })
     .state('login', {
       url: '/login', 
       templateUrl: 'login/login.html',

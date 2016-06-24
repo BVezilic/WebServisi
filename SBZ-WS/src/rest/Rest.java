@@ -13,6 +13,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import model.Artikal;
+import model.KategorijaArtikla;
+import model.KategorijaKupca;
 import model.Korisnik;
 import model.Racun;
 import database.Database;
@@ -60,6 +62,46 @@ public class Rest {
 	public Boolean otkaziRacun(Racun racun){
 		System.out.println(racun);
 		return data.getRacuni().remove(racun);
+	}
+	
+	@GET
+	@Path("/kategorija/kupac/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<KategorijaKupca> sveKategorijeKupaca(){
+		return data.getKategorijeKupca();
+	}
+	
+	@POST
+	@Path("/kategorija/kupac/update")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Boolean azurirajKategorijuKupca(KategorijaKupca kategorija){
+		for (KategorijaKupca kk : data.getKategorijeKupca()) {
+			if (kk.getSifraKategorije().equals(kategorija.getSifraKategorije())) {
+				kk.setPragPotrosnje(kategorija.getPragPotrosnje());;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@GET
+	@Path("/kategorija/artikal/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<KategorijaArtikla> sveKategorijeArtikala(){
+		return data.getKategorijeArtikla();
+	}
+	
+	@POST
+	@Path("/kategorija/artikal/update")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Boolean azurirajKategorijuArtikla(KategorijaArtikla kategorija){
+		for (KategorijaArtikla ka : data.getKategorijeArtikla()) {
+			if (ka.getSifraKategorije().equals(kategorija.getSifraKategorije())) {
+				ka = kategorija;
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@GET

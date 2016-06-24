@@ -1,0 +1,28 @@
+<div class="row">
+	<h2>Spisak kategorija kupaca</h2><br/>
+	<table class="table table-hover">
+	  <tr>
+	    <th>Sifra</th>
+	    <th>Naziv</th>
+	    <th>Opseg od</th>
+	    <th>Opseg do</th>
+	  </tr>
+	  <tr ng-repeat="kategorijaKupca in kategorijaKupaca" ng-click="selectKategorijuKupca(kategorijaKupca)">
+	    <td>{{kategorijaKupca.sifraKategorije}}</td>
+	    <td>{{kategorijaKupca.nazivKategorije}}</td>
+	    <td>{{kategorijaKupca.pragPotrosnje.opsegPotrosnjeOd}}</td>
+	    <td>{{kategorijaKupca.pragPotrosnje.opsegPotrosnjeDo}}</td>
+	  </tr>
+	</table>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<h2>Azuriranje kategorije: </h2><br/>
+		<p><b>Sifra kategorije:</b> {{selectedKategorijaKupca.sifraKategorije}}</p>
+		<label for="opseg">Opseg:</label>
+	 		<div class="input-group form-group col-md-6">
+	    <input type="number" ng-model="opsegOd" class="form-control" id="cenaOd"><span class="input-group-addon">-</span><input type="number" ng-model="opsegDo" class="form-control" id="cenaDo">
+ 		  </div>
+		<button type="button" class="btn btn-success" ng-click="sacuvajKategorijuKupca()">Sacuvaj</button>
+	</div>
+</div>
