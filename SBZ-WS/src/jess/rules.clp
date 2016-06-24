@@ -199,6 +199,7 @@ PRAVILA ZA RACUNE!!!!
 (defrule osnovniR1
     (declare (no-loop TRUE) (salience 40))
     ?r<-(racun (originalnaUkupnaCena ?ukupnaCena &:(> ?ukupnaCena 200000)))
+    (test(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO)))
     =>
     ;(printout t crlf "primenice se 5% popusta na racun za 200000" crlf)
     (call ?r.OBJECT addPrimenjeniPopust (new Popust "007" ?r.OBJECT 0.05 (TipPopusta.OSNOVNI)))
@@ -211,6 +212,7 @@ PRAVILA ZA RACUNE!!!!
     ;(racun (datumIzdavanja ?datumIzdavanja))
     ;(test (> (call Utility dateDifference ?datumIzdavanja ?datumRegistrovanja) 730))
     ?r<-(racun)
+    (test(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO)))
     (test (call Utility korisniciStaz 2 (get (get (get ?r kupac) korisnik) datumRegistrovanja)))
     =>
     ;(printout t crlf "primeniti popust od 2% za stare kupce" crlf)
@@ -223,6 +225,7 @@ PRAVILA ZA RACUNE!!!!
     ;(profilKupca (kategorijaKupca ?kat))
     ;(kategorijaKupca (sifraKategorije ?sifraKategorije &?kat.sifraKategorije) (sifraKategorije ?sifra &:(or (eq ?sifra "SIL")(eq ?sifra "GLD"))))
     ?r<-(racun (kupac ?kup &:(or (eq (get(get ?kup kategorijaKupca) nazivKategorije) "SIL") (eq (get(get ?kup kategorijaKupca) nazivKategorije) "GLD")) ))
+    (test(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO)))
     =>
     ;(printout t crlf "popust za srebrne/zlatne kupce od 1%" crlf)
     (call ?r.OBJECT addPrimenjeniPopust (new Popust "009" ?r.OBJECT 0.01 (TipPopusta.DODATNI)))
@@ -250,6 +253,7 @@ PRAVILA ZA RACUNE!!!!
     (declare (no-loop TRUE) (salience 70))
     ;?r <- (racun (originalnaUkupnaCena ?ukupnaCena &:(and(> ?ukupnaCena 50000) (call Utility overHalf (get ?r originalnaUkupnaCena) (get ?r stavkeRacuna) 0.5))))
     ?r <- (racun (originalnaUkupnaCena ?ukupnaCena &:(and(> ?ukupnaCena 50000) (overHalf (get ?r originalnaUkupnaCena) (get ?r stavkeRacuna) 0.5))))
+    (test(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO)))
     =>
     (call ?r.OBJECT addPrimenjeniPopust (new Popust "010" ?r.OBJECT 0.03 (TipPopusta.DODATNI)))
     )
@@ -258,6 +262,7 @@ PRAVILA ZA RACUNE!!!!
 (defrule saberiPopusteZaRacune
     (declare (no-loop TRUE) (salience 0))
     ?r<-(racun)
+    (test(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO)))
     =>
     (bind ?lst (get ?r primenjeniPopusti))
     (bind ?temp 0)
@@ -266,7 +271,9 @@ PRAVILA ZA RACUNE!!!!
 	(call ?r.OBJECT setProcenatUmanjenja ?temp)
     (bind ?temp (* (get ?s jedinicnaCena) (get ?s kolicinaKupnjeljihArtikala) (- 1 (call ?s.OBJECT getProcenatUmanjenja))))
     (call ?r.OBJECT setKonacnaCena ?temp)
-    (bind ?pragPotrosnje (get (get (get ?r kupac) kategorijaKupca) pragPotrosnje) )
+    (bind ?profilKupca (get ?r kupac))
+    (bind ?pragPotrosnje (get (get (get ?r kupac) kategorijaKupca) pragPotrosnje))
+    (call ?profilKupca addNagradniBodovi (round(call ?pragPotrosnje dodelaNagradnihBodova ?temp)))
     )
 
 ;proveri da li je potrebno da se poruci jos artikala
