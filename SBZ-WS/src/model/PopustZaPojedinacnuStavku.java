@@ -21,7 +21,7 @@ public class PopustZaPojedinacnuStavku extends Popust implements Serializable{
 	@Override
 	public String toString() {
 		return "PopustZaPojedinacnuStavku [stavkaRacuna=" + stavkaRacuna.getRedniBrojStavke() + 
-				", procenatUmanjenja="+ procenatUmanjenja + ",tip popusta=" + oznaka +"]";
+				", procenatUmanjenja="+ procenatUmanjenja + ",tip popusta=" + oznaka + ", sifra=" + sifra + "]";
 	}
 
 	public StavkaRacuna getStavkaRacuna() {
