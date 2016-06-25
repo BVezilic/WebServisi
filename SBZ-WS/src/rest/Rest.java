@@ -32,17 +32,17 @@ public class Rest {
 	@EJB
 	Database data;
 	
-//	@EJB
-//	Rezoner rezoner;
-//	
-//	@GET
-//	@Path("/test")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String test(){	
-//		rezoner.serializeToFile();		
-//		rezoner.loadFromFile();
-//		return "Radi";
-//	}
+	@EJB
+	Rezoner rezoner;
+	
+	@GET
+	@Path("/test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String test(){	
+		rezoner.serializeToFile();		
+		rezoner.loadFromFile();
+		return "Radi";
+	}
 	
 	@GET
 	@Path("/korpa/get")

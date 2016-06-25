@@ -3,6 +3,9 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.oracle.webservices.internal.api.databinding.DatabindingMode;
+
 import utils.Utility;
 
 public class StavkaRacuna implements Serializable{
@@ -70,6 +73,7 @@ public class StavkaRacuna implements Serializable{
 		primenjeniPopusti.remove(popust);
 	}
 	
+	@JsonIgnore
 	public Racun getRacun() {
 		return racun;
 	}
