@@ -24,6 +24,7 @@ import model.Racun;
 import model.StanjeRacuna;
 import model.StavkaRacuna;
 import rezoner.Rezoner;
+import utils.Utility;
 import database.Database;
 
 @Stateless
@@ -88,6 +89,7 @@ public class Rest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Artikal> sviArtikli(){
 		rezoner.replenishArticles();
+		rezoner.removeAllFacts();
 		return data.getArtikli();
 	}
 	
@@ -204,7 +206,8 @@ public class Rest {
 			//racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
 		}	
 		racun = rezoner.pokreniRezonerZaRacun(racun);		
-		data.setRacunUPirpremi(racun); 
+		data.setRacunUPirpremi(racun);
+		rezoner.removeAllFacts();
 		System.out.println(racun);
 		return racun;
 	}
@@ -285,7 +288,13 @@ public class Rest {
 	@Path("/akcija/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<AkcijskiDogadjaj> sveAkcije(){
-		return data.getAkcijskiDogadjaji();
+		ArrayList<AkcijskiDogadjaj> retVal = new ArrayList<AkcijskiDogadjaj>();
+		for(AkcijskiDogadjaj ad : data.getAkcijskiDogadjaji())
+		{
+			if(Utility.isWithinDates(new Date(), ad.getVaziOd(), ad.getVaziDo()))
+				retVal.add(ad);
+		}
+		return retVal;
 	}
 	
 	@POST
