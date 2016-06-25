@@ -1,6 +1,6 @@
 (function(angular) {
 	var app = angular.module('app');
-	app.controller('korpaCtrl', ['$scope', '$http', function($scope, $http) {
+	app.controller('korpaCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
 		/*
 		 * variables 
 		 */
@@ -38,13 +38,21 @@
 		};
 		
 		$scope.pregledRacuna = function(){
+			console.log($rootScope.korisnik);
 			$http({
-				  method: 'GET',
+				  method: 'POST',
 				  url: 'http://localhost:8080/SBZ/rest/services/racun/pregled',
-				  
+				  data: $rootScope.korisnik
 				}).then(function successCallback(response) {
-					$scope.hasRacun = true;
-					$scope.racun = response.data;
+					
+					if(response.data != "")
+					{
+						$scope.hasRacun = true;
+						$scope.racun = response.data;
+					}else
+					{
+						window.alert("Nema dovoljno odredjenih artikala na lageru da bi se formirala ova porudzbina.");
+					}
 				}, function errorCallback(response) {
 					  console.log("Greska kod removeFromoKorpa");
 				  });
@@ -56,16 +64,24 @@
 			$scope.korpa = [];
 		};
 		
-		$scope.potvrdiRacun = function(racun){
+		$scope.potvrdiRacun = function(racun, ulozeniBodovi){
 			$http({
 				  method: 'POST',
 				  url: 'http://localhost:8080/SBZ/rest/services/racun/potvrda',
 				  data: racun,
-				  params: {"bodovi":0}
+				  params: {"bodovi":ulozeniBodovi}
 				}).then(function successCallback(response) {
-					$scope.racun={};
-					$scope.hasRacun = false;
-					$scope.korpa = [];
+					if(response.data == true){
+						$scope.racun={};
+						$scope.hasRacun = false;
+						$scope.korpa = [];
+						console.log($rootScope.korisnik.profilKupca.nagradniBodovi);
+						$rootScope.korisnik.profilKupca.nagradniBodovi -= ulozeniBodovi;
+						console.log($rootScope.korisnik.profilKupca.nagradniBodovi);
+					}else
+					{
+						window.alert("Nemate dovoljno bodova da biste ostvarili ovu kupovinu");
+					}
 				  }, function errorCallback(response) {
 					  console.log("Greska kod addToKorpa");
 				  });

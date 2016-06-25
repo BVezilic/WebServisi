@@ -19,6 +19,7 @@ import model.Artikal;
 import model.KategorijaArtikla;
 import model.KategorijaKupca;
 import model.Korisnik;
+import model.ProfilKupca;
 import model.Racun;
 import model.StanjeRacuna;
 import model.StavkaRacuna;
@@ -82,6 +83,7 @@ public class Rest {
 	@Path("/artikal/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Artikal> sviArtikli(){
+		rezoner.replenishArticles();
 		return data.getArtikli();
 	}
 	
@@ -111,7 +113,44 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean obradiRacun(Racun racun){
 		System.out.println(racun); 
+		Racun temp = data.getRacuni().get(data.getRacuni().indexOf(racun));
+		for(StavkaRacuna sr: temp.getStavkeRacuna())
+		{
+			if(sr.getKolicinaKupnjeljihArtikala() > data.getArtikalBySifra(sr.getArtikal().getSifra()).getBrojnoStanje())
+			{
+				return false;
+			}
+		}
+		for(StavkaRacuna sr: temp.getStavkeRacuna())
+		{
+			temp.setStanjeRacuna(StanjeRacuna.USPESNO_REALIZOVANO);
+			temp.getKupac().addRealizovanaKupovina(temp);
+			//temp.getKupac().setNagradniBodovi((int)(temp.getKupac().getNagradniBodovi() - temp.getBrojPotrosenihBodova()));
+			temp.getKupac().addNagradniBodovi(temp.getBrojOstvarenihBodova());
+			data.getArtikalBySifra(sr.getArtikal().getSifra()).setBrojnoStanje((int)(data.getArtikalBySifra(sr.getArtikal().getSifra()).getBrojnoStanje() - sr.getKolicinaKupnjeljihArtikala()));
+		}
 		return true;
+	}
+	
+	@POST
+	@Path("/racun/getForKupac")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Racun> getForKupac(Korisnik kupac){
+		ArrayList<Racun> racuniKupca = new ArrayList<Racun>();
+		System.out.println("Primljen ovaj parametar: "+kupac);
+		
+		for (Racun racun : data.getRacuni()) {
+			if(racun.getKupac().getKorisnik() != null){
+				System.out.println("korisnik u racunu nije null");
+				if(racun.getKupac().getKorisnik().getKorisnickoIme().equals(kupac.getKorisnickoIme())){
+					racuniKupca.add(racun);
+				}
+			}else{
+				System.out.println("Dobio null za racun");
+			}
+		}
+
+		return racuniKupca;
 	}
 	
 	@POST
@@ -119,26 +158,48 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean obradiRacun(Racun racun, @QueryParam("bodovi")int bodovi){
 		System.out.println(racun);
-		racun.setStanjeRacuna(StanjeRacuna.USPESNO_REALIZOVANO);
-		racun.setBrojPotrosenihBodova(bodovi);
-		data.addRacun(racun);
+		if(data.getRacunUPirpremi().getKupac().getNagradniBodovi() - bodovi < 0){
+			return false;
+		}
+		
+		data.getRacunUPirpremi().setStanjeRacuna(StanjeRacuna.PORUCENO);
+		data.getRacunUPirpremi().setBrojPotrosenihBodova(bodovi);
+		data.addRacun(data.getRacunUPirpremi());
+		data.getRacunUPirpremi().getKupac().setNagradniBodovi(data.getRacunUPirpremi().getKupac().getNagradniBodovi() - bodovi);
 		data.getKorpa().clear();
 		return true;
 	}
 	
-	@GET
+	@POST
 	@Path("/racun/pregled")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Racun createRacun(){
-		Racun racun = new Racun(""+data.getRacuni().size(), new Date(), null, 0, 0, 0, 0, 0);
+	public Racun createRacun(Korisnik kupac){
+		ProfilKupca kupacFromDB = new ProfilKupca();
+		
+		for (Korisnik korisnik : data.getKorisnici()) {
+			if(korisnik.getKorisnickoIme().equals(kupac.getKorisnickoIme())){
+				kupacFromDB = korisnik.getProfilKupca();
+				break;
+			}
+		}
+		
+		Racun racun = new Racun(""+data.getRacuni().size(), new Date(), kupacFromDB, 0, 0, 0, 0, 0);
 		
 		int i = 1;
 		for (StavkaRacuna stavka : data.getKorpa().values()) {
+			if(stavka.getArtikal().getBrojnoStanje() <= stavka.getKolicinaKupnjeljihArtikala())
+			{
+				return null;
+			}
 			stavka.setRedniBrojStavke(i++);
 			racun.addStavkaRacuna(stavka);
 			racun.setOriginalnaUkupnaCena(racun.getOriginalnaUkupnaCena() + stavka.getKonacnaCena());
 			racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
 		}
+		
+		data.setRacunUPirpremi(racun);
+		
 		return racun;
 	}
 	
@@ -154,8 +215,15 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean otkaziRacun(Racun racun){
 		//System.out.println(racun);
-		//return data.removeRacun(racun);
-		return null;
+		Racun temp = data.getRacuni().get(data.getRacuni().indexOf(racun));
+		if(temp.getStanjeRacuna() == StanjeRacuna.PORUCENO)
+		{
+			temp.setStanjeRacuna(StanjeRacuna.OTKAZANO);
+			temp.getKupac().addNagradniBodovi((int)temp.getBrojPotrosenihBodova());
+			return true;
+		}else
+			return false;
+		
 	}
 	
 	@GET

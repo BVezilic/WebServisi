@@ -81,10 +81,15 @@ public class Rezoner {
 	 */
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<Artikal> replenishArticles()
+	public void replenishArticles()
 	{
-		/*
-		ArrayList<Artikal> retVal = new ArrayList<Artikal>();
+		setupEngine();
+		for(Artikal a: database.getArtikli())
+		{
+			a.setPotrebnoPopunitiZalihe(false);
+			dodajFact(a);
+		}
+		pokreniRezonovanje();
 		Iterator<Fact> it = new FilteringIterator(engine.listFacts(), new Filter() {
 			public boolean accept(Object arg0) {
 				Fact temp = (Fact) arg0; 
@@ -92,23 +97,18 @@ public class Rezoner {
 					return true;
 				return false;
 			}
-		});
+		});		
 		
 		while (it.hasNext()) {
         	Fact fa = (Fact) it.next();
         	try {
 				String sifra = fa.getSlotValue("ID").toString();
 				sifra = sifra.replace("\"", "");
-				retVal.add(database.getArtikalBySifra(sifra));
+				database.getArtikalBySifra(sifra).setPotrebnoPopunitiZalihe(true);
 			} catch (JessException e) {
 				e.printStackTrace();
 			}
 		}
-		
-		return retVal;*/
-		
-		  return null;
-		
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -496,7 +496,7 @@ public class Rezoner {
 			engine2.run();
 			//Iterator<Fact> it = engine2.listFacts();
 			
-			System.out.println("NAGRADNI BODOVI: " + r3.getKupac().getNagradniBodovi());
+			System.out.println("NAGRADNI BODOVI: " + r3.getBrojOstvarenihBodova());
 			//engine2.definstance("stavka", str1, false);
 			//engine2.run();
 			//System.out.println(r3.getOriginalnaUkupnaCena());

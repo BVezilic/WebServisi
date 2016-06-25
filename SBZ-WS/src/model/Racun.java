@@ -216,32 +216,10 @@ public class Racun implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Racun other = (Racun) obj;
-		if (brojOstvarenihBodova != other.brojOstvarenihBodova)
-			return false;
-		if (datumIzdavanja == null) {
-			if (other.datumIzdavanja != null)
-				return false;
-		} else if (!datumIzdavanja.equals(other.datumIzdavanja))
-			return false;
-		if (kupac == null) {
-			if (other.kupac != null)
-				return false;
-		} else if (!kupac.equals(other.kupac))
-			return false;
-		if (primenjeniPopusti == null) {
-			if (other.primenjeniPopusti != null)
-				return false;
-		} else if (!primenjeniPopusti.equals(other.primenjeniPopusti))
-			return false;
 		if (sifra == null) {
 			if (other.sifra != null)
 				return false;
 		} else if (!sifra.equals(other.sifra))
-			return false;
-		if (stavkeRacuna == null) {
-			if (other.stavkeRacuna != null)
-				return false;
-		} else if (!stavkeRacuna.equals(other.stavkeRacuna))
 			return false;
 		return true;
 	}
