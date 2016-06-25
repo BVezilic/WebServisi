@@ -694,6 +694,9 @@ public class Database implements Serializable {
 			this.tipoviPopusta = db.tipoviPopusta;
 			this.ulogeKorisnika = db.ulogeKorisnika;
 			
+			fis.close();
+			ois.close();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
