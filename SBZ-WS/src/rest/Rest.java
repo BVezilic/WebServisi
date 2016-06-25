@@ -154,7 +154,7 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean otkaziRacun(Racun racun){
 		System.out.println(racun);
-		return data.getRacuni().remove(racun);
+		return data.removeRacun(racun);
 	}
 	
 	@GET
