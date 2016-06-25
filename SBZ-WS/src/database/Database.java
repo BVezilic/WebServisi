@@ -283,7 +283,7 @@ public class Database implements Serializable {
 	
 	public Date parseDate(String s) {
 		try {
-			return (new SimpleDateFormat("dd/mm/yyyy")).parse(s);
+			return (new SimpleDateFormat("dd/MM/yyyy")).parse(s);
 		} catch (ParseException e) {
 			return null;
 		}
