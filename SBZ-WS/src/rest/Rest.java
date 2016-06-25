@@ -88,6 +88,7 @@ public class Rest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Artikal> sviArtikli(){
 		rezoner.replenishArticles();
+		rezoner.removeAllFacts();
 		return data.getArtikli();
 	}
 	
@@ -205,6 +206,7 @@ public class Rest {
 		}	
 		racun = rezoner.pokreniRezonerZaRacun(racun);		
 		data.setRacunUPirpremi(racun);
+		rezoner.removeAllFacts();
 		System.out.println(racun);
 		return racun;
 	}
