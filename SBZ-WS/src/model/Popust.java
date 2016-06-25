@@ -98,7 +98,7 @@ public class Popust implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Popust [sifra=" + sifra + ", racun=" + racun
+		return "Popust [sifra=" + sifra + ", racun="
 				+ ", procenatUmanjenja=" + procenatUmanjenja + ", oznaka="
 				+ oznaka + "]";
 	}

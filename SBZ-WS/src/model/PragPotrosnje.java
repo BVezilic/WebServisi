@@ -34,7 +34,6 @@ public class PragPotrosnje implements Serializable {
 		}
 		
 		return skaliranje * cena;
-		
 	}
 	
 	// GET && SET

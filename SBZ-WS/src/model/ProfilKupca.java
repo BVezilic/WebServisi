@@ -78,6 +78,11 @@ public class ProfilKupca implements Serializable {
 		this.nagradniBodovi = nagradniBodovi;
 	}
 
+	public void addNagradniBodovi(int dodBodovi)
+	{
+		this.nagradniBodovi += dodBodovi;
+	}
+	
 	public KategorijaKupca getKategorijaKupca() {
 		return kategorijaKupca;
 	}
