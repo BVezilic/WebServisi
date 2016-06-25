@@ -1,6 +1,6 @@
 (function(angular) {
 	var app = angular.module('app');
-	app.controller('kategorijeKupacaCtrl', ['$scope', '$http', function($scope, $http) {
+	app.controller('kategorijeKupacaCtrl', ['$scope', '$http', 'validator', function($scope, $http, validator) {
 		var getKategorijeKupaca = function() {
 			$http({
 			  method: 'GET',
@@ -20,6 +20,10 @@
 		};
 		
 		$scope.sacuvajKategorijuKupca = function(kolicina) {
+			if (!validator.inRange($scope.opsegOd, $scope.opsegDo)) {
+				alert("Pogresan opseg");
+				return;
+			}
 			var azuriranaKategorija = $scope.selectedKategorijaKupca;
 			azuriranaKategorija.pragPotrosnje.opsegPotrosnjeOd = $scope.opsegOd;
 			azuriranaKategorija.pragPotrosnje.opsegPotrosnjeDo = $scope.opsegDo;

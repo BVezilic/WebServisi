@@ -25,12 +25,14 @@
 	  <div class="panel-body">
 	  <p><b>Naziv artikla:</b> {{selectedArtikal.naziv}}</p>
 		<p><label>Kolicina za narucivanje:</label></p>
+		<form>
 		<div class="input-group">
-		  <input class="form-control" type="number" ng-model="kolicina">
+		  <input class="form-control" type="number" ng-model="kolicina" min="0">
 		  <span class="input-group-btn">
 		  	<button type="button" class="btn btn-success" ng-click="azurirajArtikal(kolicina)">Azuriraj</button>
 		  </span>
 		</div>
+		</form>
 		</div>
 	</div>
 	</div>

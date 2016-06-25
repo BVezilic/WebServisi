@@ -24,6 +24,9 @@
 			  data: $scope.selectedRacun
 			}).then(function successCallback(response) {
 				console.log(response.data);
+				if(!response.data) {
+					alert("Neuspesno obradjen racun!")
+				}
 			  }, function errorCallback(response) {
 				  console.log("Greska kog APPLY racuna");
 			  });
