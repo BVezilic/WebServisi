@@ -495,7 +495,7 @@ public class Rezoner {
 			engine2.run();
 			//Iterator<Fact> it = engine2.listFacts();
 			
-			System.out.println("NAGRADNI BODOVI: " + r3.getKupac().getNagradniBodovi());
+			System.out.println("NAGRADNI BODOVI: " + r3.getBrojOstvarenihBodova());
 			//engine2.definstance("stavka", str1, false);
 			//engine2.run();
 			//System.out.println(r3.getOriginalnaUkupnaCena());
