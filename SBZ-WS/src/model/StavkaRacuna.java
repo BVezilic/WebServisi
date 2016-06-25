@@ -196,7 +196,7 @@ public class StavkaRacuna implements Serializable{
 		return true;
 	}
 	
-	public boolean getArticlesInSpan(int opseg, Artikal ar)
+	public boolean articlesInSpan(int opseg, Artikal ar)
 	{
 		ArrayList<Artikal> retVal = new ArrayList<Artikal>();
 		

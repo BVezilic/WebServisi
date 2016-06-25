@@ -32,17 +32,17 @@ public class Rest {
 	@EJB
 	Database data;
 	
-	@EJB
-	Rezoner rezoner;
-	
-	@GET
-	@Path("/test")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String test(){	
-		rezoner.serializeToFile();		
-		rezoner.loadFromFile();
-		return "Radi";
-	}
+//	@EJB
+//	Rezoner rezoner;
+//	
+//	@GET
+//	@Path("/test")
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String test(){	
+//		rezoner.serializeToFile();		
+//		rezoner.loadFromFile();
+//		return "Radi";
+//	}
 	
 	@GET
 	@Path("/korpa/get")
@@ -102,6 +102,7 @@ public class Rest {
 	@Path("/racun/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Racun> sviRacuni(){
+		System.out.println(data.getRacuni());
 		return data.getRacuni();
 	}
 	
