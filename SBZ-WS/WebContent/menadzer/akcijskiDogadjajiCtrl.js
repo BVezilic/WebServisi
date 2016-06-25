@@ -34,8 +34,7 @@
 			$scope.azuriranjeOd = new Date(akcija.vaziOd);
 			$scope.azuriranjeDo = new Date(akcija.vaziDo);
 			$scope.azuriranjePopust = akcija.popustZaDogadjaj*100;
-			$scope.azuriranjeKat = [];
-			$scope.azuriranjeKat = akcija.kategorijaArtiklaSaPopustima;
+			//$scope.azuriranjeKat = akcija.kategorijaArtiklaSaPopustima;
 		};
 	
 		$scope.dodajAkcijskiDogadjaj = function() {
@@ -45,7 +44,7 @@
 			akcija.vaziOd = $scope.dodavanjeOd;
 			akcija.vaziDo = $scope.dodavanjeDo;
 			akcija.popustZaDogadjaj = $scope.dodavanjePopust/100;
-			test = $scope.dodavanjeKat;
+			akcija.kategorijaArtiklaSaPopustima = $scope.dodavanjeKat;
 			$http({
 			  method: 'POST',
 			  url: 'http://localhost:8080/SBZ/rest/services/akcija/add',
@@ -63,6 +62,7 @@
 			azuriranaAkcija.vaziOd = $scope.azuriranjeOd;
 			azuriranaAkcija.vaziDo = $scope.azuriranjeDo;
 			azuriranaAkcija.popustZaDogadjaj = $scope.azuriranjePopust/100;
+			azuriranaAkcija.kategorijaArtiklaSaPopustima = $scope.azuriranjeKat;
 			$http({
 			  method: 'POST',
 			  url: 'http://localhost:8080/SBZ/rest/services/akcija/update',

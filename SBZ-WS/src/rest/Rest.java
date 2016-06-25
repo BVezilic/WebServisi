@@ -31,8 +31,6 @@ public class Rest {
 	@EJB
 	Database data;
 	
-	
-	
 	@GET
 	@Path("/korpa/get")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -205,6 +203,7 @@ public class Rest {
 	@Path("/akcija/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean dodajAkciju(AkcijskiDogadjaj akcijskiDogadjaj){
+		System.out.println(akcijskiDogadjaj);
 		return data.addAkcijskiDogadjaj(akcijskiDogadjaj);
 	}
 	
