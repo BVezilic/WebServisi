@@ -94,8 +94,6 @@ public class Rest {
 		for (Artikal a : data.getArtikli()) {
 			if (a.getSifra().equals(artikal.getSifra())) {
 				a.setBrojnoStanje(a.getBrojnoStanje() + kolicina);
-				if(a.getBrojnoStanje() >= a.getMinimalnoStanjeNaLageru())
-					a.setPotrebnoPopunitiZalihe(false);
 				return true;
 			}
 		}
@@ -115,6 +113,22 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean obradiRacun(Racun racun){
 		System.out.println(racun); 
+		Racun temp = data.getRacuni().get(data.getRacuni().indexOf(racun));
+		for(StavkaRacuna sr: temp.getStavkeRacuna())
+		{
+			if(sr.getKolicinaKupnjeljihArtikala() > data.getArtikalBySifra(sr.getArtikal().getSifra()).getBrojnoStanje())
+			{
+				return false;
+			}
+		}
+		for(StavkaRacuna sr: temp.getStavkeRacuna())
+		{
+			temp.setStanjeRacuna(StanjeRacuna.USPESNO_REALIZOVANO);
+			temp.getKupac().addRealizovanaKupovina(temp);
+			//temp.getKupac().setNagradniBodovi((int)(temp.getKupac().getNagradniBodovi() - temp.getBrojPotrosenihBodova()));
+			temp.getKupac().addNagradniBodovi(temp.getBrojOstvarenihBodova());
+			data.getArtikalBySifra(sr.getArtikal().getSifra()).setBrojnoStanje((int)(data.getArtikalBySifra(sr.getArtikal().getSifra()).getBrojnoStanje() - sr.getKolicinaKupnjeljihArtikala()));
+		}
 		return true;
 	}
 	
