@@ -9,7 +9,7 @@
 
 (defrule popustZaViseOd20
     (declare (no-loop TRUE) (salience 50))
-    ?s <- (stavka (racun ?r &:(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO))) (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and (> ?kol 20) (<> (call ?ar getNazivKategorije) "Skolski pribor") (<> (call ?ar getNazivNadKategorije) "Skolski pribor"))))
+    ?s <- (stavka (racun ?r &:(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO))) (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and (> ?kol 20) (<> (call ?ar nazivKategorije) "Skolski pribor") (<> (call ?ar nazivNadKategorije) "Skolski pribor"))))
     ;?s <- (stavka (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and (> ?kol 20) (<> (get (get ?ar kategorijaArtikla) naziv) "Skolski pribor") (<> (call ?ar getNazivNadKategorije) "Skolski pribor"))))
     =>
     (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "001" (get ?s racun) 0.1 (TipPopusta.OSNOVNI) ?s.OBJECT))
@@ -21,9 +21,9 @@
 ;televizori, racunari ili laptopovi
 (defrule popustZa5IzTehnike
     (declare (no-loop TRUE) (salience 49))
-    ?s <- (stavka (racun ?r &:(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO))) (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and  (> ?kol 5) (or (and (eq (call ?ar getNazivKategorije) "Televizori") (eq (call ?ar getNazivNadKategorije) "Televizori") ) 
-               (or (eq (call ?ar getNazivKategorije) "Racunari") (eq (call ?ar getNazivNadKategorije) "Racunari") )
-               (or (eq (call ?ar getNazivKategorije) "Laptopovi") (eq (call ?ar getNazivNadKategorije) "Laptopovi") )     ))))
+    ?s <- (stavka (racun ?r &:(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO))) (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and  (> ?kol 5) (or (and (eq (call ?ar nazivKategorije) "Televizori") (eq (call ?ar nazivNadKategorije) "Televizori") ) 
+               (or (eq (call ?ar nazivKategorije) "Racunari") (eq (call ?ar nazivNadKategorije) "Racunari") )
+               (or (eq (call ?ar nazivKategorije) "Laptopovi") (eq (call ?ar nazivNadKategorije) "Laptopovi") )     ))))
     ;(artikal (kategorijaArtikla ?kat) (sifra ?sifra &?a.sifra))
     ;(kategorijaArtikla (sifraKategorije ?kat1 &?kat.sifraKategorije) (naziv ?n |:(or (eq ?n "laptopovi")(eq ?n "racunari")(eq ?n "televizori"))))
     =>
@@ -36,7 +36,7 @@
     (declare (no-loop TRUE) (salience 51))
     ;(or(eq (call ?ar getNazivKategorije) "Skolski pribor") (eq (call ?ar getNazivNadKategorije) "Skolski pribor")
     ;(racun ?r &:(eq (get ?r stanjeRacuna) StanjeRacuna.PORUCENO)) (artikal ?ar) (originalnaUkupnaCena ?cena &:(> ?cena 5000))
-    ?s <- (stavka (racun ?r &:(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO))) (artikal ?ar) (originalnaUkupnaCena ?cena &:(and(> ?cena 5000) (or(eq (call ?ar getNazivKategorije) "Skolski pribor") (eq (call ?ar getNazivNadKategorije) "Skolski pribor")) ) ) )
+    ?s <- (stavka (racun ?r &:(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO))) (artikal ?ar) (originalnaUkupnaCena ?cena &:(and(> ?cena 5000) (or(eq (call ?ar nazivKategorije) "Skolski pribor") (eq (call ?ar nazivNadKategorije) "Skolski pribor")) ) ) )
     ;(artikal (kategorijaArtikla ?kat) (sifra ?sifra &?a.sifra))
     ;(kategorijaArtikla (sifraKategorije ?kat1 &?kat.sifraKategorije) (naziv ?n &"Siroka potrosnja"))
     =>

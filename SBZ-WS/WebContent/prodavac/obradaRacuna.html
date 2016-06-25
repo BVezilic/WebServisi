@@ -4,7 +4,7 @@
 	<table class="table table-hover fixed">
 	  <tr>
 	    <th>Sifra</th>
-	    <th>Kupac</th>
+	    <th>Adresa</th>
 	    <th>Originalna cena</th>
 	    <th>Procenat umanjenja</th>
 	    <th>Konacna cena</th>
@@ -14,7 +14,7 @@
 	  </tr>
 	  <tr ng-repeat="racun in racuni | filter:stanje" ng-click="selectRacun(racun)">
 	    <td>{{racun.sifra}}</td>
-	    <td>{{racun.kupac.korisnik.korisnickoIme}}</td>
+	    <td>{{racun.kupac.adresaIsporuke}}</td>
 	    <td>{{racun.originalnaUkupnaCena}}</td>
 	    <td>{{racun.procenatUmanjenja}}</td>
 	    <td>{{racun.konacnaCena}}</td>

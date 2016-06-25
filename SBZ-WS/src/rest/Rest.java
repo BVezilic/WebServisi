@@ -31,17 +31,17 @@ public class Rest {
 	@EJB
 	Database data;
 	
-//	@EJB
-//	Rezoner rezoner;
-//	
-//	@GET
-//	@Path("/test")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String test(){	
-//		rezoner.serializeToFile();		
-//		rezoner.loadFromFile();
-//		return "Radi";
-//	}
+	@EJB
+	Rezoner rezoner;
+	
+	@GET
+	@Path("/test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String test(){	
+		rezoner.serializeToFile();		
+		rezoner.loadFromFile();
+		return "Radi";
+	}
 	
 	@GET
 	@Path("/korpa/get")
@@ -153,7 +153,7 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean otkaziRacun(Racun racun){
 		System.out.println(racun);
-		return data.getRacuni().remove(racun);
+		return data.removeRacun(racun);
 	}
 	
 	@GET

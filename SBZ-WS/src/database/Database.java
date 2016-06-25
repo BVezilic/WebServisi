@@ -407,6 +407,16 @@ public class Database implements Serializable {
 		racuni.add(ra);
 		return true;
 	}
+	
+	public boolean removeRacun(Racun racun) {
+		for (Racun r : racuni) {
+			if (r.getSifra().equals(racun.getSifra())) {
+				racuni.remove(r);
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public boolean addProfilKupca(ProfilKupca pk) {
 		for (ProfilKupca p : profiliKupca) {

@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class ProfilKupca implements Serializable {
 
 	private static final long serialVersionUID = -4118823700944757540L;
@@ -49,6 +51,7 @@ public class ProfilKupca implements Serializable {
 		return true;
 	}
 	
+	@JsonIgnore
 	public Korisnik getKorisnik() {
 		return korisnik;
 	}
@@ -91,6 +94,7 @@ public class ProfilKupca implements Serializable {
 		this.kategorijaKupca = kategorijaKupca;
 	}
 
+	@JsonIgnore
 	public ArrayList<Racun> getRealizovaneKupovine() {
 		return realizovaneKupovine;
 	}
