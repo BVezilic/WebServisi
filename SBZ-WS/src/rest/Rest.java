@@ -24,6 +24,7 @@ import model.Racun;
 import model.StanjeRacuna;
 import model.StavkaRacuna;
 import rezoner.Rezoner;
+import utils.Utility;
 import database.Database;
 
 @Stateless
@@ -285,7 +286,13 @@ public class Rest {
 	@Path("/akcija/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<AkcijskiDogadjaj> sveAkcije(){
-		return data.getAkcijskiDogadjaji();
+		ArrayList<AkcijskiDogadjaj> retVal = new ArrayList<AkcijskiDogadjaj>();
+		for(AkcijskiDogadjaj ad : data.getAkcijskiDogadjaji())
+		{
+			if(Utility.isWithinDates(new Date(), ad.getVaziOd(), ad.getVaziDo()))
+				retVal.add(ad);
+		}
+		return retVal;
 	}
 	
 	@POST
