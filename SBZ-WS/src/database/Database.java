@@ -55,7 +55,7 @@ public class Database implements Serializable {
 	
 	private HashMap<String, StavkaRacuna> korpa = new HashMap<String, StavkaRacuna>();
 	
-	private Racun racunUPirpremi = new Racun();
+	transient private Racun racunUPirpremi = new Racun();
 	
 	public Database() {
 		super();
@@ -283,7 +283,7 @@ public class Database implements Serializable {
 	
 	public Date parseDate(String s) {
 		try {
-			return (new SimpleDateFormat("dd/MM/yyyy")).parse(s);
+			return (new SimpleDateFormat("dd/mm/yyyy")).parse(s);
 		} catch (ParseException e) {
 			return null;
 		}
@@ -417,16 +417,6 @@ public class Database implements Serializable {
 		racuni.add(ra);
 		return true;
 	}
-	
-	public boolean removeRacun(Racun racun) {
-		for (Racun r : racuni) {
-			if (r.getSifra().equals(racun.getSifra())) {
-				racuni.remove(r);
-				return true;
-			}
-		}
-		return false;
-	}
 
 	public boolean addProfilKupca(ProfilKupca pk) {
 		for (ProfilKupca p : profiliKupca) {
@@ -492,6 +482,17 @@ public class Database implements Serializable {
 		}
 		return null;
 	}
+
+	public boolean addKategorijaKupca(KategorijaKupca kk) {
+		for (KategorijaKupca k : kategorijeKupca) {
+			if (k.getSifraKategorije().equals(kk.getSifraKategorije())) {
+				System.out.println("Vec postoji kategorija kupca sa ovom sifrom kategorije");
+				return false;
+			}
+		}
+		kategorijeKupca.add(kk);
+		return true;
+	}
 	
 	public Artikal getArtikalBySifra(String sifra)
 	{
@@ -503,17 +504,6 @@ public class Database implements Serializable {
 			}
 		}
 		return null;
-	}
-	
-	public boolean addKategorijaKupca(KategorijaKupca kk) {
-		for (KategorijaKupca k : kategorijeKupca) {
-			if (k.getSifraKategorije().equals(kk.getSifraKategorije())) {
-				System.out.println("Vec postoji kategorija kupca sa ovom sifrom kategorije");
-				return false;
-			}
-		}
-		kategorijeKupca.add(kk);
-		return true;
 	}
 
 	public boolean addAkcijskiDogadjaj(AkcijskiDogadjaj ad) {
