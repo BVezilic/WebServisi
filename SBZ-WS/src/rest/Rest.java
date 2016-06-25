@@ -158,6 +158,7 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean obradiRacun(Racun racun, @QueryParam("bodovi")int bodovi){
 		System.out.println(racun);
+	
 		if(data.getRacunUPirpremi().getKupac().getNagradniBodovi() - bodovi < 0){
 			return false;
 		}
