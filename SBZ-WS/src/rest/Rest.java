@@ -81,7 +81,7 @@ public class Rest {
 			StavkaRacuna st = new StavkaRacuna(null, 0, artikal, artikal.getCena(), kolicina, kolicina * artikal.getCena(), 0, kolicina * artikal.getCena());
 			data.getKorpa().put(artikal.getSifra(), st);
 		}
-		System.out.println(data.getKorpa().toString());
+		System.out.println("DODAO JE U KORPU IDUCE" + data.getKorpa().toString());
 	}
 	
 	@GET
@@ -182,6 +182,10 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Racun createRacun(Korisnik kupac){
+		if(data.getKorpa().values().size() == 0){
+			return null;
+		}
+		
 		ProfilKupca kupacFromDB = new ProfilKupca();
 		
 		for (Korisnik korisnik : data.getKorisnici()) {

@@ -53,7 +53,7 @@
 						$scope.racun = response.data;
 					}else
 					{
-						window.alert("Nema dovoljno odredjenih artikala na lageru da bi se formirala ova porudzbina.");
+						window.alert("Nije moguce kreirati ovakav racun.");
 					}
 				}, function errorCallback(response) {
 					  console.log("Greska kod removeFromoKorpa");
