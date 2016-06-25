@@ -164,8 +164,8 @@ public class Rest {
 	@Path("/racun/potvrda")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean obradiRacun(Racun racun, @QueryParam("bodovi")int bodovi){
-		System.out.println(racun);
-	
+		System.out.println("BODOVI: " + bodovi);
+		
 		if(data.getRacunUPirpremi().getKupac().getNagradniBodovi() - bodovi < 0){
 			return false;
 		}
@@ -211,12 +211,13 @@ public class Rest {
 			//racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
 		}	
 		racun = rezoner.pokreniRezonerZaRacun(racun);		
-		data.setRacunUPirpremi(racun);
-		rezoner.removeAllFacts();
-		System.out.println(racun);
 		
 		racun.izaberiNajboljiOsnovniPopust(); // brise sve popuste osim najboljeg
-		System.out.println(racun);
+		
+		//OVO IDE NA KRAJ
+		data.setRacunUPirpremi(racun);
+		rezoner.removeAllFacts();
+		
 		return racun;
 	}
 	

@@ -23,6 +23,7 @@
 			  url: 'http://localhost:8080/SBZ/rest/services/racun/apply',
 			  data: $scope.selectedRacun
 			}).then(function successCallback(response) {
+				getRacuni();
 				console.log(response.data);
 			  }, function errorCallback(response) {
 				  console.log("Greska kog APPLY racuna");

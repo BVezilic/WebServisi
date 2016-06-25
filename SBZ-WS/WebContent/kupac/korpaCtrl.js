@@ -67,6 +67,9 @@
 		};
 		
 		$scope.potvrdiRacun = function(racun, ulozeniBodovi){
+			if(typeof ulozeniBodovi == 'undefined'){
+				ulozeniBodovi = 0;
+			}
 			$http({
 				  method: 'POST',
 				  url: 'http://localhost:8080/SBZ/rest/services/racun/potvrda',
