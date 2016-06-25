@@ -55,7 +55,7 @@ public class Database implements Serializable {
 	
 	private HashMap<String, StavkaRacuna> korpa = new HashMap<String, StavkaRacuna>();
 	
-	private Racun racunUPirpremi = new Racun();
+	transient private Racun racunUPirpremi = new Racun();
 	
 	public Database() {
 		super();
@@ -492,6 +492,18 @@ public class Database implements Serializable {
 		}
 		kategorijeKupca.add(kk);
 		return true;
+	}
+	
+	public Artikal getArtikalBySifra(String sifra)
+	{
+		for(Artikal a:artikli)
+		{
+			if(a.getSifra().equals(sifra))
+			{
+				return a;
+			}
+		}
+		return null;
 	}
 
 	public boolean addAkcijskiDogadjaj(AkcijskiDogadjaj ad) {
