@@ -218,8 +218,16 @@ public class Rest {
 	@Path("/racun/cancel")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean otkaziRacun(Racun racun){
-		System.out.println(racun);
-		return data.removeRacun(racun);
+		//System.out.println(racun);
+		Racun temp = data.getRacuni().get(data.getRacuni().indexOf(racun));
+		if(temp.getStanjeRacuna() == StanjeRacuna.PORUCENO)
+		{
+			temp.setStanjeRacuna(StanjeRacuna.OTKAZANO);
+			temp.getKupac().addNagradniBodovi((int)temp.getBrojPotrosenihBodova());
+			return true;
+		}else
+			return false;
+		
 	}
 	
 	@GET
