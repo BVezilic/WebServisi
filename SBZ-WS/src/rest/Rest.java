@@ -68,8 +68,12 @@ public class Rest {
 		if(data.getKorpa().containsKey(artikal.getSifra()))
 		{
 			StavkaRacuna st = data.getKorpa().get(artikal.getSifra());
+			
+			System.out.println(st.getKolicinaKupnjeljihArtikala());
 			st.setKolicinaKupnjeljihArtikala(st.getKolicinaKupnjeljihArtikala()+kolicina);
-			st.setKonacnaCena(st.getJedinicnaCena() * st.getKolicinaKupnjeljihArtikala());
+			System.out.println(st.getKolicinaKupnjeljihArtikala());
+			
+			st.setOriginalnaUkupnaCena(st.getJedinicnaCena() * st.getKolicinaKupnjeljihArtikala());
 			data.getKorpa().put(artikal.getSifra() , st);
 		}else
 		{	
@@ -158,6 +162,7 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean obradiRacun(Racun racun, @QueryParam("bodovi")int bodovi){
 		System.out.println(racun);
+	
 		if(data.getRacunUPirpremi().getKupac().getNagradniBodovi() - bodovi < 0){
 			return false;
 		}

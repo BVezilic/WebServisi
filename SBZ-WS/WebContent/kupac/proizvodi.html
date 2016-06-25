@@ -33,7 +33,11 @@
 				  	<p><label>Naziv:</label> {{a.naziv}}</p>					  	
 				  	<p><label>Kategorija:</label> {{a.kategorijaArtikla.naziv}}</p>
 				  	<p><label>Cena:</label> {{a.cena}}</p>
-				  	<p><label>Akcija:</label> 10%</p>
+				  	<div class = "well" ng-repeat="akcija in akcijskiDogadjaji|filter:a.kategorijaArtikla.naziv">
+				  		<p><label>Akcija:</label> {{akcija.naziv}}</p>
+				  		<p><label>Popust:</label> {{akcija.popustZaDogadjaj * 100}}%</p>
+				  		<p><label>U periodu od:</label> {{akcija.vaziOd|date:'mediumDate'}} - {{akcija.vaziDo|date:'mediumDate'}}</p>
+				  	</div>
 				  </div>
 				  <div class="panel-footer">
 		  			<div class="input-group col-lg-5">
