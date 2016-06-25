@@ -32,6 +32,7 @@
 				  
 				}).then(function successCallback(response) {
 					getKorpa();
+					$scope.pregledRacuna();
 				}, function errorCallback(response) {
 					  console.log("Greska kod removeFromoKorpa");
 				  });
@@ -61,7 +62,7 @@
 		$scope.ponistiRacun = function(){
 			$scope.racun={};
 			$scope.hasRacun = false;
-			$scope.korpa = [];
+			
 		};
 		
 		$scope.potvrdiRacun = function(racun, ulozeniBodovi){
