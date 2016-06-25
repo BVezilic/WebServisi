@@ -86,6 +86,7 @@ public class Rezoner {
 		setupEngine();
 		for(Artikal a: database.getArtikli())
 		{
+			a.setPotrebnoPopunitiZalihe(false);
 			dodajFact(a);
 		}
 		pokreniRezonovanje();
@@ -96,7 +97,7 @@ public class Rezoner {
 					return true;
 				return false;
 			}
-		});
+		});		
 		
 		while (it.hasNext()) {
         	Fact fa = (Fact) it.next();
