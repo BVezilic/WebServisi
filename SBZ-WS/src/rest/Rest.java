@@ -148,6 +148,14 @@ public class Rest {
 		data.getRacunUPirpremi().setStanjeRacuna(StanjeRacuna.USPESNO_REALIZOVANO);
 		data.getRacunUPirpremi().setBrojPotrosenihBodova(bodovi);
 		data.addRacun(data.getRacunUPirpremi());
+		
+		Artikal temp = new Artikal();
+		
+		for (StavkaRacuna stavka : data.getKorpa().values()) {
+			temp = data.getArtikalBySifra(stavka.getArtikal().getSifra());
+			temp.setBrojnoStanje(temp.getBrojnoStanje() - stavka.getKolicinaKupnjeljihArtikala());
+		}
+		
 		data.getKorpa().clear();
 		return true;
 	}
@@ -170,6 +178,10 @@ public class Rest {
 		
 		int i = 1;
 		for (StavkaRacuna stavka : data.getKorpa().values()) {
+			if(stavka.getArtikal().getBrojnoStanje() <= stavka.getKolicinaKupnjeljihArtikala())
+			{
+				return null;
+			}
 			stavka.setRedniBrojStavke(i++);
 			racun.addStavkaRacuna(stavka);
 			racun.setOriginalnaUkupnaCena(racun.getOriginalnaUkupnaCena() + stavka.getKonacnaCena());

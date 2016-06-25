@@ -44,8 +44,15 @@
 				  url: 'http://localhost:8080/SBZ/rest/services/racun/pregled',
 				  data: $rootScope.korisnik
 				}).then(function successCallback(response) {
-					$scope.hasRacun = true;
-					$scope.racun = response.data;
+					
+					if(response.data != "")
+					{
+						$scope.hasRacun = true;
+						$scope.racun = response.data;
+					}else
+					{
+						window.alert("Nema dovoljno odredjenih artikala na lageru da bi se formirala ova porudzbina.");
+					}
 				}, function errorCallback(response) {
 					  console.log("Greska kod removeFromoKorpa");
 				  });
