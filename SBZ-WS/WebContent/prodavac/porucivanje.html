@@ -1,0 +1,37 @@
+<div class="row">
+	<h2>Spisak artikala</h2><br/>
+	<table class="table table-hover fixed">
+	  <tr>
+	    <th>Sifra</th>
+	    <th>Naziv</th>
+	    <th>Brojno stanje</th>
+	    <th>Minimalno stanje</th>
+	    <th>Zalihe</th>
+	  </tr>
+	  <tr ng-repeat="artikal in artikli track by $index" ng-click="selectArtikal(artikal)">
+	    <td>{{artikal.sifra}}</td>
+	    <td>{{artikal.naziv}}</td>
+	    <td>{{artikal.brojnoStanje}}</td>
+	    <td>{{artikal.minimalnoStanjeNaLageru}}</td>
+	    <td>{{artikal.potrebnoPopunitiZalihe?'warning':'ok'}}</td>
+	  </tr>
+	</table>
+	<br/><br/>
+</div>
+<div class="row">
+	<div class="col-md-4">
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h2>Azuriraj artikal: </h2></div>
+	  <div class="panel-body">
+	  <p><b>Naziv artikla:</b> {{selectedArtikal.naziv}}</p>
+		<p><label>Kolicina za narucivanje:</label></p>
+		<div class="input-group">
+		  <input class="form-control" type="number" ng-model="kolicina">
+		  <span class="input-group-btn">
+		  	<button type="button" class="btn btn-success" ng-click="azurirajArtikal(kolicina)">Azuriraj</button>
+		  </span>
+		</div>
+		</div>
+	</div>
+	</div>
+</div>
