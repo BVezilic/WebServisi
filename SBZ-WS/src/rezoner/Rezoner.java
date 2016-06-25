@@ -83,6 +83,7 @@ public class Rezoner {
 	@SuppressWarnings("unchecked")
 	public ArrayList<Artikal> replenishArticles()
 	{
+		/*
 		ArrayList<Artikal> retVal = new ArrayList<Artikal>();
 		Iterator<Fact> it = new FilteringIterator(engine.listFacts(), new Filter() {
 			public boolean accept(Object arg0) {
@@ -103,7 +104,11 @@ public class Rezoner {
 				e.printStackTrace();
 			}
 		}
-		return retVal;
+		
+		return retVal;*/
+		
+		  return null;
+		
 	}
 	
 	@SuppressWarnings("unchecked")

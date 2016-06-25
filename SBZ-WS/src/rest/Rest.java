@@ -22,6 +22,7 @@ import model.Korisnik;
 import model.Racun;
 import model.StanjeRacuna;
 import model.StavkaRacuna;
+import rezoner.Rezoner;
 import database.Database;
 
 @Stateless
@@ -152,8 +153,9 @@ public class Rest {
 	@Path("/racun/cancel")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean otkaziRacun(Racun racun){
-		System.out.println(racun);
-		return data.removeRacun(racun);
+		//System.out.println(racun);
+		//return data.removeRacun(racun);
+		return null;
 	}
 	
 	@GET
