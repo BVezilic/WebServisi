@@ -24,7 +24,7 @@
 	<p><b>Sifra: </b>{{racun.sifra}}</p>
 	<p><b>Datum izdavanja: </b>{{racun.datumIzdavanja|date:'mediumDate'}}</p>
 	<p><b>Broj ostvarenih bodova: </b>{{racun.brojOstvarenihBodova}}</p>
-	<p><b>Originalna cena: </b>{{racun.originalnaUkupnaCena}}</p>
+	<p><b>Ukupna cena pre popusta na racun: </b>{{racun.originalnaUkupnaCena}}</p>
 	<p><b>Procenat umanjenja: </b>{{racun.procenatUmanjenja * 100}}%</p>
 	<p><b>Konacna cena: </b>{{racun.konacnaCena}}</p>
 	<table class="table table-striped">
@@ -42,7 +42,7 @@
 			<td valign="middle">{{stavkaRacuna.artikal.naziv}}</td>
 			<td valign="middle">{{stavkaRacuna.kolicinaKupnjeljihArtikala}}</td>
 			<td valign="middle">{{stavkaRacuna.jedinicnaCena}}</td>
-			<td valign="middle">{{stavkaRacuna.originalnaUkupnaCena}}</td>
+			<td valign="middle">{{stavkaRacuna.konacnaCena}}</td>
 		</tr>
 	</table>
 	<button class="btn btn-success" ng-click="potvrdiRacun(racun, ulozeniBodovi)">Potvrdi</button>
