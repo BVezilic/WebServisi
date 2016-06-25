@@ -1,6 +1,6 @@
 (function(angular) {
 	var app = angular.module('app');
-	app.controller('kategorijeArtikalaCtrl', ['$scope', '$http', function($scope, $http) {
+	app.controller('kategorijeArtikalaCtrl', ['$scope', '$http', 'validator', function($scope, $http, validator) {
 		var getKategorijeArtikala = function() {
 			$http({
 			  method: 'GET',
@@ -21,6 +21,10 @@
 		};
 		
 		$scope.dodajKategorijuArtikla = function() {
+			if(!validator.inRangeProcenti($scope.dodavanjPopust)) {
+				alert("Procenti moraju biti u opsego od 1-100");
+				return;
+			}
 			var kategorija = {};
 			kategorija.sifraKategorije = $scope.dodavanjeSifra;
 			kategorija.nadkategorija = $scope.dodavanjeNadkategorija;
@@ -32,12 +36,17 @@
 			  data: kategorija
 			}).then(function successCallback(response) {
 				getKategorijeArtikala();
+				resetAddFields();
 			  }, function errorCallback(response) {
 				  console.log("Greska kog ADD kategorijeArtikla");
 			  });
 		}
 		
 		$scope.azurirajKategorijuArtikla = function(kolicina) {
+			if(!validator.inRangeProcenti($scope.azuriranjePopust)) {
+				alert("Procenti moraju biti u opsego od 1-100");
+				return;
+			}
 			var azuriranaKategorija = $scope.selectedKategorijuArtikla;
 			azuriranaKategorija.nadkategorija = $scope.azuriranjeNadkategorija;
 			azuriranaKategorija.naziv = $scope.azuriranjeNaziv;
@@ -48,9 +57,23 @@
 			  data: azuriranaKategorija
 			}).then(function successCallback(response) {
 				getKategorijeArtikala();
+				resetUpdateFields();
 			  }, function errorCallback(response) {
 				  console.log("Greska kog UPDATE kategorijeKupaca");
 			  });
+		};
+		
+		var resetUpdateFields = function() {
+			$scope.azuriranjeNadkategorija = null;
+			$scope.azuriranjeNaziv = null;
+			$scope.azuriranjePopust = null;
+		};
+		
+		var resetAddFields = function() {
+			$scope.dodavanjeSifra = null;
+			$scope.dodavanjeNaziv = null;
+			$scope.dodavanjeNadkategorija = null;
+			$scope.dodavanjPopust = null;
 		};
 	}]);
 })(angular);
