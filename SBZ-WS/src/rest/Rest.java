@@ -83,6 +83,7 @@ public class Rest {
 	@Path("/artikal/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Artikal> sviArtikli(){
+		rezoner.replenishArticles();
 		return data.getArtikli();
 	}
 	
@@ -93,6 +94,8 @@ public class Rest {
 		for (Artikal a : data.getArtikli()) {
 			if (a.getSifra().equals(artikal.getSifra())) {
 				a.setBrojnoStanje(a.getBrojnoStanje() + kolicina);
+				if(a.getBrojnoStanje() >= a.getMinimalnoStanjeNaLageru())
+					a.setPotrebnoPopunitiZalihe(false);
 				return true;
 			}
 		}

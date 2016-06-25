@@ -81,9 +81,14 @@ public class Rezoner {
 	 */
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<Artikal> replenishArticles()
+	public void replenishArticles()
 	{
-		ArrayList<Artikal> retVal = new ArrayList<Artikal>();
+		setupEngine();
+		for(Artikal a: database.getArtikli())
+		{
+			dodajFact(a);
+		}
+		pokreniRezonovanje();
 		Iterator<Fact> it = new FilteringIterator(engine.listFacts(), new Filter() {
 			public boolean accept(Object arg0) {
 				Fact temp = (Fact) arg0; 
@@ -98,12 +103,11 @@ public class Rezoner {
         	try {
 				String sifra = fa.getSlotValue("ID").toString();
 				sifra = sifra.replace("\"", "");
-				retVal.add(database.getArtikalBySifra(sifra));
+				database.getArtikalBySifra(sifra).setPotrebnoPopunitiZalihe(true);
 			} catch (JessException e) {
 				e.printStackTrace();
 			}
 		}
-		return retVal;
 	}
 	
 	@SuppressWarnings("unchecked")

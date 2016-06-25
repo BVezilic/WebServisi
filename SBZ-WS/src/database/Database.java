@@ -95,9 +95,9 @@ public class Database implements Serializable {
 		KategorijaArtikla ka5 = new KategorijaArtikla("ka5", null,
 				"Sportska oprema", 0.33);
 
-		Artikal ar1 = new Artikal("ar1", "Olovka", ka2, 25, 100, 50,
+		Artikal ar1 = new Artikal("ar1", "Olovka", ka2, 25, 25, 50,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar2 = new Artikal("ar2", "Lenjir", ka2, 100, 50, 25,
+		Artikal ar2 = new Artikal("ar2", "Lenjir", ka2, 100, 50, 65,
 				parseDate("1/1/2014"), false, false);
 		Artikal ar3 = new Artikal("ar3", "Gumica", ka2, 100, 50, 25,
 				parseDate("1/1/2014"), false, false);
