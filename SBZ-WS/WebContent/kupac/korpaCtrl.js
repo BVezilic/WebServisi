@@ -38,11 +38,11 @@
 		};
 		
 		$scope.pregledRacuna = function(){
-			console.log($rootScope.korisnik.profilKupca);
+			console.log($rootScope.korisnik);
 			$http({
 				  method: 'POST',
 				  url: 'http://localhost:8080/SBZ/rest/services/racun/pregled',
-				  data: $rootScope.korisnik.profilKupca
+				  data: $rootScope.korisnik
 				}).then(function successCallback(response) {
 					$scope.hasRacun = true;
 					$scope.racun = response.data;

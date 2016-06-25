@@ -142,9 +142,9 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean obradiRacun(Racun racun, @QueryParam("bodovi")int bodovi){
 		System.out.println(racun);
-		racun.setStanjeRacuna(StanjeRacuna.USPESNO_REALIZOVANO);
-		racun.setBrojPotrosenihBodova(bodovi);
-		data.addRacun(racun);
+		data.getRacunUPirpremi().setStanjeRacuna(StanjeRacuna.USPESNO_REALIZOVANO);
+		data.getRacunUPirpremi().setBrojPotrosenihBodova(bodovi);
+		data.addRacun(data.getRacunUPirpremi());
 		data.getKorpa().clear();
 		return true;
 	}
@@ -153,8 +153,17 @@ public class Rest {
 	@Path("/racun/pregled")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Racun createRacun(ProfilKupca kupac){
-		Racun racun = new Racun(""+data.getRacuni().size(), new Date(), kupac, 0, 0, 0, 0, 0);
+	public Racun createRacun(Korisnik kupac){
+		ProfilKupca kupacFromDB = new ProfilKupca();
+		
+		for (Korisnik korisnik : data.getKorisnici()) {
+			if(korisnik.getKorisnickoIme().equals(kupac.getKorisnickoIme())){
+				kupacFromDB = korisnik.getProfilKupca();
+				break;
+			}
+		}
+		
+		Racun racun = new Racun(""+data.getRacuni().size(), new Date(), kupacFromDB, 0, 0, 0, 0, 0);
 		
 		int i = 1;
 		for (StavkaRacuna stavka : data.getKorpa().values()) {
@@ -163,6 +172,9 @@ public class Rest {
 			racun.setOriginalnaUkupnaCena(racun.getOriginalnaUkupnaCena() + stavka.getKonacnaCena());
 			racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
 		}
+		
+		data.setRacunUPirpremi(racun);
+		
 		return racun;
 	}
 	

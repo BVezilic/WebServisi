@@ -55,6 +55,8 @@ public class Database implements Serializable {
 	
 	private HashMap<String, StavkaRacuna> korpa = new HashMap<String, StavkaRacuna>();
 	
+	private Racun racunUPirpremi = new Racun();
+	
 	public Database() {
 		super();
 		startUp();
@@ -330,9 +332,19 @@ public class Database implements Serializable {
 
 	}
 	*/
-
+    
+	
+	
 	public HashMap<String, StavkaRacuna> getKorpa() {
 		return korpa;
+	}
+
+	public Racun getRacunUPirpremi() {
+		return racunUPirpremi;
+	}
+
+	public void setRacunUPirpremi(Racun racunUPirpremi) {
+		this.racunUPirpremi = racunUPirpremi;
 	}
 
 	public void setKorpa(HashMap<String, StavkaRacuna> korpa) {
