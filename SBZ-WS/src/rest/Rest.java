@@ -19,11 +19,13 @@ import model.Artikal;
 import model.KategorijaArtikla;
 import model.KategorijaKupca;
 import model.Korisnik;
+import model.PopustZaPojedinacnuStavku;
 import model.ProfilKupca;
 import model.Racun;
 import model.StanjeRacuna;
 import model.StavkaRacuna;
 import rezoner.Rezoner;
+import utils.Utility;
 import database.Database;
 
 @Stateless
@@ -68,15 +70,19 @@ public class Rest {
 		if(data.getKorpa().containsKey(artikal.getSifra()))
 		{
 			StavkaRacuna st = data.getKorpa().get(artikal.getSifra());
+			
+			System.out.println(st.getKolicinaKupnjeljihArtikala());
 			st.setKolicinaKupnjeljihArtikala(st.getKolicinaKupnjeljihArtikala()+kolicina);
-			st.setKonacnaCena(st.getJedinicnaCena() * st.getKolicinaKupnjeljihArtikala());
+			System.out.println(st.getKolicinaKupnjeljihArtikala());
+			
+			st.setOriginalnaUkupnaCena(st.getJedinicnaCena() * st.getKolicinaKupnjeljihArtikala());
 			data.getKorpa().put(artikal.getSifra() , st);
 		}else
 		{	
 			StavkaRacuna st = new StavkaRacuna(null, 0, artikal, artikal.getCena(), kolicina, kolicina * artikal.getCena(), 0, kolicina * artikal.getCena());
 			data.getKorpa().put(artikal.getSifra(), st);
 		}
-		System.out.println(data.getKorpa().toString());
+		System.out.println("DODAO JE U KORPU IDUCE" + data.getKorpa().toString());
 	}
 	
 	@GET
@@ -84,6 +90,7 @@ public class Rest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Artikal> sviArtikli(){
 		rezoner.replenishArticles();
+		rezoner.removeAllFacts();
 		return data.getArtikli();
 	}
 	
@@ -158,6 +165,7 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean obradiRacun(Racun racun, @QueryParam("bodovi")int bodovi){
 		System.out.println(racun);
+	
 		if(data.getRacunUPirpremi().getKupac().getNagradniBodovi() - bodovi < 0){
 			return false;
 		}
@@ -175,6 +183,10 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Racun createRacun(Korisnik kupac){
+		if(data.getKorpa().values().size() == 0){
+			return null;
+		}
+		
 		ProfilKupca kupacFromDB = new ProfilKupca();
 		
 		for (Korisnik korisnik : data.getKorisnici()) {
@@ -193,13 +205,18 @@ public class Rest {
 				return null;
 			}
 			stavka.setRedniBrojStavke(i++);
+			stavka.setRacun(racun);
 			racun.addStavkaRacuna(stavka);
-			racun.setOriginalnaUkupnaCena(racun.getOriginalnaUkupnaCena() + stavka.getKonacnaCena());
-			racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
-		}
-		
+			//racun.setOriginalnaUkupnaCena(racun.getOriginalnaUkupnaCena() + stavka.getKonacnaCena());
+			//racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
+		}	
+		racun = rezoner.pokreniRezonerZaRacun(racun);		
 		data.setRacunUPirpremi(racun);
+		rezoner.removeAllFacts();
+		System.out.println(racun);
 		
+		racun.izaberiNajboljiOsnovniPopust(); // brise sve popuste osim najboljeg
+		System.out.println(racun);
 		return racun;
 	}
 	
@@ -279,7 +296,13 @@ public class Rest {
 	@Path("/akcija/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<AkcijskiDogadjaj> sveAkcije(){
-		return data.getAkcijskiDogadjaji();
+		ArrayList<AkcijskiDogadjaj> retVal = new ArrayList<AkcijskiDogadjaj>();
+		for(AkcijskiDogadjaj ad : data.getAkcijskiDogadjaji())
+		{
+			if(Utility.isWithinDates(new Date(), ad.getVaziOd(), ad.getVaziDo()))
+				retVal.add(ad);
+		}
+		return retVal;
 	}
 	
 	@POST
@@ -319,4 +342,5 @@ public class Rest {
 		}
 		return null;
 	}
+
 }

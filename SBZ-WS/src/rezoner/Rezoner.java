@@ -175,23 +175,23 @@ public class Rezoner {
 	public void dodajSveFakteZaKorisnika(Korisnik ko) {
 
 		//Korisnik ko = database.getKorisnikByKorisnickoIme(korisnickoIme);
-		dodajFact(ko); // korisnik
-		/*
-		dodajFact(ko.getProfilKupca()); // profil kupca
-		dodajFact(ko.getProfilKupca().getKategorijaKupca()); // kategorija kupca
-		dodajFact(ko.getProfilKupca().getKategorijaKupca().getPragPotrosnje()); // prag potrosnje za kategoriju kupca
+		//dodajFact(ko); // korisnik
+		
+		//dodajFact(ko.getProfilKupca()); // profil kupca
+		//dodajFact(ko.getProfilKupca().getKategorijaKupca()); // kategorija kupca
+		//dodajFact(ko.getProfilKupca().getKategorijaKupca().getPragPotrosnje()); // prag potrosnje za kategoriju kupca
 
 		for (Racun ra : ko.getProfilKupca().getRealizovaneKupovine()) {
 
 			dodajFact(ra); // racun
-			for (Popust pp : ra.getPrimenjeniPopusti()) {
+			/*for (Popust pp : ra.getPrimenjeniPopusti()) {
 				dodajFact(pp); // popust na racun
 				dodajFact(pp.getOznaka()); // tip popusta
-			}
+			}*/
 
 			for (StavkaRacuna sr : ra.getStavkeRacuna()) {
 				dodajFact(sr); // stavka racuna
-				
+				/*
 				for (PopustZaPojedinacnuStavku ps : sr.getPrimenjeniPopusti()){
 					dodajFact(ps); // popust za stavku
 					dodajFact(ps.getOznaka()); //tip popusta
@@ -201,23 +201,41 @@ public class Rezoner {
 				dodajFact(ar); // artikal
 				dodajFact(ar.getKategorijaArtikla()); // kategorija artikla
 				dodajFact(ar.getKategorijaArtikla().getNadkategorija()); //nadkategorija artikla
-				
+				*/
 			}
 			
+			/*
 			dodajFact(ra.getStanjeRacuna()); // stanje racuna
-
+			*/
 		}
 
-		dodajFact(ko.getUlogaKorisnika());
 
 		for(AkcijskiDogadjaj ad : database.getAkcijskiDogadjaji()){
 			dodajFact(ad);
 		}
-		*/
+		
 		
 		
 	}
 
+	public Racun pokreniRezonerZaRacun(Racun racun){
+		
+		setupEngine();
+		
+		dodajFact(racun);
+		for (StavkaRacuna sr : racun.getStavkeRacuna()) {
+			dodajFact(sr);
+		}
+		
+		for(AkcijskiDogadjaj ad : database.getAkcijskiDogadjaji()){
+			dodajFact(ad);
+		}
+		
+		pokreniRezonovanje();
+		
+		return racun;
+		
+	}
 	public void dodajFact(AkcijskiDogadjaj ad) {
 		try {
 			engine.definstance("akcijskiDogadjaj", ad, false);
@@ -308,7 +326,7 @@ public class Rezoner {
 
 	public void dodajFact(StavkaRacuna st) {
 		try {
-			engine.definstance("stavkaRacuna", st, false);
+			engine.definstance("stavka", st, false);
 		} catch (JessException e) {
 			e.printStackTrace();
 		}

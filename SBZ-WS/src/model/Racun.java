@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Racun implements Serializable{
 	
@@ -222,6 +223,42 @@ public class Racun implements Serializable{
 		} else if (!sifra.equals(other.sifra))
 			return false;
 		return true;
+	}
+
+
+	public void izaberiNajboljiOsnovniPopust() {
+		
+		
+		for (StavkaRacuna sr : stavkeRacuna) {
+			
+			ArrayList<PopustZaPojedinacnuStavku> toRemove = new ArrayList<PopustZaPojedinacnuStavku>();
+			PopustZaPojedinacnuStavku najbolji = new PopustZaPojedinacnuStavku();
+			Double maxValue = Double.MIN_VALUE;
+			
+			for (PopustZaPojedinacnuStavku ps : sr.getPrimenjeniPopusti()) {
+				
+				if (ps.getOznaka().equals(TipPopusta.OSNOVNI)){
+					String sifra = ps.getSifra();
+					String token = sifra.split("%")[0];
+					String tokens[] = token.split(" ");
+					String value = tokens[tokens.length - 1];
+					
+					toRemove.add(ps);
+					
+					Double dValue = Double.valueOf(value);
+					if (maxValue < dValue){
+						najbolji = ps;
+						maxValue = dValue;
+					}
+									
+				}
+			}
+			
+			toRemove.remove(najbolji);
+			sr.getPrimenjeniPopusti().removeAll(toRemove);
+			
+		}
+		
 	}
 	
 	

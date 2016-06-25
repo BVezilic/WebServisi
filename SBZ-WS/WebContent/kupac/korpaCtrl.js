@@ -31,7 +31,9 @@
 				  data: artikalUKorpi.artikal
 				  
 				}).then(function successCallback(response) {
-					getKorpa();
+					$scope.korpa = response.data;
+					$scope.racun={};
+					$scope.hasRacun = false;
 				}, function errorCallback(response) {
 					  console.log("Greska kod removeFromoKorpa");
 				  });
@@ -51,7 +53,7 @@
 						$scope.racun = response.data;
 					}else
 					{
-						window.alert("Nema dovoljno odredjenih artikala na lageru da bi se formirala ova porudzbina.");
+						window.alert("Nije moguce kreirati ovakav racun.");
 					}
 				}, function errorCallback(response) {
 					  console.log("Greska kod removeFromoKorpa");
@@ -61,7 +63,7 @@
 		$scope.ponistiRacun = function(){
 			$scope.racun={};
 			$scope.hasRacun = false;
-			$scope.korpa = [];
+			
 		};
 		
 		$scope.potvrdiRacun = function(racun, ulozeniBodovi){

@@ -26,15 +26,21 @@
 		getKategorijeArtikla();
 		
 		$scope.addToKorpa = function(artikal, kolicina) {
-			$http({
-				  method: 'POST',
-				  url: 'http://localhost:8080/SBZ/rest/services/korpa/add',
-				  data: artikal,
-				  params: {"kolicina":kolicina}
-				}).then(function successCallback(response) {
-				  }, function errorCallback(response) {
-					  console.log("Greska kod addToKorpa");
-				  });
+			if(kolicina > 0 && kolicina < artikal.brojnoStanje){
+				$http({
+					  method: 'POST',
+					  url: 'http://localhost:8080/SBZ/rest/services/korpa/add',
+					  data: artikal,
+					  params: {"kolicina":kolicina}
+					}).then(function successCallback(response) {
+						
+					  }, function errorCallback(response) {
+						  console.log("Greska kod addToKorpa");
+					  });
+			}else
+			{
+				window.alert("Kolicina artikala nije u opsegu od 1 do " + artikal.brojnoStanje );
+			}
 		};
 		
 		var getAkcijskeDogadjaje = function() {
