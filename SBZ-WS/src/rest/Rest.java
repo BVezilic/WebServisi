@@ -19,6 +19,7 @@ import model.Artikal;
 import model.KategorijaArtikla;
 import model.KategorijaKupca;
 import model.Korisnik;
+import model.ProfilKupca;
 import model.Racun;
 import model.StanjeRacuna;
 import model.StavkaRacuna;
@@ -115,6 +116,28 @@ public class Rest {
 	}
 	
 	@POST
+	@Path("/racun/getForKupac")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Racun> getForKupac(Korisnik kupac){
+		ArrayList<Racun> racuniKupca = new ArrayList<Racun>();
+		System.out.println("Primljen ovaj parametar: "+kupac);
+		
+		for (Racun racun : data.getRacuni()) {
+			if(racun.getKupac().getKorisnik() != null){
+				System.out.println("korisnik u racunu nije null");
+				if(racun.getKupac().getKorisnik().getKorisnickoIme().equals(kupac.getKorisnickoIme())){
+					racuniKupca.add(racun);
+				}
+			}else{
+				System.out.println("Dobio null za racun");
+			}
+		}
+		
+		
+		return racuniKupca;
+	}
+	
+	@POST
 	@Path("/racun/potvrda")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean obradiRacun(Racun racun, @QueryParam("bodovi")int bodovi){
@@ -126,11 +149,12 @@ public class Rest {
 		return true;
 	}
 	
-	@GET
+	@POST
 	@Path("/racun/pregled")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Racun createRacun(){
-		Racun racun = new Racun(""+data.getRacuni().size(), new Date(), null, 0, 0, 0, 0, 0);
+	public Racun createRacun(ProfilKupca kupac){
+		Racun racun = new Racun(""+data.getRacuni().size(), new Date(), kupac, 0, 0, 0, 0, 0);
 		
 		int i = 1;
 		for (StavkaRacuna stavka : data.getKorpa().values()) {

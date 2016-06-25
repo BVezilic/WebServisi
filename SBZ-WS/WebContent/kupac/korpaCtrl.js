@@ -1,6 +1,6 @@
 (function(angular) {
 	var app = angular.module('app');
-	app.controller('korpaCtrl', ['$scope', '$http', function($scope, $http) {
+	app.controller('korpaCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
 		/*
 		 * variables 
 		 */
@@ -38,10 +38,11 @@
 		};
 		
 		$scope.pregledRacuna = function(){
+			console.log($rootScope.korisnik.profilKupca);
 			$http({
-				  method: 'GET',
+				  method: 'POST',
 				  url: 'http://localhost:8080/SBZ/rest/services/racun/pregled',
-				  
+				  data: $rootScope.korisnik.profilKupca
 				}).then(function successCallback(response) {
 					$scope.hasRacun = true;
 					$scope.racun = response.data;
