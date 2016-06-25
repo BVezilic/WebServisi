@@ -204,7 +204,7 @@ public class Rest {
 			//racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
 		}	
 		racun = rezoner.pokreniRezonerZaRacun(racun);		
-		data.setRacunUPirpremi(racun);
+		data.setRacunUPirpremi(racun); 
 		System.out.println(racun);
 		return racun;
 	}

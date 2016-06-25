@@ -31,7 +31,7 @@
 				  data: artikalUKorpi.artikal
 				  
 				}).then(function successCallback(response) {
-					getKorpa();	
+					$scope.korpa = response.data;
 					$scope.racun={};
 					$scope.hasRacun = false;
 				}, function errorCallback(response) {
