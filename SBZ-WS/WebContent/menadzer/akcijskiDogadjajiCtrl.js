@@ -1,6 +1,6 @@
 (function(angular) {
 	var app = angular.module('app');
-	app.controller('akcijskiDogadjajiCtrl', ['$scope', '$http', function($scope, $http) {
+	app.controller('akcijskiDogadjajiCtrl', ['$scope', '$http', 'validator', function($scope, $http, validator) {
 		$scope.azuriranjeKat = [];
 		$scope.dodavanjeKat = [];
 		
@@ -38,6 +38,10 @@
 		};
 	
 		$scope.dodajAkcijskiDogadjaj = function() {
+			if (!validator.inRange($scope.dodavanjeOd, $scope.dodavanjeDo)) {
+				alert("Datum zavrsetka akcije more biti posle datuma pocetka akcije!");
+				return;
+			}
 			var akcija = {};
 			akcija.sifra = $scope.dodavanjeSifra;
 			akcija.naziv = $scope.dodavanjeNaziv;
@@ -51,12 +55,17 @@
 			  data: akcija
 			}).then(function successCallback(response) {
 				getAkcijskeDogadjaje();
+				resetAddFields();
 			  }, function errorCallback(response) {
 				  console.log("Greska kog ADD akcije");
 			  });
 		};
 	
 		$scope.azurirajAkcijskiDogadjaj = function() {
+			if (!validator.inRange($scope.azuriranjeOd, $scope.azuriranjeDo)) {
+				alert("Datum zavrsetka akcije more biti posle datuma pocetka akcije!");
+				return;
+			}
 			var azuriranaAkcija = $scope.selectedAkcijskiDogadjaj;
 			azuriranaAkcija.naziv = $scope.azuriranjeNaziv;
 			azuriranaAkcija.vaziOd = $scope.azuriranjeOd;
@@ -69,9 +78,27 @@
 			  data: azuriranaAkcija
 			}).then(function successCallback(response) {
 				getAkcijskeDogadjaje();
+				resetUpdateFields();
 			  }, function errorCallback(response) {
 				  console.log("Greska kog UPDATE akcije");
 			  });
+		};
+		
+		var resetUpdateFields = function() {
+			$scope.azuriranjeNaziv = null;
+			$scope.azuriranjeOd = null;
+			$scope.azuriranjeDo = null;
+			$scope.azuriranjePopust = null;
+			$scope.azuriranjeKat = null;
+		};
+		
+		var resetAddFields = function() {
+			$scope.dodavanjeSifra = null;
+			$scope.dodavanjeNaziv = null;
+			$scope.dodavanjeOd = null;
+			$scope.dodavanjeDo = null;
+			$scope.dodavanjePopust = null;
+			$scope.dodavanjeKat = null;
 		};
 	}]);
 })(angular);
