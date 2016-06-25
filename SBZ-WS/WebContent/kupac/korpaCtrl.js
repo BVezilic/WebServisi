@@ -31,8 +31,9 @@
 				  data: artikalUKorpi.artikal
 				  
 				}).then(function successCallback(response) {
-					getKorpa();
-					$scope.pregledRacuna();
+					getKorpa();	
+					$scope.racun={};
+					$scope.hasRacun = false;
 				}, function errorCallback(response) {
 					  console.log("Greska kod removeFromoKorpa");
 				  });

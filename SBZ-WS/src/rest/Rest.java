@@ -202,11 +202,9 @@ public class Rest {
 			racun.addStavkaRacuna(stavka);
 			//racun.setOriginalnaUkupnaCena(racun.getOriginalnaUkupnaCena() + stavka.getKonacnaCena());
 			//racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
-		}
-		
+		}	
+		racun = rezoner.pokreniRezonerZaRacun(racun);		
 		data.setRacunUPirpremi(racun);
-		
-		racun = rezoner.pokreniRezonerZaRacun(racun);
 		System.out.println(racun);
 		return racun;
 	}
