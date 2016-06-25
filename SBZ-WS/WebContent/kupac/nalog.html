@@ -16,6 +16,7 @@
 	<p><b>Sifra: </b>{{racun.sifra}}</p>
 	<p><b>Datum izdavanja: </b>{{racun.datumIzdavanja|date:'mediumDate'}}</p>
 	<p><b>Broj ostvarenih bodova: </b>{{racun.brojOstvarenihBodova}}</p>
+	<p><b>Broj utrosenih bodova: </b>{{racun.brojPotrosenihBodova}}</p>
 	<p><b>Originalna cena: </b>{{racun.originalnaUkupnaCena}}</p>
 	<p><b>Procenat umanjenja: </b>{{racun.procenatUmanjenja}}%</p>
 	<p><b>Konacna cena: </b>{{racun.konacnaCena}}</p>
@@ -44,6 +45,11 @@
 	
 	<h2>Istorija kupovine</h2><br/>
 	<table class="table table-striped table-hover">
+    	<tr>
+    		<th>Sifra racuna</th>
+    		<th>Datum kupovine</th>
+    		<th>Konacna cena</th>
+    	</tr>
     	<tr ng-repeat="racun in racuni" ng-click="checkRacun(racun)">
     		<td>{{racun.sifra}}</td>
     		<td>{{racun.datumIzdavanja|date:'mediumDate'}}</td>

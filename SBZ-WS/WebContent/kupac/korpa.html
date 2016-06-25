@@ -45,6 +45,7 @@
 			<td valign="middle">{{stavkaRacuna.originalnaUkupnaCena}}</td>
 		</tr>
 	</table>
-	<button class="btn btn-success" ng-click="potvrdiRacun(racun)">Potvrdi</button>
+	<button class="btn btn-success" ng-click="potvrdiRacun(racun, ulozeniBodovi)">Potvrdi</button>
 	<button class="btn btn-danger" ng-click="ponistiRacun()">Ponisti</button>
+	<input type="number" class="form-control" ng-model="ulozeniBodovi"/>
 </div>

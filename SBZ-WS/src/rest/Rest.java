@@ -135,8 +135,7 @@ public class Rest {
 				System.out.println("Dobio null za racun");
 			}
 		}
-		
-		
+
 		return racuniKupca;
 	}
 	
@@ -145,17 +144,14 @@ public class Rest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean obradiRacun(Racun racun, @QueryParam("bodovi")int bodovi){
 		System.out.println(racun);
-		data.getRacunUPirpremi().setStanjeRacuna(StanjeRacuna.USPESNO_REALIZOVANO);
-		data.getRacunUPirpremi().setBrojPotrosenihBodova(bodovi);
-		data.addRacun(data.getRacunUPirpremi());
-		
-		Artikal temp = new Artikal();
-		
-		for (StavkaRacuna stavka : data.getKorpa().values()) {
-			temp = data.getArtikalBySifra(stavka.getArtikal().getSifra());
-			temp.setBrojnoStanje(temp.getBrojnoStanje() - stavka.getKolicinaKupnjeljihArtikala());
+		if(data.getRacunUPirpremi().getKupac().getNagradniBodovi() - bodovi < 0){
+			return false;
 		}
 		
+		data.getRacunUPirpremi().setStanjeRacuna(StanjeRacuna.PORUCENO);
+		data.getRacunUPirpremi().setBrojPotrosenihBodova(bodovi);
+		data.addRacun(data.getRacunUPirpremi());
+		data.getRacunUPirpremi().getKupac().setNagradniBodovi(data.getRacunUPirpremi().getKupac().getNagradniBodovi() - bodovi);
 		data.getKorpa().clear();
 		return true;
 	}

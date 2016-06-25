@@ -64,16 +64,24 @@
 			$scope.korpa = [];
 		};
 		
-		$scope.potvrdiRacun = function(racun){
+		$scope.potvrdiRacun = function(racun, ulozeniBodovi){
 			$http({
 				  method: 'POST',
 				  url: 'http://localhost:8080/SBZ/rest/services/racun/potvrda',
 				  data: racun,
-				  params: {"bodovi":0}
+				  params: {"bodovi":ulozeniBodovi}
 				}).then(function successCallback(response) {
-					$scope.racun={};
-					$scope.hasRacun = false;
-					$scope.korpa = [];
+					if(response.data == true){
+						$scope.racun={};
+						$scope.hasRacun = false;
+						$scope.korpa = [];
+						console.log($rootScope.korisnik.profilKupca.nagradniBodovi);
+						$rootScope.korisnik.profilKupca.nagradniBodovi -= ulozeniBodovi;
+						console.log($rootScope.korisnik.profilKupca.nagradniBodovi);
+					}else
+					{
+						window.alert("Nemate dovoljno bodova da biste ostvarili ovu kupovinu");
+					}
 				  }, function errorCallback(response) {
 					  console.log("Greska kod addToKorpa");
 				  });
