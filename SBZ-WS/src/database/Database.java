@@ -1,10 +1,16 @@
 package database;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -46,7 +52,9 @@ public class Database implements Serializable {
 	private ArrayList<StanjeRacuna> stanjaRacuna = new ArrayList<StanjeRacuna>();
 	private ArrayList<TipPopusta> tipoviPopusta = new ArrayList<TipPopusta>();
 	private ArrayList<UlogaKorisnika> ulogeKorisnika = new ArrayList<UlogaKorisnika>();
-
+	
+	private HashMap<String, StavkaRacuna> korpa = new HashMap<String, StavkaRacuna>();
+	
 	public Database() {
 		super();
 		startUp();
@@ -111,11 +119,11 @@ public class Database implements Serializable {
 				parseDate("1/1/2014"), false, false);
 		Artikal ar13 = new Artikal("ar13", "Kapa", ka5, 750, 10, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar14 = new Artikal("ar13", "Mis", ka3, 1000, 10, 2,
+		Artikal ar14 = new Artikal("ar14", "Mis", ka3, 1000, 10, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar15 = new Artikal("ar13", "Tastatura", ka3, 1500, 10, 2,
+		Artikal ar15 = new Artikal("ar15", "Tastatura", ka3, 1500, 10, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar16 = new Artikal("ar13", "Kamera", ka3, 2000, 10, 2,
+		Artikal ar16 = new Artikal("ar16", "Kamera", ka3, 2000, 10, 2,
 				parseDate("1/1/2014"), false, false);
 		
 		PragPotrosnje pp1 = new PragPotrosnje(0, 10000);
@@ -129,17 +137,17 @@ public class Database implements Serializable {
 		KategorijaKupca kk3 = new KategorijaKupca("kk3", "Zlatna kategorija",
 				pp3);
 
-		Korisnik ko1 = new Korisnik("kupac1", "Pera", "Peric", "p", uk1,
+		Korisnik ko1 = new Korisnik("kupac", "Pera", "Peric", "k", uk1,
 				parseDate("1/1/2015"));
 		Korisnik ko2 = new Korisnik("kupac2", "Marko", "Markovic", "m", uk1,
 				parseDate("2/2/2014"));
 		Korisnik ko3 = new Korisnik("kupac3", "Nikola", "Nikolic", "n", uk1,
 				parseDate("3/3/2013"));
-		Korisnik ko4 = new Korisnik("prodavac1", "Jovan", "Jovanovic", "j",
+		Korisnik ko4 = new Korisnik("prodavac", "Jovan", "Jovanovic", "p",
 				uk2, parseDate("4/4/2012"));
 		Korisnik ko5 = new Korisnik("prodavac2", "Ana", "Anic", "a", uk2,
 				parseDate("5/5/2012"));
-		Korisnik ko6 = new Korisnik("menadzer1", "Djordje", "Djordjevic", "d",
+		Korisnik ko6 = new Korisnik("menadzer", "Djordje", "Djordjevic", "m",
 				uk3, parseDate("6/6/2011"));
 
 		ProfilKupca pk1 = new ProfilKupca(ko1, "Zeleznicka 1", 0, kk1);
@@ -157,7 +165,7 @@ public class Database implements Serializable {
 
 		TipPopusta tp1 = TipPopusta.DODATNI;
 		TipPopusta tp2 = TipPopusta.OSNOVNI;
-
+		
 		// Dodavanje kategorija artikala u akcijske dogadjaje
 		ad1.addKategorijaArtiklaSaPopustima(ka1);
 		ad1.addKategorijaArtiklaSaPopustima(ka4);
@@ -269,9 +277,11 @@ public class Database implements Serializable {
 	 * @param s
 	 * @return
 	 */
+	
+	
 	public Date parseDate(String s) {
 		try {
-			return (new SimpleDateFormat("dd/mm/yyyy")).parse(s);
+			return (new SimpleDateFormat("dd/MM/yyyy")).parse(s);
 		} catch (ParseException e) {
 			return null;
 		}
@@ -320,6 +330,14 @@ public class Database implements Serializable {
 
 	}
 	*/
+
+	public HashMap<String, StavkaRacuna> getKorpa() {
+		return korpa;
+	}
+
+	public void setKorpa(HashMap<String, StavkaRacuna> korpa) {
+		this.korpa = korpa;
+	}
 
 	public ArrayList<Racun> getAllRacuniByProfilKorisnika(ProfilKupca pk) {
 		ArrayList<Racun> retVal = new ArrayList<Racun>();
@@ -452,7 +470,19 @@ public class Database implements Serializable {
 		}
 		return null;
 	}
-
+	
+	public Artikal getArtikalBySifra(String sifra)
+	{
+		for(Artikal a:artikli)
+		{
+			if(a.getSifra().equals(sifra))
+			{
+				return a;
+			}
+		}
+		return null;
+	}
+	
 	public boolean addKategorijaKupca(KategorijaKupca kk) {
 		for (KategorijaKupca k : kategorijeKupca) {
 			if (k.getSifraKategorije().equals(kk.getSifraKategorije())) {
@@ -646,4 +676,57 @@ public class Database implements Serializable {
 		this.ulogeKorisnika = ulogeKorisnika;
 	}
 
+	// SERIALIZE
+	
+	public void serializeToFile(){
+		
+		FileOutputStream fout;
+		ObjectOutputStream oos;
+		try {
+			fout = new FileOutputStream("../standalone/deployments/SBZ.war/database/database.bin");
+			oos = new ObjectOutputStream(fout);
+			oos.writeObject(this);
+			
+			fout.close();
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void readFromFile(){
+		FileInputStream fis;
+		ObjectInputStream ois;
+		try {
+			fis = new FileInputStream("../standalone/deployments/SBZ.war/database/database.bin");
+			ois = new ObjectInputStream(fis);
+			Database db = (Database) ois.readObject();
+			
+			this.akcijskiDogadjaji = db.akcijskiDogadjaji;
+			this.artikli = db.artikli;
+			this.kategorijeArtikla = db.kategorijeArtikla;
+			this.kategorijeKupca = db.kategorijeKupca;
+			this.korisnici = db.korisnici;
+			this.popustiZaRacun = db.popustiZaRacun;
+			this.popustiZaStavku = db.popustiZaStavku;
+			this.pragoviPotrosnje = db.pragoviPotrosnje;
+			this.profiliKupca = db.profiliKupca;
+			this.racuni = db.racuni;
+			this.stanjaRacuna = db.stanjaRacuna;
+			this.stavkeRacuna = db.stavkeRacuna;
+			this.tipoviPopusta = db.tipoviPopusta;
+			this.ulogeKorisnika = db.ulogeKorisnika;
+			
+			fis.close();
+			ois.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e){
+			
+		}
+	}
 }

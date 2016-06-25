@@ -21,10 +21,19 @@ public class PragPotrosnje implements Serializable {
 	}
 	
 	// METODE
-	public double dodelaNagradnihBodova(){
+	public double dodelaNagradnihBodova(double cena){
 		
-		//TODO: implementiraj
-		return 0;
+		double skaliranje = 0;
+		
+		if (opsegPotrosnjeDo < 5000){
+			skaliranje = 0.1;
+		} else if (opsegPotrosnjeDo < 20000){
+			skaliranje = 0.2;
+		} else {
+			skaliranje = 0.3;
+		}
+		
+		return skaliranje * cena;
 	}
 	
 	// GET && SET

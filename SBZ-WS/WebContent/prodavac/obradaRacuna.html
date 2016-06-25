@@ -1,0 +1,39 @@
+<div class="row">
+	<h2>Spisak racuna</h2><br/>
+	<p>Filter:<p><select ng-model="stanje" ng-options="x for x in ['','PORUCENO','OTKAZANO','USPESNO_REALIZOVANO']"></select>
+	<table class="table table-hover fixed">
+	  <tr>
+	    <th>Sifra</th>
+	    <th>Kupac</th>
+	    <th>Originalna cena</th>
+	    <th>Procenat umanjenja</th>
+	    <th>Konacna cena</th>
+	    <th>Ostvareni bodovi</th>
+	    <th>Potroseni bodovi</th>
+	    <th>Stanje</th>
+	  </tr>
+	  <tr ng-repeat="racun in racuni | filter:stanje" ng-click="selectRacun(racun)">
+	    <td>{{racun.sifra}}</td>
+	    <td>{{racun.kupac.korisnik.korisnickoIme}}</td>
+	    <td>{{racun.originalnaUkupnaCena}}</td>
+	    <td>{{racun.procenatUmanjenja}}</td>
+	    <td>{{racun.konacnaCena}}</td>
+	    <td>{{racun.brojOstvarenihBodova}}</td>
+	    <td>{{racun.brojPotrosenihBodova}}</td>
+	    <td>{{racun.stanjeRacuna}}</td>
+	  </tr>
+	</table>
+	<br/><br/>
+</div>
+<div class="row">
+	<div class="col-md-4">
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h2>Obrada racuna: </h2><br/></div>
+	  <div class="panel-body">
+	  	<p><b>Sifra racuna:</b> {{selectedRacun.sifra}}</p>
+			<button type="button" class="btn btn-success" ng-click="obradiRacun()">Obradi</button>
+			<button type="button" class="btn btn-danger" ng-click="otkaziRacun()">Otkazi</button>
+		</div>
+	</div>
+	</div>
+</div>

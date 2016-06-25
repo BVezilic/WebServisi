@@ -1,0 +1,53 @@
+<div class="col-sm-6">
+<h2>Nalog</h2><br/>
+<form role="form">
+  <div class="form-group">
+    <p><label>Korisnicko ime: </label>{{korisnik.korisnickoIme}}</p>
+		<p><label>Ime: </label>{{korisnik.ime}}</p>
+		<p><label>Prezime: </label>{{korisnik.prezime}}</p>
+		<p><label>Adresa: </label>{{korisnik.profilKupca.adresaIsporuke}}</p>
+		<p><label>Bodovi: </label>{{korisnik.profilKupca.nagradniBodovi}}</p>
+		<p><label>Kategorija: </label>{{korisnik.profilKupca.kategorijaKupca}}</p>
+  </div>
+</form>
+<div ng-show="showSelectedRacun">
+	<h2>Pregled racuna:</h2>
+	<div  class="well">
+	<p><b>Sifra: </b>{{racun.sifra}}</p>
+	<p><b>Datum izdavanja: </b>{{racun.datumIzdavanja|date:'mediumDate'}}</p>
+	<p><b>Broj ostvarenih bodova: </b>{{racun.brojOstvarenihBodova}}</p>
+	<p><b>Originalna cena: </b>{{racun.originalnaUkupnaCena}}</p>
+	<p><b>Procenat umanjenja: </b>{{racun.procenatUmanjenja}}%</p>
+	<p><b>Konacna cena: </b>{{racun.konacnaCena}}</p>
+	<table class="table table-striped">
+		<tr>
+			<th>Redni broj</th>
+			<th>Sifra</th>
+			<th>Naziv</th>
+			<th>Kolicina</th>
+			<th>Pojedinacna cena</th>
+			<th>Ukupna cena</th>	
+		</tr>
+		<tr ng-repeat="stavkaRacuna in racun.stavkeRacuna">
+			<td valign="middle">{{stavkaRacuna.redniBrojStavke}}</td>
+			<td valign="middle">{{stavkaRacuna.artikal.sifra}}</td>
+			<td valign="middle">{{stavkaRacuna.artikal.naziv}}</td>
+			<td valign="middle">{{stavkaRacuna.kolicinaKupnjeljihArtikala}}</td>
+			<td valign="middle">{{stavkaRacuna.jedinicnaCena}}</td>
+			<td valign="middle">{{stavkaRacuna.originalnaUkupnaCena}}</td>
+		</tr>
+	</table>
+	</div>
+</div>
+</div>
+<div class="col-sm-6">	
+	
+	<h2>Istorija kupovine</h2><br/>
+	<table class="table table-striped table-hover">
+    	<tr ng-repeat="racun in racuni" ng-click="checkRacun(racun)">
+    		<td>{{racun.sifra}}</td>
+    		<td>{{racun.datumIzdavanja|date:'mediumDate'}}</td>
+    		<td>{{racun.konacnaCena}}</td>
+    	</tr>
+  	</table>
+</div>

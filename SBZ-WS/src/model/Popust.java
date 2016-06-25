@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Popust implements Serializable {
 	
 	private static final long serialVersionUID = 5113798612811616498L;
+	protected static int brojPopusta = 0;
 	
 	protected String sifra;
 	protected Racun racun;
@@ -23,6 +24,15 @@ public class Popust implements Serializable {
 
 	public Popust() {
 		super();
+	}
+	
+	//METODE
+	public String postaviJednistvenuSifru(){
+		
+		String retVal = String.valueOf(brojPopusta++);
+		setSifra(retVal);
+		
+		return retVal;
 	}
 
 	
@@ -88,7 +98,7 @@ public class Popust implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Popust [sifra=" + sifra + ", racun=" + racun
+		return "Popust [sifra=" + sifra + ", racun="
 				+ ", procenatUmanjenja=" + procenatUmanjenja + ", oznaka="
 				+ oznaka + "]";
 	}

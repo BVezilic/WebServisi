@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import utils.Utility;
+
 public class StavkaRacuna implements Serializable{
 
 	private static final long serialVersionUID = 829924934788310063L;
@@ -192,6 +194,26 @@ public class StavkaRacuna implements Serializable{
 		if (redniBrojStavke != other.redniBrojStavke)
 			return false;
 		return true;
+	}
+	
+	public boolean articlesInSpan(int opseg, Artikal ar)
+	{
+		ArrayList<Artikal> retVal = new ArrayList<Artikal>();
+		
+		ArrayList<Racun> rcLst = racun.getKupac().getRealizovaneKupovine();
+		
+		for(Racun r: rcLst)
+		{
+			if(Utility.dateDifference(racun.getDatumIzdavanja(),r.getDatumIzdavanja()) < opseg)
+			{
+				for(StavkaRacuna s:r.getStavkeRacuna())
+				{
+					retVal.add(s.getArtikal());
+				}
+			}
+		}
+		
+		return retVal.contains(ar);
 	}
 
 	

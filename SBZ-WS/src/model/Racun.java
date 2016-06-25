@@ -98,6 +98,11 @@ public class Racun implements Serializable{
 		return true;
 	}
 	
+	public void addCena(double dodaj)
+	{
+		this.originalnaUkupnaCena += dodaj;
+	}
+	
 	public void removePrimenjeniPopust(Popust popust){
 		primenjeniPopusti.remove(popust);
 	}
@@ -199,7 +204,7 @@ public class Racun implements Serializable{
 		return "Racun [sifra=" + sifra + ", datumIzdavanja=" + datumIzdavanja
 				+ ", brojOstvarenihBodova="
 				+ brojOstvarenihBodova + ", primenjeniPopusti="
-				+ primenjeniPopusti + ", stavkeRacuna=" + stavkeRacuna + "]";
+				+ primenjeniPopusti + ", originalnaUkupnaCena=" + originalnaUkupnaCena + "]";
 	}
 
 	@Override
