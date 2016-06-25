@@ -154,6 +154,7 @@ public class Database implements Serializable {
 		ProfilKupca pk2 = new ProfilKupca(ko2, "Zeleznicka 2", 100, kk2);
 		ProfilKupca pk3 = new ProfilKupca(ko3, "Zeleznicka 3", 500, kk3);
 
+		
 		ko1.setProfilKupca(pk1);
 		ko2.setProfilKupca(pk2);
 		ko3.setProfilKupca(pk3);
@@ -268,6 +269,7 @@ public class Database implements Serializable {
 		ko1.getProfilKupca().addRealizovanaKupovina(r1);
 		ko1.getProfilKupca().addRealizovanaKupovina(r2);
 		ko1.getProfilKupca().addRealizovanaKupovina(r3);
+		
 		
 	}
 
@@ -718,6 +720,7 @@ public class Database implements Serializable {
 			this.stavkeRacuna = db.stavkeRacuna;
 			this.tipoviPopusta = db.tipoviPopusta;
 			this.ulogeKorisnika = db.ulogeKorisnika;
+			this.korpa = db.korpa;
 			
 			fis.close();
 			ois.close();

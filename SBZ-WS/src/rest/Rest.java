@@ -22,7 +22,6 @@ import model.Korisnik;
 import model.Racun;
 import model.StanjeRacuna;
 import model.StavkaRacuna;
-import rezoner.Rezoner;
 import database.Database;
 
 @Stateless
