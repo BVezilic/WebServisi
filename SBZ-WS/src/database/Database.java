@@ -1,5 +1,10 @@
 package database;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 
 import model.AkcijskiDogadjaj;
 import model.Artikal;
@@ -25,6 +32,7 @@ import model.TipPopusta;
 import model.UlogaKorisnika;
 
 @Singleton
+@Startup
 public class Database implements Serializable {
 
 	private static final long serialVersionUID = 6692747052696354138L;
@@ -49,11 +57,18 @@ public class Database implements Serializable {
 	
 	public Database() {
 		super();
-
+		startUp();
+	}
+	
+	@PostConstruct
+	public void startUp(){
+		
+		
 		UlogaKorisnika uk1 = UlogaKorisnika.KUPAC;
 		UlogaKorisnika uk2 = UlogaKorisnika.PRODAVAC;
 		UlogaKorisnika uk3 = UlogaKorisnika.MENADZER;
 
+		
 		AkcijskiDogadjaj ad1 = new AkcijskiDogadjaj("ad1", "Leto",
 				parseDate("21/06/2016"), parseDate("21/09/2016"), 0.20);
 		AkcijskiDogadjaj ad2 = new AkcijskiDogadjaj("ad2", "Jesen",
@@ -110,7 +125,7 @@ public class Database implements Serializable {
 				parseDate("1/1/2014"), false, false);
 		Artikal ar16 = new Artikal("ar16", "Kamera", ka3, 2000, 10, 2,
 				parseDate("1/1/2014"), false, false);
-
+		
 		PragPotrosnje pp1 = new PragPotrosnje(0, 10000);
 		PragPotrosnje pp2 = new PragPotrosnje(10000, 100000);
 		PragPotrosnje pp3 = new PragPotrosnje(100000, Double.MAX_VALUE);
@@ -139,6 +154,11 @@ public class Database implements Serializable {
 		ProfilKupca pk2 = new ProfilKupca(ko2, "Zeleznicka 2", 100, kk2);
 		ProfilKupca pk3 = new ProfilKupca(ko3, "Zeleznicka 3", 500, kk3);
 
+		ko1.setProfilKupca(pk1);
+		ko2.setProfilKupca(pk2);
+		ko3.setProfilKupca(pk3);
+		
+		
 		StanjeRacuna sr1 = StanjeRacuna.OTKAZANO;
 		StanjeRacuna sr2 = StanjeRacuna.PORUCENO;
 		StanjeRacuna sr3 = StanjeRacuna.USPESNO_REALIZOVANO;
@@ -174,6 +194,7 @@ public class Database implements Serializable {
 
 		ad6.addKategorijaArtiklaSaPopustima(ka3);
 
+		
 		// Punjenje baze
 
 		addArtikal(ar1);
@@ -232,10 +253,29 @@ public class Database implements Serializable {
 		addTipPopusta(tp1);
 		addTipPopusta(tp2);
 		
-		//addRacun(r1);
-		//addRacun(r2);
-		//addRacun(r3);
-
+		
+		StavkaRacuna str1 = new StavkaRacuna(null, 1, ar1, ar1.getCena(), 3, 0, 0, 0);
+		StavkaRacuna str2 = new StavkaRacuna(null, 2, ar2, ar2.getCena(), 5, 0, 0, 0);
+		
+		
+		Racun r1 = new Racun("111", parseDate("22/11/1999"), pk1, 0, 0.0, 0.0, 0.0, 0.0);
+		Racun r2 = new Racun("222", parseDate("22/11/2000"), pk1, 0, 0.0, 0.0, 0.0, 0.0);
+		Racun r3 = new Racun("333", parseDate("22/11/2001"), pk2, 0, 0.0, 0.0, 0.0, 0.0);
+		r1.addStavkaRacuna(str1);
+		r1.addStavkaRacuna(str2);
+		
+		str1.setRacun(r1);
+		str2.setRacun(r1);
+		
+		addStavkaRacuna(str1);
+		addStavkaRacuna(str2);
+		addRacun(r1);
+		addRacun(r2);
+		addRacun(r3);
+		ko1.getProfilKupca().addRealizovanaKupovina(r1);
+		ko1.getProfilKupca().addRealizovanaKupovina(r2);
+		ko1.getProfilKupca().addRealizovanaKupovina(r3);
+		
 	}
 
 	/**
@@ -631,4 +671,54 @@ public class Database implements Serializable {
 		this.ulogeKorisnika = ulogeKorisnika;
 	}
 
+	// SERIALIZE
+	
+	public void serializeToFile(){
+		
+		FileOutputStream fout;
+		ObjectOutputStream oos;
+		try {
+			fout = new FileOutputStream("../standalone/deployments/SBZ.war/database/database.bin");
+			oos = new ObjectOutputStream(fout);
+			oos.writeObject(this);
+			
+			fout.close();
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void readFromFile(){
+		FileInputStream fis;
+		ObjectInputStream ois;
+		try {
+			fis = new FileInputStream("../standalone/deployments/SBZ.war/database/database.bin");
+			ois = new ObjectInputStream(fis);
+			Database db = (Database) ois.readObject();
+			
+			this.akcijskiDogadjaji = db.akcijskiDogadjaji;
+			this.artikli = db.artikli;
+			this.kategorijeArtikla = db.kategorijeArtikla;
+			this.kategorijeKupca = db.kategorijeKupca;
+			this.korisnici = db.korisnici;
+			this.popustiZaRacun = db.popustiZaRacun;
+			this.popustiZaStavku = db.popustiZaStavku;
+			this.pragoviPotrosnje = db.pragoviPotrosnje;
+			this.profiliKupca = db.profiliKupca;
+			this.racuni = db.racuni;
+			this.stanjaRacuna = db.stanjaRacuna;
+			this.stavkeRacuna = db.stavkeRacuna;
+			this.tipoviPopusta = db.tipoviPopusta;
+			this.ulogeKorisnika = db.ulogeKorisnika;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e){
+			
+		}
+	}
 }

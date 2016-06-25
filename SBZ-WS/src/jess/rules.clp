@@ -1,12 +1,28 @@
 (batch "./jess/init.clp")
+(import java.util.ArrayList)
 (watch facts)
 ;PRAVILA ZA STAVKE RACUNA
 
+(defrule ispisiKorisnika
+    
+    ?kor <- (korisnik (profilKupca ?pk))
+    =>
+    (bind ?lst ?pk.realizovaneKupovine)
+    (printout t "Prvi element " ?lst)
+    
+    )
+
+(defrule ispisKorisnika2
+    ?kor <- (korisnik (profilKupca ?pk))
+    =>
+    (bind ?lst ?pk.realizovaneKupovine)
+    (bind ?LIST (new java.util.ArrayList))
+   (foreach ?N ?lst  (printout t " SIFRA RACUNA: " ?N.sifra))
+    )
+
 (defrule popustZaViseOd20
     
-    
-    ?s <- (stavka (kolicinaKupnjeljihArtikala ?kol &:(> ?kol 20)))
-    
+    ?s <- (stavka (kolicinaKupnjeljihArtikala ?kol &:(and(> ?kol 20)) ))
     =>
     (call ?s.OBJECT addPrimenjeniPopust (new Popust "001" nil 0.1 (TipPopusta.OSNOVNI)))
     ;(printout t (call (new Popust "001" nil 0.1 (TipPopusta.OSNOVNI)) toString) crlf)

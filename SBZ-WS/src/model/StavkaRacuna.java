@@ -142,7 +142,7 @@ public class StavkaRacuna implements Serializable{
 
 	@Override
 	public String toString() {
-		return "StavkaRacuna [racun=" + racun + ", redniBrojStavke="
+		return "StavkaRacuna [redniBrojStavke="
 				+ redniBrojStavke + ", artikal=" + artikal + ", jedinicnaCena="
 				+ jedinicnaCena + ", kolicinaKupnjeljihArtikala="
 				+ kolicinaKupnjeljihArtikala + ", originalnaUkupnaCena="

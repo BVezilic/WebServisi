@@ -3,7 +3,7 @@
 (import model.TipPopusta)
 (import model.UlogaKorisnika)
 
-(import java.util.Date)
+(import java.util.*)
 
 (watch facts)
 (deftemplate korisnik
@@ -26,7 +26,6 @@
         (from-class KategorijaKupca)
         (include-variables TRUE))
     )
-
 
 (deftemplate racun
     (declare
@@ -67,6 +66,20 @@
     (declare
         (slot-specific TRUE)
         (from-class Popust)
+        (include-variables TRUE))
+    )
+
+(deftemplate pragPotrosnje
+    (declare
+        (slot-specific TRUE)
+        (from-class PragPotrosnje)
+        (include-variables TRUE))
+    )
+
+(deftemplate popustZaPojedinacnuStavku
+    (declare
+        (slot-specific TRUE)
+        (from-class PopustZaPojedinacnuStavku)
         (include-variables TRUE))
     )
 

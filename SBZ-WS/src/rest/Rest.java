@@ -1,11 +1,16 @@
 package rest;
 
+import javax.ejb.EJB;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,6 +18,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
+import rezoner.Rezoner;
+import model.Korisnik;
+import model.PragPotrosnje;
 
 import model.AkcijskiDogadjaj;
 import model.Artikal;
@@ -237,4 +246,19 @@ public class Rest {
 		return null;
 	}
 	
+	
+	@EJB
+	Rezoner rezoner;
+	
+	@GET
+	@Path("/test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String test(){
+		
+		rezoner.serializeToFile();
+		
+		rezoner.loadFromFile();
+		
+		return "Radi";
+	}
 }
