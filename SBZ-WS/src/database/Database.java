@@ -89,43 +89,43 @@ public class Database implements Serializable {
 		KategorijaArtikla ka2 = new KategorijaArtikla("ka2", ka1,
 				"Skolski pribor", 0.20);
 		KategorijaArtikla ka3 = new KategorijaArtikla("ka3", ka1,
-				"Elektronika", 0.25);
+				"Racunari", 0.25);
 		KategorijaArtikla ka4 = new KategorijaArtikla("ka4", null, "Sokovi",
 				0.10);
 		KategorijaArtikla ka5 = new KategorijaArtikla("ka5", null,
 				"Sportska oprema", 0.33);
 
-		Artikal ar1 = new Artikal("ar1", "Olovka", ka2, 25, 25, 50,
+		Artikal ar1 = new Artikal("ar1", "Olovka", ka2, 25, 100, 50,
 				parseDate("1/1/2014"), false, false);
 		Artikal ar2 = new Artikal("ar2", "Lenjir", ka2, 100, 50, 65,
 				parseDate("1/1/2014"), false, false);
 		Artikal ar3 = new Artikal("ar3", "Gumica", ka2, 100, 50, 25,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar4 = new Artikal("ar4", "Televizor", ka3, 20000, 5, 1,
+		Artikal ar4 = new Artikal("ar4", "Televizor", ka3, 20000, 50, 1,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar5 = new Artikal("ar5", "Racunar", ka3, 30000, 5, 1,
+		Artikal ar5 = new Artikal("ar5", "Racunar", ka3, 30000, 50, 1,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar6 = new Artikal("ar6", "Coca cola", ka4, 120, 30, 20,
+		Artikal ar6 = new Artikal("ar6", "Coca cola", ka4, 120, 300, 20,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar7 = new Artikal("ar7", "Pepsi cola", ka4, 90, 30, 20,
+		Artikal ar7 = new Artikal("ar7", "Pepsi cola", ka4, 90, 300, 20,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar8 = new Artikal("ar8", "Sok od jabuke", ka4, 90, 30, 20,
+		Artikal ar8 = new Artikal("ar8", "Sok od jabuke", ka4, 900, 30, 20,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar9 = new Artikal("ar9", "Lav pivo", ka4, 100, 30, 20,
+		Artikal ar9 = new Artikal("ar9", "Lav pivo", ka4, 100, 300, 20,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar10 = new Artikal("ar10", "Fudbalska lopta", ka5, 3000, 10, 2,
+		Artikal ar10 = new Artikal("ar10", "Fudbalska lopta", ka5, 3000, 100, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar11 = new Artikal("ar11", "Teniske loptice", ka5, 500, 10, 2,
+		Artikal ar11 = new Artikal("ar11", "Teniske loptice", ka5, 500, 100, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar12 = new Artikal("ar12", "Teg", ka5, 500, 10, 2,
+		Artikal ar12 = new Artikal("ar12", "Teg", ka5, 500, 100, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar13 = new Artikal("ar13", "Kapa", ka5, 750, 10, 2,
+		Artikal ar13 = new Artikal("ar13", "Kapa", ka5, 750, 100, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar14 = new Artikal("ar14", "Mis", ka3, 1000, 10, 2,
+		Artikal ar14 = new Artikal("ar14", "Mis", ka3, 1000, 100, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar15 = new Artikal("ar15", "Tastatura", ka3, 1500, 10, 2,
+		Artikal ar15 = new Artikal("ar15", "Tastatura", ka3, 1500, 100, 2,
 				parseDate("1/1/2014"), false, false);
-		Artikal ar16 = new Artikal("ar16", "Kamera", ka3, 2000, 10, 2,
+		Artikal ar16 = new Artikal("ar16", "Kamera", ka3, 2000, 100, 2,
 				parseDate("1/1/2014"), false, false);
 		
 		PragPotrosnje pp1 = new PragPotrosnje(0, 10000);

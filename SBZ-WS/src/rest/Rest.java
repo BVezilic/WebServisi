@@ -193,13 +193,16 @@ public class Rest {
 				return null;
 			}
 			stavka.setRedniBrojStavke(i++);
+			stavka.setRacun(racun);
 			racun.addStavkaRacuna(stavka);
-			racun.setOriginalnaUkupnaCena(racun.getOriginalnaUkupnaCena() + stavka.getKonacnaCena());
-			racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
+			//racun.setOriginalnaUkupnaCena(racun.getOriginalnaUkupnaCena() + stavka.getKonacnaCena());
+			//racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
 		}
 		
 		data.setRacunUPirpremi(racun);
 		
+		racun = rezoner.pokreniRezonerZaRacun(racun);
+		System.out.println(racun);
 		return racun;
 	}
 	

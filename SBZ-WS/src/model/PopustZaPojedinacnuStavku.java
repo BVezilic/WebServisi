@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class PopustZaPojedinacnuStavku extends Popust implements Serializable{
 
 	private static final long serialVersionUID = 2379537612191306866L;
@@ -24,6 +26,7 @@ public class PopustZaPojedinacnuStavku extends Popust implements Serializable{
 				", procenatUmanjenja="+ procenatUmanjenja + ",tip popusta=" + oznaka + ", sifra=" + sifra + "]";
 	}
 
+	@JsonIgnore
 	public StavkaRacuna getStavkaRacuna() {
 		return stavkaRacuna;
 	}
