@@ -12,7 +12,7 @@
     ?s <- (stavka (racun ?r &:(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO))) (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and (> ?kol 20) (<> (call ?ar nazivKategorije) "Skolski pribor") (<> (call ?ar nazivNadKategorije) "Skolski pribor"))))
     ;?s <- (stavka (artikal ?ar) (kolicinaKupnjeljihArtikala ?kol &:(and (> ?kol 20) (<> (get (get ?ar kategorijaArtikla) naziv) "Skolski pribor") (<> (call ?ar getNazivNadKategorije) "Skolski pribor"))))
     =>
-    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "001" (get ?s racun) 0.1 (TipPopusta.OSNOVNI) ?s.OBJECT))
+    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "Osnovni popust 10% za kupovinu na veliko" (get ?s racun) 0.1 (TipPopusta.OSNOVNI) ?s.OBJECT))
     ;(printout t (call (new Popust "001" nil 0.1 (TipPopusta.OSNOVNI)) toString) crlf)
     ;(printout t "radi mi pravilo " (call ?s.OBJECT toString) crlf)
     ;(printout t " ISPIS: " (call ?ar getNazivKategorije))
@@ -27,7 +27,9 @@
     ;(artikal (kategorijaArtikla ?kat) (sifra ?sifra &?a.sifra))
     ;(kategorijaArtikla (sifraKategorije ?kat1 &?kat.sifraKategorije) (naziv ?n |:(or (eq ?n "laptopovi")(eq ?n "racunari")(eq ?n "televizori"))))
     =>
-    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "002" (get ?s racun) 0.05 (TipPopusta.OSNOVNI) ?s.OBJECT))
+    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "Osnovni popust 5% za kupovinu na veliko" (get ?s racun) 0.05 (TipPopusta.OSNOVNI) ?s.OBJECT))
+    
+    (assert (primenjniPopusti (popust "Osnovni popust 5% za kupovinu vise od 5 artikala iz kategorija Racunari, televozori i laptopovi")))
     ;(printout t "radi mi i drugo pravilo" crlf crlf)
     )
 
@@ -40,7 +42,7 @@
     ;(artikal (kategorijaArtikla ?kat) (sifra ?sifra &?a.sifra))
     ;(kategorijaArtikla (sifraKategorije ?kat1 &?kat.sifraKategorije) (naziv ?n &"Siroka potrosnja"))
     =>
-    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "003" (get ?s racun) 0.07 (TipPopusta.OSNOVNI) ?s.OBJECT))
+    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "Osnovni popust 7% za kupovinu na veliko" (get ?s racun) 0.07 (TipPopusta.OSNOVNI) ?s.OBJECT))
     (printout t "radi mi trece pravilo")
     )
 
@@ -76,7 +78,7 @@
     ?s <- (stavka (racun ?r &:(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO))) (artikal ?ar &:(getArticlesInSpan ?r 15 ?ar)))
     =>
     ;(printout t crlf crlf "napravicu onaj 2% popust" crlf )
-    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "004" (get ?s racun) 0.02 (TipPopusta.DODATNI) ?s.OBJECT))
+    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "Dodatni popust 2% za ponovnu kupovinu" (get ?s racun) 0.02 (TipPopusta.DODATNI) ?s.OBJECT))
     )
 
 ; proverava da li je proizvod iz iste kategorije kupljen u prethodnih 30 dana
@@ -111,7 +113,7 @@
     ;(artikal (sifra ?art2 &:(<> ?art1 ?art2))(sifra ?art2 &?artSt2.sifra) (kategorijaArtikla ?kat))
     ?s <- (stavka (racun ?r &:(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO))) (artikal ?ar &:(call Utility getCatInSpan ?r 30 ?ar)))
     =>
-    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "005" (get ?s racun) 0.01 (TipPopusta.DODATNI) ?s.OBJECT))
+    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "Dodatni popust 1% za ponovnu kupovinu proizvoda iz iste kategorije" (get ?s racun) 0.01 (TipPopusta.DODATNI) ?s.OBJECT))
     ;(printout t crlf crlf "napravicu onaj 1% popust" crlf)
     
     )
@@ -131,7 +133,7 @@
    	;(printout t crlf crlf (call ?s.OBJECT toString) crlf)
     ;(printout t "Napravicu onaj popust za akcijski dogadjaj u vrednosti od " ?akd.popustZaDogadjaj crlf)
     ;(printout t crlf "AKCIJSKI DOGADJAJ " " " (call ?vaziOd toString) " " (call ?vaziDo toString))
-    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku "006" (get ?s racun) (get ?akd popustZaDogadjaj) (TipPopusta.DODATNI) ?s.OBJECT))
+    (call ?s.OBJECT addPrimenjeniPopust (new PopustZaPojedinacnuStavku (str-cat "Popust za akcijski dogadjaj: " (get ?akd naziv)) (get ?s racun) (get ?akd popustZaDogadjaj) (TipPopusta.DODATNI) ?s.OBJECT))
     )
 
 
@@ -211,7 +213,7 @@ PRAVILA ZA RACUNE!!!!
     (test(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO)))
     =>
     ;(printout t crlf "primenice se 5% popusta na racun za 200000: " (get ?r originalnaUkupnaCena) crlf)
-    (call ?r.OBJECT addPrimenjeniPopust (new Popust "007" ?r.OBJECT 0.05 (TipPopusta.OSNOVNI)))
+    (call ?r.OBJECT addPrimenjeniPopust (new Popust "Osnovni popust 5% na citav racun za kupovinu na veliko"  ?r.OBJECT 0.05 (TipPopusta.OSNOVNI)))
     )
 
 ;1% na ceo racun ako je kupac duze od dve godine aktivan
@@ -225,7 +227,7 @@ PRAVILA ZA RACUNE!!!!
     (test (call Utility korisniciStaz 2 (get (get (get ?r kupac) korisnik) datumRegistrovanja)))
     =>
     ;(printout t crlf "primeniti popust od 2% za stare kupce" crlf)
-    (call ?r.OBJECT addPrimenjeniPopust (new Popust "008" ?r.OBJECT 0.01 (TipPopusta.DODATNI)))
+    (call ?r.OBJECT addPrimenjeniPopust (new Popust "Dodatni popust 1% za vernost" ?r.OBJECT 0.01 (TipPopusta.DODATNI)))
     )
 
 ;popust za srebrne/zladne kupce
@@ -237,7 +239,7 @@ PRAVILA ZA RACUNE!!!!
     (test(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO)))
     =>
     ;(printout t crlf "popust za srebrne/zlatne kupce od 1%" crlf)
-    (call ?r.OBJECT addPrimenjeniPopust (new Popust "009" ?r.OBJECT 0.01 (TipPopusta.DODATNI)))
+    (call ?r.OBJECT addPrimenjeniPopust (new Popust "Dodatni popust 1% za kupce sa posebnim privilegijama" ?r.OBJECT 0.01 (TipPopusta.DODATNI)))
     )
 
 ;funkcija koja odredjuje da li prelazi prag za treci dodatni popust na racun
@@ -264,7 +266,7 @@ PRAVILA ZA RACUNE!!!!
     ?r <- (racun (originalnaUkupnaCena ?ukupnaCena &:(and(> ?ukupnaCena 50000) (overHalf (get ?r originalnaUkupnaCena) (get ?r stavkeRacuna) 0.5))))
     (test(eq (get ?r stanjeRacuna) (StanjeRacuna.PORUCENO)))
     =>
-    (call ?r.OBJECT addPrimenjeniPopust (new Popust "010" ?r.OBJECT 0.03 (TipPopusta.DODATNI)))
+    (call ?r.OBJECT addPrimenjeniPopust (new Popust "Dodatni popust 3% na kupovinu skupih proizvoda" ?r.OBJECT 0.03 (TipPopusta.DODATNI)))
     )
 
 ;izracunavanje ukupnog popusta na racunu

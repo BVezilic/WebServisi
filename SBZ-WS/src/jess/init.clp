@@ -13,6 +13,9 @@
         (include-variables TRUE))
     )
 
+(deftemplate primenjniPopusti
+    (slot popust (type STRING)))
+
 (deftemplate artikalAlarm
     (slot ID (type STRING)))
 

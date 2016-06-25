@@ -132,11 +132,11 @@ public class Database implements Serializable {
 		PragPotrosnje pp2 = new PragPotrosnje(10000, 100000);
 		PragPotrosnje pp3 = new PragPotrosnje(100000, Double.MAX_VALUE);
 
-		KategorijaKupca kk1 = new KategorijaKupca("kk1", "Bronzana kategorija",
+		KategorijaKupca kk1 = new KategorijaKupca("kk1", "BRN",
 				pp1);
-		KategorijaKupca kk2 = new KategorijaKupca("kk2", "Srebrna kategorija",
+		KategorijaKupca kk2 = new KategorijaKupca("kk2", "SIL",
 				pp2);
-		KategorijaKupca kk3 = new KategorijaKupca("kk3", "Zlatna kategorija",
+		KategorijaKupca kk3 = new KategorijaKupca("kk3", "GLD",
 				pp3);
 
 		Korisnik ko1 = new Korisnik("kupac", "Pera", "Peric", "k", uk1,

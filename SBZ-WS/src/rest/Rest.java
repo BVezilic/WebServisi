@@ -19,6 +19,7 @@ import model.Artikal;
 import model.KategorijaArtikla;
 import model.KategorijaKupca;
 import model.Korisnik;
+import model.PopustZaPojedinacnuStavku;
 import model.ProfilKupca;
 import model.Racun;
 import model.StanjeRacuna;
@@ -213,6 +214,9 @@ public class Rest {
 		data.setRacunUPirpremi(racun);
 		rezoner.removeAllFacts();
 		System.out.println(racun);
+		
+		racun.izaberiNajboljiOsnovniPopust(); // brise sve popuste osim najboljeg
+		System.out.println(racun);
 		return racun;
 	}
 	
@@ -338,4 +342,5 @@ public class Rest {
 		}
 		return null;
 	}
+
 }
