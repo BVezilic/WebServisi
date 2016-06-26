@@ -207,7 +207,7 @@ public class Rest {
 		
 		int i = 1;
 		for (StavkaRacuna stavka : data.getKorpa().values()) {
-			if(stavka.getArtikal().getBrojnoStanje() <= stavka.getKolicinaKupnjeljihArtikala())
+			if(stavka.getArtikal().getBrojnoStanje() < stavka.getKolicinaKupnjeljihArtikala())
 			{
 				return null;
 			}
@@ -301,7 +301,7 @@ public class Rest {
 	}
 	
 	@GET
-	@Path("/akcija/all")
+	@Path("/akcija/active")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<AkcijskiDogadjaj> sveAkcije(){
 		ArrayList<AkcijskiDogadjaj> retVal = new ArrayList<AkcijskiDogadjaj>();
@@ -311,6 +311,13 @@ public class Rest {
 				retVal.add(ad);
 		}
 		return retVal;
+	}
+	
+	@GET
+	@Path("/akcija/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<AkcijskiDogadjaj> aktivneAkcije(){
+		return data.getAkcijskiDogadjaji();
 	}
 	
 	@POST

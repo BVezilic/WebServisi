@@ -46,7 +46,7 @@
 		var getAkcijskeDogadjaje = function() {
 			$http({
 			  method: 'GET',
-			  url: 'http://localhost:8080/SBZ/rest/services/akcija/all'
+			  url: 'http://localhost:8080/SBZ/rest/services/akcija/active'
 			}).then(function successCallback(response) {
 				$scope.akcijskiDogadjaji = response.data;
 				console.log($scope.akcijskiDogadjaji);

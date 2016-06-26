@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
@@ -60,6 +61,11 @@ public class Database implements Serializable {
 	public Database() {
 		super();
 		startUp();
+	}
+	
+	@PreDestroy
+	public void shutDown(){
+		serializeToFile();
 	}
 	
 	@PostConstruct
