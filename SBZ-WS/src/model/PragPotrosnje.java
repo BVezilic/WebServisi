@@ -41,7 +41,7 @@ public class PragPotrosnje implements Serializable {
 	// METODE
 	public double dodelaNagradnihBodova(double cena){
 		
-		return getProcenatKonverzije() * cena;
+		return getProcenatKonverzije()/100 * cena;
 		
 	}
 	

@@ -17,6 +17,7 @@
 			$scope.selectedKategorijaKupca = kategorija;
 			$scope.opsegOd = kategorija.pragPotrosnje.opsegPotrosnjeOd;
 			$scope.opsegDo = kategorija.pragPotrosnje.opsegPotrosnjeDo;
+			$scope.procenatKonverzije = kategorija.pragPotrosnje.procenatKonverzije;
 		};
 		
 		$scope.sacuvajKategorijuKupca = function(kolicina) {
@@ -24,9 +25,14 @@
 				alert("Pogresan opseg");
 				return;
 			}
+			if (!validator.inRangeProcenti($scope.procenatKonverzije)) {
+				alert("Pogresan procenat");
+				return;
+			}
 			var azuriranaKategorija = $scope.selectedKategorijaKupca;
 			azuriranaKategorija.pragPotrosnje.opsegPotrosnjeOd = $scope.opsegOd;
 			azuriranaKategorija.pragPotrosnje.opsegPotrosnjeDo = $scope.opsegDo;
+			azuriranaKategorija.pragPotrosnje.procenatKonverzije = $scope.procenatKonverzije;
 			$http({
 			  method: 'POST',
 			  url: 'http://localhost:8080/SBZ/rest/services/kategorija/kupac/update',

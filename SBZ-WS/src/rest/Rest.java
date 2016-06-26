@@ -128,6 +128,8 @@ public class Rest {
 	public Boolean obradiRacun(Racun racun){
 		System.out.println(racun); 
 		Racun temp = data.getRacuni().get(data.getRacuni().indexOf(racun));
+		if(temp.getStanjeRacuna() != StanjeRacuna.PORUCENO)
+			return false;
 		for(StavkaRacuna sr: temp.getStavkeRacuna())
 		{
 			if(sr.getKolicinaKupnjeljihArtikala() > data.getArtikalBySifra(sr.getArtikal().getSifra()).getBrojnoStanje())
@@ -143,7 +145,7 @@ public class Rest {
 			temp.getKupac().addNagradniBodovi(temp.getBrojOstvarenihBodova());
 			data.getArtikalBySifra(sr.getArtikal().getSifra()).setBrojnoStanje((int)(data.getArtikalBySifra(sr.getArtikal().getSifra()).getBrojnoStanje() - sr.getKolicinaKupnjeljihArtikala()));
 		}
-		return true;
+		return true;				
 	}
 	
 	@POST
