@@ -35,7 +35,7 @@
 			  </div>
 			  <div class="form-group">
 			    <label for="popust">Maksimalni popust (%):</label>
-			    <input type="number" ng-model="dodavanjPopust" class="form-control" id="popust">
+			    <input type="number" ng-model="dodavanjPopust" class="form-control" id="popust" min="0" max="100">
 			  </div>
 				<button type="button" class="btn btn-success" ng-click="dodajKategorijuArtikla()">Dodaj</button>
 			</form>
@@ -57,7 +57,7 @@
 			  </div>
 			  <div class="form-group">
 			    <label for="popust">Maksimalni popust (%):</label>
-			    <input type="number" ng-model="azuriranjePopust" class="form-control" id="popust">
+			    <input type="number" ng-model="azuriranjePopust" class="form-control" id="popust" min="0" max="100">
 			  </div>
 				<button type="button" class="btn btn-success" ng-click="azurirajKategorijuArtikla()">Sacuvaj</button>
 			</div>

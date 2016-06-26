@@ -33,6 +33,7 @@
 				  	<p><label>Naziv:</label> {{a.naziv}}</p>					  	
 				  	<p><label>Kategorija:</label> {{a.kategorijaArtikla.naziv}}</p>
 				  	<p><label>Cena:</label> {{a.cena}}</p>
+				  	<p><label>Na stanju:</label> {{a.brojnoStanje}}</p>
 				  	<div class = "well" ng-repeat="akcija in akcijskiDogadjaji|filter:a.kategorijaArtikla.naziv">
 				  		<p><label>Akcija:</label> {{akcija.naziv}}</p>
 				  		<p><label>Popust:</label> {{akcija.popustZaDogadjaj * 100}}%</p>
@@ -41,9 +42,9 @@
 				  </div>
 				  <div class="panel-footer">
 		  			<div class="input-group col-lg-5">
-						 	<span class="input-group-addon" id="basic-addon3">Kolicina</span><input type="number" class="form-control" id="kolicina" ng-model="kolicina" aria-describedby="basic-addon3"/>
+						 	<span class="input-group-addon" id="basic-addon3">Kolicina</span><input type="number" class="form-control" min="0" max="{{a.brojnoStanje}}" id="kolicina" ng-model="kolicina" aria-describedby="basic-addon3"/>
 						 	<span class="input-group-btn">
-					        <button type="button" class="btn btn-success" ng-click="addToKorpa(a, kolicina)">Dodaj u korpu</button>
+					        <button type="button" class="btn btn-success" ng-click="addToKorpa(a,kolicina)">Dodaj u korpu</button>
 					   	</span>
 						</div>
 					</div>

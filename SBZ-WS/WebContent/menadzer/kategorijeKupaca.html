@@ -20,9 +20,11 @@
 		<h2>Azuriranje kategorije: </h2><br/>
 		<p><b>Sifra kategorije:</b> {{selectedKategorijaKupca.sifraKategorije}}</p>
 		<label for="opseg">Opseg:</label>
+			<form>
 	 		<div class="input-group form-group col-md-6">
-	    <input type="number" ng-model="opsegOd" class="form-control" id="cenaOd"><span class="input-group-addon">-</span><input type="number" ng-model="opsegDo" class="form-control" id="cenaDo">
+	    <input type="number" ng-model="opsegOd" class="form-control" min="0"><span class="input-group-addon">-</span><input type="number" ng-model="opsegDo" class="form-control" min="0">
  		  </div>
+ 		  </form>
 		<button type="button" class="btn btn-success" ng-click="sacuvajKategorijuKupca()">Sacuvaj</button>
 	</div>
 </div>
