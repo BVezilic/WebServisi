@@ -25,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.DatatypeConverter;
 
 import model.AkcijskiDogadjaj;
@@ -345,13 +346,13 @@ public class Rest {
 	
 	@GET
 	@Path("/login")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String login(@QueryParam("korisnickoIme")String korisnickoIme, @QueryParam("lozinka")String lozinka) {
-		
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response login(@QueryParam("korisnickoIme")String korisnickoIme, @QueryParam("lozinka")String lozinka) {
 		ArrayList<Korisnik> korisnici = data.getKorisnici();
 		for (Korisnik k : korisnici) {
 			if (k.getKorisnickoIme().equals(korisnickoIme) && k.getLozinka().equals(lozinka)) {
-				return createJWT(korisnickoIme, lozinka, k.getUlogaKorisnika().toString());
+				return Response.ok(k, MediaType.APPLICATION_JSON).header("Authorization", createJWT(korisnickoIme, lozinka, k.getUlogaKorisnika().toString())).build();
+				//return createJWT(korisnickoIme, lozinka, k.getUlogaKorisnika().toString());
 			}
 		}
 		return null;
@@ -365,7 +366,7 @@ public class Rest {
 		 Claims claims = Jwts.claims().setSubject(korisnickoIme);
 	        claims.put("korisnickoIme", korisnickoIme);
 	        claims.put("lozinka", lozinka);
-	        claims.put("roles", uloga);
+	        claims.put("role", uloga);
 	        
 		  //Let's set the JWT Claims
 		JwtBuilder builder = Jwts.builder().setClaims(claims)
