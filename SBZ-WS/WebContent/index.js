@@ -100,7 +100,10 @@
     	{
         	$state.go(fromState.name);
     	}
-        	
+        else if(AuthenticationService.getCurrentUser() && toState.name == 'login')
+        {
+        	$state.go(fromState.name);
+        }
       });
       
       $rootScope.logout = function () {

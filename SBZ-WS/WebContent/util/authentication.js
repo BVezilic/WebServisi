@@ -54,6 +54,11 @@
             // uklonimo korisnika iz lokalnog skladišta
             delete $localStorage.currentUser;
             $http.defaults.headers.common.Authorization = '';
+            $http({
+    			  method: 'POST',
+    			  url: 'http://localhost:8080/SBZ/rest/services/korpa/clear',
+    			  
+    			});
             $state.go('login');
         }
 

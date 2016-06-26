@@ -70,6 +70,14 @@ public class Rest {
 	}
 	
 	@POST
+	@Path("/korpa/clear")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void clearKorpa (){
+		data.getKorpa().clear();
+	}
+	
+	@POST
 	@Path("/korpa/remove")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
