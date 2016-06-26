@@ -1,5 +1,5 @@
 (function(angular) {
-  var app = angular.module('app',['ui.router', 'checklist-model', 'authentication', 'porucivanje']);
+  var app = angular.module('app',['ui.router', 'checklist-model', 'authentication', 'porucivanje', 'obradaRacuna']);
   app
   	.config(config)
   	.run(run);

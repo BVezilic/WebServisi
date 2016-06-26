@@ -4,10 +4,6 @@
 		PorucivanjeService.getArtikli(function(data) {
 			$scope.artikli = data;
 		});
-
-		$scope.selectArtikal = function(artikal) {
-			$scope.selectedArtikal = artikal;
-		};
 		
 		$scope.azurirajArtikal = function(kolicina) {
 			PorucivanjeService.azurirajArtikal($scope.selectedArtikal, kolicina, function(){
@@ -16,6 +12,10 @@
   					$scope.artikli = data;
   				});
 			});
+		};
+		
+		$scope.selectArtikal = function(artikal) {
+			$scope.selectedArtikal = artikal;
 		};
 	}]);
 })(angular);
