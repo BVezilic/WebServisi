@@ -5,7 +5,7 @@
   	.run(run);
 		  
   function config($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/login');
     $stateProvider
     .state('kupac', {//naziv stanja!
       url: '/kupac',
@@ -74,18 +74,33 @@
       // ukoliko pokušamo da odemo na stranicu za koju nemamo prava, redirektujemo se na login
       $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         // lista javnih stanja
-        var publicStates = ['login'];
+        var publicStates = ['login', 'kupac', 'menadzer', 'prodavac'];
         var restrictedState = publicStates.indexOf(toState.name) === -1;
         
         console.log("ROLE: "+ $rootScope.getCurrentUserRole());
-        console.log("toState: "+ toState.toString());
+        console.log("toState: "+ toState.name);
         
-       /* if(restrictedState && !AuthenticationService.getCurrentUser()){
+        var checkKupac = toState.name == 'kupac' || toState.name == 'kupac.proizvodi' || toState.name == 'kupac.korpa' || toState.name == 'kupac.nalog';
+        var checkMenadzer = toState.name == 'menadzer' || toState.name == 'menadzer.kategorijeKupaca' || toState.name == 'menadzer.kategorijeArtikala' || toState.name == 'menadzer.akcijskiDogadjaji';
+        var checkProdavac = toState.name == 'prodavac' || toState.name == 'prodavac.porucivanje' || toState.name == 'prodavac.obradaRacuna';
+        
+        if(restrictedState && !AuthenticationService.getCurrentUser())
+        {
         	$state.go('login');
-        }else if(!$rootScope.getCurrentUserRole() == 'KUPAC' && toState.toString() == 'kupac')
+        }
+        else if($rootScope.getCurrentUserRole() != 'KUPAC' && checkKupac)
     	{
-        	$state.go('login');
-    	}*/
+        	$state.go(fromState.name);
+    	}
+        else if($rootScope.getCurrentUserRole() != 'MENADZER' && checkMenadzer)
+    	{
+        	$state.go(fromState.name);
+    	}
+        else if($rootScope.getCurrentUserRole() != 'PRODAVAC' && checkProdavac)
+    	{
+        	$state.go(fromState.name);
+    	}
+        	
       });
       
       $rootScope.logout = function () {
@@ -99,6 +114,16 @@
             return AuthenticationService.getCurrentUser().role;
           }
       }
+      
+      $rootScope.getCurrentUser = function () {
+          if (!AuthenticationService.getCurrentUser()){
+            return undefined;
+          }
+          else{
+            return AuthenticationService.getCurrentUser();
+          }
+      }
+      
       $rootScope.isLoggedIn = function () {
           if (AuthenticationService.getCurrentUser()){
             return true;

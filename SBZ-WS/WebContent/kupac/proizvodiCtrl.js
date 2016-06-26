@@ -26,7 +26,7 @@
 		getKategorijeArtikla();
 		
 		$scope.addToKorpa = function(artikal, kolicina) {
-			if(kolicina > 0 && kolicina < artikal.brojnoStanje){
+			if(kolicina > 0 && kolicina <= artikal.brojnoStanje){
 				$http({
 					  method: 'POST',
 					  url: 'http://localhost:8080/SBZ/rest/services/korpa/add',
@@ -46,7 +46,7 @@
 		var getAkcijskeDogadjaje = function() {
 			$http({
 			  method: 'GET',
-			  url: 'http://localhost:8080/SBZ/rest/services/akcija/all'
+			  url: 'http://localhost:8080/SBZ/rest/services/akcija/active'
 			}).then(function successCallback(response) {
 				$scope.akcijskiDogadjaji = response.data;
 				console.log($scope.akcijskiDogadjaji);

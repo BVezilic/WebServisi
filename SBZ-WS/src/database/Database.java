@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
@@ -62,9 +63,16 @@ public class Database implements Serializable {
 		startUp();
 	}
 	
+	@PreDestroy
+	public void shutDown(){
+		serializeToFile();
+	}
+	
 	@PostConstruct
 	public void startUp(){
 		
+		
+		readFromFile();
 		
 		UlogaKorisnika uk1 = UlogaKorisnika.KUPAC;
 		UlogaKorisnika uk2 = UlogaKorisnika.PRODAVAC;

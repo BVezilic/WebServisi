@@ -40,11 +40,10 @@
 		};
 		
 		$scope.pregledRacuna = function(){
-			console.log($rootScope.korisnik);
 			$http({
 				  method: 'POST',
 				  url: 'http://localhost:8080/SBZ/rest/services/racun/pregled',
-				  data: $rootScope.korisnik
+				  data: $rootScope.getCurrentUser().korisnickoIme
 				}).then(function successCallback(response) {
 					
 					if(response.data != "")
@@ -67,6 +66,9 @@
 		};
 		
 		$scope.potvrdiRacun = function(racun, ulozeniBodovi){
+			if(typeof ulozeniBodovi == 'undefined'){
+				ulozeniBodovi = 0;
+			}
 			$http({
 				  method: 'POST',
 				  url: 'http://localhost:8080/SBZ/rest/services/racun/potvrda',
@@ -77,9 +79,7 @@
 						$scope.racun={};
 						$scope.hasRacun = false;
 						$scope.korpa = [];
-						console.log($rootScope.korisnik.profilKupca.nagradniBodovi);
-						$rootScope.korisnik.profilKupca.nagradniBodovi -= ulozeniBodovi;
-						console.log($rootScope.korisnik.profilKupca.nagradniBodovi);
+						$rootScope.getCurrentUser().profilKupca.nagradniBodovi -= ulozeniBodovi;					
 					}else
 					{
 						window.alert("Nemate dovoljno bodova da biste ostvarili ovu kupovinu");
@@ -87,7 +87,17 @@
 				  }, function errorCallback(response) {
 					  console.log("Greska kod addToKorpa");
 				  });
+		};
+		
+		$scope.getPopusti = function(stavka){
+			var popusti = stavka.primenjeniPopusti;
+			var ispis = "";
 			
+			for(var i = 0; i < popusti.length; i++){
+				ispis += popusti[i].sifra + '\r\n';
+			}
+			
+			return ispis;
 		};
 	}]);
 })(angular);
