@@ -56,6 +56,13 @@ public class Rest {
 	}
 	
 	@GET
+	@Path("/proba")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String proba(){
+		return data.toString();
+	}
+	
+	@GET
 	@Path("/korpa/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<StavkaRacuna> getKorpa(){
@@ -172,8 +179,8 @@ public class Rest {
 	@Path("/racun/potvrda")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean obradiRacun(Racun racun, @QueryParam("bodovi")int bodovi){
-		System.out.println(racun);
-	
+		System.out.println("BODOVI: " + bodovi);
+		
 		if(data.getRacunUPirpremi().getKupac().getNagradniBodovi() - bodovi < 0){
 			return false;
 		}
@@ -208,7 +215,7 @@ public class Rest {
 		
 		int i = 1;
 		for (StavkaRacuna stavka : data.getKorpa().values()) {
-			if(stavka.getArtikal().getBrojnoStanje() <= stavka.getKolicinaKupnjeljihArtikala())
+			if(stavka.getArtikal().getBrojnoStanje() < stavka.getKolicinaKupnjeljihArtikala())
 			{
 				return null;
 			}
@@ -219,12 +226,13 @@ public class Rest {
 			//racun.setKonacnaCena(racun.getOriginalnaUkupnaCena());
 		}	
 		racun = rezoner.pokreniRezonerZaRacun(racun);		
-		data.setRacunUPirpremi(racun);
-		rezoner.removeAllFacts();
-		System.out.println(racun);
 		
 		racun.izaberiNajboljiOsnovniPopust(); // brise sve popuste osim najboljeg
-		System.out.println(racun);
+		
+		//OVO IDE NA KRAJ
+		data.setRacunUPirpremi(racun);
+		rezoner.removeAllFacts();
+		
 		return racun;
 	}
 	
@@ -239,7 +247,7 @@ public class Rest {
 	@Path("/racun/cancel")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean otkaziRacun(Racun racun){
-		//System.out.println(racun);
+		
 		Racun temp = data.getRacuni().get(data.getRacuni().indexOf(racun));
 		if(temp.getStanjeRacuna() == StanjeRacuna.PORUCENO)
 		{
@@ -301,7 +309,7 @@ public class Rest {
 	}
 	
 	@GET
-	@Path("/akcija/all")
+	@Path("/akcija/active")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<AkcijskiDogadjaj> sveAkcije(){
 		ArrayList<AkcijskiDogadjaj> retVal = new ArrayList<AkcijskiDogadjaj>();
@@ -311,6 +319,13 @@ public class Rest {
 				retVal.add(ad);
 		}
 		return retVal;
+	}
+	
+	@GET
+	@Path("/akcija/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<AkcijskiDogadjaj> aktivneAkcije(){
+		return data.getAkcijskiDogadjaji();
 	}
 	
 	@POST
