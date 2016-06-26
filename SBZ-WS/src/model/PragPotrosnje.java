@@ -8,7 +8,16 @@ public class PragPotrosnje implements Serializable {
 	
 	private double opsegPotrosnjeOd;
 	private double opsegPotrosnjeDo;
+	private double procenatKonverzije;
 	
+	public double getProcenatKonverzije() {
+		return procenatKonverzije;
+	}
+
+	public void setProcenatKonverzije(double procenatKonverzije) {
+		this.procenatKonverzije = procenatKonverzije;
+	}
+
 	//KONSTRUKTORI
 	public PragPotrosnje() {
 		super();
@@ -20,20 +29,20 @@ public class PragPotrosnje implements Serializable {
 		this.opsegPotrosnjeDo = opsegPotrosnjeDo;
 	}
 	
+	
+	public PragPotrosnje(double opsegPotrosnjeOd, double opsegPotrosnjeDo,
+			double procenatKonverzije) {
+		super();
+		this.opsegPotrosnjeOd = opsegPotrosnjeOd;
+		this.opsegPotrosnjeDo = opsegPotrosnjeDo;
+		this.procenatKonverzije = procenatKonverzije;
+	}
+
 	// METODE
 	public double dodelaNagradnihBodova(double cena){
 		
-		double skaliranje = 0;
+		return getProcenatKonverzije() * cena;
 		
-		if (opsegPotrosnjeDo < 5000){
-			skaliranje = 0.1;
-		} else if (opsegPotrosnjeDo < 20000){
-			skaliranje = 0.2;
-		} else {
-			skaliranje = 0.3;
-		}
-		
-		return skaliranje * cena;
 	}
 	
 	// GET && SET
