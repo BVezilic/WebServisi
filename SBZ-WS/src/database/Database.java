@@ -73,7 +73,7 @@ public class Database implements Serializable {
 		
 		
 		readFromFile();
-		
+
 		/*
 		UlogaKorisnika uk1 = UlogaKorisnika.KUPAC;
 		UlogaKorisnika uk2 = UlogaKorisnika.PRODAVAC;
@@ -279,7 +279,7 @@ public class Database implements Serializable {
 		ko1.getProfilKupca().addRealizovanaKupovina(r1);
 		ko1.getProfilKupca().addRealizovanaKupovina(r2);
 		ko1.getProfilKupca().addRealizovanaKupovina(r3);
-		
+		*/
 		
 	}
 
