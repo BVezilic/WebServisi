@@ -6,12 +6,14 @@
 	    <th>Naziv</th>
 	    <th>Opseg od</th>
 	    <th>Opseg do</th>
+	    <th>Procenat konverzije</th>
 	  </tr>
 	  <tr ng-repeat="kategorijaKupca in kategorijaKupaca" ng-click="selectKategorijuKupca(kategorijaKupca)">
 	    <td>{{kategorijaKupca.sifraKategorije}}</td>
 	    <td>{{kategorijaKupca.nazivKategorije}}</td>
 	    <td>{{kategorijaKupca.pragPotrosnje.opsegPotrosnjeOd}}</td>
 	    <td>{{kategorijaKupca.pragPotrosnje.opsegPotrosnjeDo}}</td>
+	    <td>{{kategorijaKupca.pragPotrosnje.procenatKonverzije}}%</td>
 	  </tr>
 	</table>
 </div>
@@ -21,9 +23,13 @@
 		<p><b>Sifra kategorije:</b> {{selectedKategorijaKupca.sifraKategorije}}</p>
 		<label for="opseg">Opseg:</label>
 			<form>
-	 		<div class="input-group form-group col-md-6">
-	    <input type="number" ng-model="opsegOd" class="form-control" min="0"><span class="input-group-addon">-</span><input type="number" ng-model="opsegDo" class="form-control" min="0">
- 		  </div>
+	 			<div class="input-group form-group col-md-6">
+	   				 <input type="number" ng-model="opsegOd" class="form-control" min="0"><span class="input-group-addon">-</span><input type="number" ng-model="opsegDo" class="form-control" min="0">
+ 		 		</div>
+ 		 		<div class="input-group form-group col-md-6">
+ 		 			<label for="procenat">Procenat konverzije u nagradne bodove:</label>
+ 		 			<input type="number" ng-model="procenatKonverzije" class="form-control" min="0" max="100">
+ 		 		</div>
  		  </form>
 		<button type="button" class="btn btn-success" ng-click="sacuvajKategorijuKupca()">Sacuvaj</button>
 	</div>
