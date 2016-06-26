@@ -1,8 +1,11 @@
 (function(angular) {
-  var app = angular.module('app',['ui.router', "checklist-model"]);
-
-  app.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/login');
+  var app = angular.module('app',['ui.router', 'checklist-model', 'authentication']);
+  app
+  	.config(config)
+  	.run(run);
+		  
+  function config($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/');
     $stateProvider
     .state('kupac', {//naziv stanja!
       url: '/kupac',
@@ -61,5 +64,43 @@
       templateUrl: 'login/login.html',
       controller: 'loginCtrl'
     });
-  });
+  }
+  function run($rootScope, $http, $location, $localStorage, AuthenticationService, $state) {
+      // postavljanje tokena nakon refresh
+      if ($localStorage.currentUser) {
+          $http.defaults.headers.common.Authorization = $localStorage.currentUser.token;
+      }
+
+      // ukoliko pokušamo da odemo na stranicu za koju nemamo prava, redirektujemo se na login
+      $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+        // lista javnih stanja
+        var publicStates = ['login'];
+        var restrictedState = publicStates.indexOf(toState.name) === -1;
+        if(restrictedState && !AuthenticationService.getCurrentUser()){
+          $state.go('login');
+        }
+      });
+      $rootScope.logout = function () {
+          AuthenticationService.logout();
+      }
+      $rootScope.getCurrentUserRole = function () {
+          if (!AuthenticationService.getCurrentUser()){
+            return undefined;
+          }
+          else{
+            return AuthenticationService.getCurrentUser().role;
+          }
+      }
+      $rootScope.isLoggedIn = function () {
+          if (AuthenticationService.getCurrentUser()){
+            return true;
+          }
+          else{
+            return false;
+          }
+      }
+      $rootScope.getCurrentState = function () {
+        return $state.current.name;
+      }
+  }
 })(angular);

@@ -1,9 +1,21 @@
 package rest;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.crypto.MacProvider;
+
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -13,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.DatatypeConverter;
 
 import model.AkcijskiDogadjaj;
 import model.Artikal;
@@ -332,15 +345,34 @@ public class Rest {
 	
 	@GET
 	@Path("/login")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Korisnik login(@QueryParam("korisnickoIme")String korisnickoIme, @QueryParam("lozinka")String lozinka) {
+	@Produces(MediaType.TEXT_PLAIN)
+	public String login(@QueryParam("korisnickoIme")String korisnickoIme, @QueryParam("lozinka")String lozinka) {
+		
 		ArrayList<Korisnik> korisnici = data.getKorisnici();
 		for (Korisnik k : korisnici) {
 			if (k.getKorisnickoIme().equals(korisnickoIme) && k.getLozinka().equals(lozinka)) {
-				return k;
+				return createJWT(korisnickoIme, lozinka, k.getUlogaKorisnika().toString());
 			}
 		}
 		return null;
 	}
+	
+	private static String createJWT(String korisnickoIme, String lozinka, String uloga) {
+		 
+		//The JWT signature algorithm we will be using to sign the token
+		Key key = MacProvider.generateKey();
+		 
+		 Claims claims = Jwts.claims().setSubject(korisnickoIme);
+	        claims.put("korisnickoIme", korisnickoIme);
+	        claims.put("lozinka", lozinka);
+	        claims.put("roles", uloga);
+	        
+		  //Let's set the JWT Claims
+		JwtBuilder builder = Jwts.builder().setClaims(claims)
+		                                .signWith(SignatureAlgorithm.HS256, key);
+		  
+		 //Builds the JWT and serializes it to a compact, URL-safe string
+		return builder.compact();
+		}
 
 }

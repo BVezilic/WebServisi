@@ -1,7 +1,13 @@
 (function(angular) {
 	var app = angular.module('app');
-	app.controller('loginCtrl', ['$rootScope','$scope', '$http', '$state', function($rootScope, $scope, $http, $state) {
+	app.controller('loginCtrl', ['AuthenticationService', function(AuthenticationService, $rootScope, $scope, $http, $state) {
 		$scope.login = function(korisnickoIme, lozinka) {
+			AuthenticationService.login(korisnickoIme, lozinka,
+				function(uspeo) {
+					console.log(uspeo);
+				});
+		}
+		/*$scope.login = function(korisnickoIme, lozinka) {
 			$http({
 			  method: 'GET',
 			  url: 'http://localhost:8080/SBZ/rest/services/login',
@@ -22,6 +28,6 @@
 			  }, function errorCallback(response) {
 				  console.log("Greska kog login-a");
 			  });
-		};
+		};*/
 	}]);
 })(angular);
