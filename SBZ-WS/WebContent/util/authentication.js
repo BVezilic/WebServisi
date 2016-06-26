@@ -19,17 +19,18 @@
   			  params: {"korisnickoIme":korisnickoIme, "lozinka":lozinka}
   			}).then(function successCallback(response) {
                 // ukoliko postoji token, prijava je uspecna
-                if (response.data) {
+                if (response.data.token) {
                     // korisnicko ime, token i rola (ako postoji) cuvaju se u lokalnom skladištu
-                    var currentUser = { korisnickoIme: korisnickoIme, token: response.data }
-                    var tokenPayload = jwtHelper.decodeToken(response.data);
+                    var currentUser = response.data.user;
+                    currentUser.token = response.data.token;
+                    var tokenPayload = jwtHelper.decodeToken(response.data.token);
                     if(tokenPayload.role){
                         currentUser.role = tokenPayload.role;
                     }
                     // prijavljenog korisnika cuva u lokalnom skladistu
                     $localStorage.currentUser = currentUser;
                     // jwt token dodajemo u to auth header za sve $http zahteve
-                    $http.defaults.headers.common.Authorization = response.data;
+                    $http.defaults.headers.common.Authorization = response.data.token;
                     // callback za uspesan login
                     callback(true);
                     switch (currentUser.role) {

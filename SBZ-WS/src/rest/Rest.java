@@ -7,15 +7,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 
 import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -26,14 +22,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.DatatypeConverter;
 
 import model.AkcijskiDogadjaj;
 import model.Artikal;
 import model.KategorijaArtikla;
 import model.KategorijaKupca;
 import model.Korisnik;
-import model.PopustZaPojedinacnuStavku;
 import model.ProfilKupca;
 import model.Racun;
 import model.StanjeRacuna;
@@ -348,11 +342,14 @@ public class Rest {
 	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(@QueryParam("korisnickoIme")String korisnickoIme, @QueryParam("lozinka")String lozinka) {
+		HashMap<String, Object> response = new HashMap<String, Object>();	
 		ArrayList<Korisnik> korisnici = data.getKorisnici();
+		
 		for (Korisnik k : korisnici) {
 			if (k.getKorisnickoIme().equals(korisnickoIme) && k.getLozinka().equals(lozinka)) {
-				return Response.ok(k, MediaType.APPLICATION_JSON).header("Authorization", createJWT(korisnickoIme, lozinka, k.getUlogaKorisnika().toString())).build();
-				//return createJWT(korisnickoIme, lozinka, k.getUlogaKorisnika().toString());
+				response.put("user", k);
+				response.put("token", createJWT(korisnickoIme, lozinka, k.getUlogaKorisnika().toString()));
+				return Response.ok(response, MediaType.APPLICATION_JSON).build();
 			}
 		}
 		return null;
@@ -365,7 +362,6 @@ public class Rest {
 		 
 		 Claims claims = Jwts.claims().setSubject(korisnickoIme);
 	        claims.put("korisnickoIme", korisnickoIme);
-	        claims.put("lozinka", lozinka);
 	        claims.put("role", uloga);
 	        
 		  //Let's set the JWT Claims
