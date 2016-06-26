@@ -76,10 +76,18 @@
         // lista javnih stanja
         var publicStates = ['login'];
         var restrictedState = publicStates.indexOf(toState.name) === -1;
-        if(restrictedState && !AuthenticationService.getCurrentUser()){
-          $state.go('login');
-        }
+        
+        console.log("ROLE: "+ $rootScope.getCurrentUserRole());
+        console.log("toState: "+ toState.toString());
+        
+       /* if(restrictedState && !AuthenticationService.getCurrentUser()){
+        	$state.go('login');
+        }else if(!$rootScope.getCurrentUserRole() == 'KUPAC' && toState.toString() == 'kupac')
+    	{
+        	$state.go('login');
+    	}*/
       });
+      
       $rootScope.logout = function () {
           AuthenticationService.logout();
       }
