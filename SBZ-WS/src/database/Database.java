@@ -72,8 +72,8 @@ public class Database implements Serializable {
 	public void startUp(){
 		
 		
-		readFromFile();
-		/*
+		//readFromFile();
+		
 		UlogaKorisnika uk1 = UlogaKorisnika.KUPAC;
 		UlogaKorisnika uk2 = UlogaKorisnika.PRODAVAC;
 		UlogaKorisnika uk3 = UlogaKorisnika.MENADZER;
@@ -278,7 +278,7 @@ public class Database implements Serializable {
 		ko1.getProfilKupca().addRealizovanaKupovina(r1);
 		ko1.getProfilKupca().addRealizovanaKupovina(r2);
 		ko1.getProfilKupca().addRealizovanaKupovina(r3);
-		*/
+		
 	}
 
 	/**
