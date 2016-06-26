@@ -227,7 +227,7 @@ public class Rest {
 	@Path("/racun/cancel")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Boolean otkaziRacun(Racun racun){
-		//System.out.println(racun);
+		
 		Racun temp = data.getRacuni().get(data.getRacuni().indexOf(racun));
 		if(temp.getStanjeRacuna() == StanjeRacuna.PORUCENO)
 		{
