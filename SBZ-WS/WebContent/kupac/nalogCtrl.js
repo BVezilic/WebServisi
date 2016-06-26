@@ -36,6 +36,5 @@
 		$scope.showSelectedRacun = false;
 		$scope.korisnik = $rootScope.getCurrentUser();
 		
-		
 	}]);
 })(angular);

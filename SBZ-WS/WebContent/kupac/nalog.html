@@ -26,17 +26,18 @@
 			<th>Naziv</th>
 			<th>Kolicina</th>
 			<th>Pojedinacna cena</th>
-			<th>Ukupna cena</th>	
+			<th>Originalna cena</th>
+			<th>Konacna cena</th>	
 			<th></th>
 		</tr>
-		<tr ng-repeat="stavkaRacuna in racun.stavkeRacuna">
+		<tr title="{{getPopusti(stavkaRacuna)}}" data-toggle="popover" data-trigger="hover" data-content="Some content" ng-repeat="stavkaRacuna in racun.stavkeRacuna">
 			<td valign="middle">{{stavkaRacuna.redniBrojStavke}}</td>
 			<td valign="middle">{{stavkaRacuna.artikal.sifra}}</td>
 			<td valign="middle">{{stavkaRacuna.artikal.naziv}}</td>
 			<td valign="middle">{{stavkaRacuna.kolicinaKupnjeljihArtikala}}</td>
 			<td valign="middle">{{stavkaRacuna.jedinicnaCena}}</td>
 			<td valign="middle">{{stavkaRacuna.originalnaUkupnaCena}}</td>
-			<td title="{{getPopusti(stavkaRacuna)}}" data-toggle="popover" data-trigger="hover" data-content="Some content"><b>PRIMENJENI POPUSTI</b></td>
+			<td valign="middle">{{stavkaRacuna.konacnaCena}}</td>			
 		</tr>
 	</table>
 	<p><label>Primenjeni popusti na racunu: </label></p>

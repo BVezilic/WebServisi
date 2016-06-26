@@ -87,7 +87,17 @@
 				  }, function errorCallback(response) {
 					  console.log("Greska kod addToKorpa");
 				  });
+		};
+		
+		$scope.getPopusti = function(stavka){
+			var popusti = stavka.primenjeniPopusti;
+			var ispis = "";
 			
+			for(var i = 0; i < popusti.length; i++){
+				ispis += popusti[i].sifra + '\r\n';
+			}
+			
+			return ispis;
 		};
 	}]);
 })(angular);
