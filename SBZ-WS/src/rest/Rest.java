@@ -150,14 +150,14 @@ public class Rest {
 	@POST
 	@Path("/racun/getForKupac")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ArrayList<Racun> getForKupac(Korisnik kupac){
+	public ArrayList<Racun> getForKupac(String kupac){
 		ArrayList<Racun> racuniKupca = new ArrayList<Racun>();
 		System.out.println("Primljen ovaj parametar: "+kupac);
 		
 		for (Racun racun : data.getRacuni()) {
 			if(racun.getKupac().getKorisnik() != null){
 				System.out.println("korisnik u racunu nije null");
-				if(racun.getKupac().getKorisnik().getKorisnickoIme().equals(kupac.getKorisnickoIme())){
+				if(racun.getKupac().getKorisnik().getKorisnickoIme().equals(kupac)){
 					racuniKupca.add(racun);
 				}
 			}else{
@@ -190,7 +190,7 @@ public class Rest {
 	@Path("/racun/pregled")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Racun createRacun(Korisnik kupac){
+	public Racun createRacun(String kupac){
 		if(data.getKorpa().values().size() == 0){
 			return null;
 		}
@@ -198,7 +198,7 @@ public class Rest {
 		ProfilKupca kupacFromDB = new ProfilKupca();
 		
 		for (Korisnik korisnik : data.getKorisnici()) {
-			if(korisnik.getKorisnickoIme().equals(kupac.getKorisnickoIme())){
+			if(korisnik.getKorisnickoIme().equals(kupac)){
 				kupacFromDB = korisnik.getProfilKupca();
 				break;
 			}

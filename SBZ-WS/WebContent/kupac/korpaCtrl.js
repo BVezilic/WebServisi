@@ -40,11 +40,10 @@
 		};
 		
 		$scope.pregledRacuna = function(){
-			console.log($rootScope.korisnik);
 			$http({
 				  method: 'POST',
 				  url: 'http://localhost:8080/SBZ/rest/services/racun/pregled',
-				  data: $rootScope.korisnik
+				  data: $rootScope.getCurrentUser().korisnickoIme
 				}).then(function successCallback(response) {
 					
 					if(response.data != "")
@@ -77,9 +76,7 @@
 						$scope.racun={};
 						$scope.hasRacun = false;
 						$scope.korpa = [];
-						console.log($rootScope.korisnik.profilKupca.nagradniBodovi);
-						$rootScope.korisnik.profilKupca.nagradniBodovi -= ulozeniBodovi;
-						console.log($rootScope.korisnik.profilKupca.nagradniBodovi);
+						$rootScope.getCurrentUser().profilKupca.nagradniBodovi -= ulozeniBodovi;					
 					}else
 					{
 						window.alert("Nemate dovoljno bodova da biste ostvarili ovu kupovinu");

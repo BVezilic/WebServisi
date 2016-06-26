@@ -114,6 +114,16 @@
             return AuthenticationService.getCurrentUser().role;
           }
       }
+      
+      $rootScope.getCurrentUser = function () {
+          if (!AuthenticationService.getCurrentUser()){
+            return undefined;
+          }
+          else{
+            return AuthenticationService.getCurrentUser();
+          }
+      }
+      
       $rootScope.isLoggedIn = function () {
           if (AuthenticationService.getCurrentUser()){
             return true;

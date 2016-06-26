@@ -6,7 +6,7 @@
 			$http({
 				  method: 'POST',
 				  url: 'http://localhost:8080/SBZ/rest/services/racun/getForKupac',
-				  data: $rootScope.korisnik
+				  data: $rootScope.getCurrentUser().korisnickoIme
 				}).then(function successCallback(response) {
 					$scope.racuni = response.data;
 				  }, function errorCallback(response) {
@@ -23,5 +23,8 @@
 		
 		$scope.racuni = {};
 		$scope.showSelectedRacun = false;
+		$scope.korisnik = $rootScope.getCurrentUser();
+		
+		
 	}]);
 })(angular);
