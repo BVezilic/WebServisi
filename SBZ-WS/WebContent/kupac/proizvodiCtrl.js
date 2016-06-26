@@ -26,7 +26,7 @@
 		getKategorijeArtikla();
 		
 		$scope.addToKorpa = function(artikal, kolicina) {
-			if(kolicina > 0 && kolicina < artikal.brojnoStanje){
+			if(kolicina > 0 && kolicina <= artikal.brojnoStanje){
 				$http({
 					  method: 'POST',
 					  url: 'http://localhost:8080/SBZ/rest/services/korpa/add',

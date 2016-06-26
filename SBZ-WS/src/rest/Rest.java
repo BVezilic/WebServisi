@@ -48,6 +48,13 @@ public class Rest {
 	}
 	
 	@GET
+	@Path("/proba")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String proba(){
+		return data.toString();
+	}
+	
+	@GET
 	@Path("/korpa/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<StavkaRacuna> getKorpa(){
