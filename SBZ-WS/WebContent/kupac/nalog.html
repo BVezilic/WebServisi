@@ -56,11 +56,13 @@
     		<th>Sifra racuna</th>
     		<th>Datum kupovine</th>
     		<th>Konacna cena</th>
+    		<th>Stanje racuna</th>
     	</tr>
     	<tr ng-repeat="racun in racuni" ng-click="checkRacun(racun)">
     		<td>{{racun.sifra}}</td>
     		<td>{{racun.datumIzdavanja|date:'mediumDate'}}</td>
     		<td>{{racun.konacnaCena}}</td>
+    		<td>{{racun.stanjeRacuna}}</td>
     	</tr>
   	</table>
 </div>
