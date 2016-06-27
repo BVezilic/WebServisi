@@ -191,7 +191,7 @@ public class Rest {
 	public Boolean obradiRacun(Racun racun, @QueryParam("bodovi")int bodovi){
 		System.out.println("BODOVI: " + bodovi);
 		
-		if(data.getRacunUPirpremi().getKupac().getNagradniBodovi() - bodovi < 0){
+		if(data.getRacunUPirpremi().getKupac().getNagradniBodovi() - bodovi < 0 || bodovi < 0){
 			return false;
 		}
 		

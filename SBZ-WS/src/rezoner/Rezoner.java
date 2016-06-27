@@ -438,7 +438,7 @@ public class Rezoner {
 		
 		try {
 			
-			engine.reset();
+			engine.clear();
 			engine.eval("(watch all)");
 			engine.batch("jess/rules.clp");
 			
